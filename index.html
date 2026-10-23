@@ -1,0 +1,1262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Five Wisdom Traditions</title>
+<style>
+:root{
+  --bg:#f7f3ec; --surface:#fffdf9; --surface-2:#f0eadf; --ink:#2a251f; --muted:#6d6457; --line:#e2d9ca;
+  --accent:#7a4f1d; --focus:#b7791f;
+  --bible:#9b2c2c; --tao:#2c7a7b; --quran:#2f6b45; --buddha:#b7791f; --confucius:#4c4699;
+  --shadow:0 1px 2px rgba(60,40,10,.06),0 4px 16px rgba(60,40,10,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16130f; --surface:#1f1b16; --surface-2:#2a251e; --ink:#efe7da; --muted:#a99e8d; --line:#3a332a;
+    --accent:#e0b475; --focus:#e0b475;
+    --bible:#f08a8a; --tao:#6fd0d1; --quran:#7fd19e; --buddha:#f2c46b; --confucius:#a9a3f2;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16130f; --surface:#1f1b16; --surface-2:#2a251e; --ink:#efe7da; --muted:#a99e8d; --line:#3a332a;
+  --accent:#e0b475; --focus:#e0b475;
+  --bible:#f08a8a; --tao:#6fd0d1; --quran:#7fd19e; --buddha:#f2c46b; --confucius:#a9a3f2;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.serif{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+header{padding:28px 0 8px}
+header h1{margin:0;font-size:clamp(1.6rem,4vw,2.3rem);letter-spacing:-.01em}
+header p{margin:6px 0 0;color:var(--muted);max-width:60ch}
+.topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.theme-toggle{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:.85rem;white-space:nowrap}
+nav.tabs{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);margin-top:16px}
+nav.tabs .wrap{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+nav.tabs button{background:none;border:0;padding:12px 14px;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap;font-weight:500}
+nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+main{padding:20px 0 60px}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:16px}
+.search{flex:1 1 220px;min-width:0;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:.88rem;display:inline-flex;align-items:center;gap:6px}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;text-align:left;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px;border-top:4px solid var(--c);transition:transform .12s}
+.card:hover{transform:translateY(-2px)}
+.card .meta{display:flex;justify-content:space-between;gap:8px;font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.card .meta b{color:var(--c);font-weight:600}
+.card h3{margin:0;font-size:1.08rem}
+.card .quote{margin:0;color:var(--muted);font-size:.95rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}
+.tag{font-size:.74rem;background:var(--surface-2);border-radius:6px;padding:2px 8px;color:var(--muted)}
+.empty{color:var(--muted);padding:30px 0;text-align:center}
+.count{color:var(--muted);font-size:.85rem;margin:-6px 0 12px}
+
+/* detail */
+dialog{border:0;padding:0;border-radius:18px;width:min(760px,calc(100vw - 24px));max-height:calc(100vh - 32px);background:var(--surface);color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.35)}
+dialog::backdrop{background:rgba(20,15,10,.55)}
+.detail{padding:24px 22px 22px;border-top:6px solid var(--c)}
+.detail .close{position:sticky;top:0;float:right;background:var(--surface-2);border:0;border-radius:999px;width:36px;height:36px;font-size:1.2rem;line-height:1}
+.kicker{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--c);font-weight:600}
+.detail h2{margin:4px 0 2px;font-size:1.5rem}
+.ref{color:var(--muted);font-size:.9rem}
+blockquote{margin:18px 0;padding:16px 18px;background:var(--surface-2);border-left:4px solid var(--c);border-radius:0 10px 10px 0;font-size:1.12rem;line-height:1.6;white-space:pre-line}
+.trans{font-size:.78rem;color:var(--muted);margin-top:-10px}
+.section{margin-top:20px}
+.section h4{margin:0 0 6px;font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.section p{margin:0}
+.apply{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.apply li{background:var(--surface-2);border-radius:10px;padding:10px 12px 10px 38px;position:relative}
+.apply li::before{content:"→";position:absolute;left:14px;color:var(--c);font-weight:700}
+.reflect{font-style:italic}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 14px;font-weight:500}
+.btn.primary{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+/* daily */
+.hero{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+.hero .detail{border-top-width:8px}
+.practice-box{margin-top:18px;padding:14px 16px;border:2px dashed var(--c);border-radius:12px}
+.practice-box strong{color:var(--c)}
+
+/* themes */
+.theme-block{margin-bottom:34px}
+.theme-block h2{margin:0 0 4px;font-size:1.3rem}
+.theme-block > p{margin:0 0 12px;color:var(--muted);max-width:75ch}
+.note{font-size:.88rem;background:var(--surface-2);border-radius:10px;padding:10px 12px;margin:0 0 12px;color:var(--muted)}
+
+/* quiz */
+.quiz{max-width:680px;margin:0 auto;text-align:center}
+.quiz blockquote{text-align:left}
+.qopts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin-top:10px}
+.qopt{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px;display:flex;gap:8px;align-items:center;justify-content:center;font-weight:500}
+.qopt.right{border-color:var(--quran);background:color-mix(in srgb,var(--quran) 15%,var(--surface))}
+.qopt.wrong{border-color:var(--bible);background:color-mix(in srgb,var(--bible) 15%,var(--surface))}
+.score{color:var(--muted);margin-bottom:6px}
+.feedback{margin-top:14px;text-align:left}
+
+/* practice */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:22px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.stat .n{font-size:1.8rem;font-weight:700}
+.stat .l{color:var(--muted);font-size:.85rem}
+.log{list-style:none;padding:0;margin:0;display:grid;gap:6px}
+.log li{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:.92rem}
+h2.sub{font-size:1.1rem;margin:24px 0 10px}
+footer{color:var(--muted);font-size:.8rem;padding:0 0 30px}
+.orig-wrap{margin-top:14px}
+.orig{font-size:1.25rem;line-height:1.9;white-space:pre-line;margin-top:4px}
+.orig[lang="ar"]{font-family:"Amiri","Scheherazade New","Noto Naskh Arabic","Geeza Pro",serif;font-size:1.45rem}
+.src-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.btn.small{padding:6px 11px;font-size:.85rem;text-decoration:none;color:var(--ink)}
+.journal{width:100%;margin-top:10px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;resize:vertical}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;margin-bottom:14px}
+.seg button{border:0;background:var(--surface);padding:7px 14px;font-size:.88rem}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.prose{max-width:70ch}
+.prose h2{font-size:1.45rem;margin:0 0 6px}
+.prose h3{font-size:1.1rem;margin:22px 0 6px}
+.prose p{margin:0 0 12px}
+.prose ul{margin:0 0 12px;padding-left:20px}
+.cite{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--c,var(--accent));border-radius:0 10px 10px 0;padding:10px 14px;margin:0 0 10px}
+.cite .who{font-size:.76rem;text-transform:uppercase;letter-spacing:.05em;color:var(--c,var(--muted));font-weight:600;margin-bottom:2px}
+.cite .src{font-size:.8rem;color:var(--muted)}
+.layout{display:grid;grid-template-columns:240px 1fr;gap:26px;align-items:start}
+.toc{position:sticky;top:60px;display:grid;gap:4px;max-height:calc(100vh - 80px);overflow:auto}
+.toc button{text-align:left;background:none;border:0;border-radius:8px;padding:7px 10px;color:var(--muted);font-size:.9rem;display:flex;gap:8px}
+.toc button[aria-current="true"]{background:var(--surface);color:var(--ink);font-weight:600;box-shadow:var(--shadow)}
+.toc .chk{width:16px;flex:none;color:var(--quran)}
+.banner{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:20px;box-shadow:var(--shadow)}
+.banner p{margin:0;max-width:60ch}
+.pager{display:flex;justify-content:space-between;gap:10px;margin-top:24px;flex-wrap:wrap}
+.tl{list-style:none;padding:0;margin:0;border-left:2px solid var(--line)}
+.tl li{position:relative;padding:0 0 14px 18px}
+.tl li::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--c,var(--accent))}
+.tl b{display:block;font-size:.85rem;color:var(--muted)}
+.gloss{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.gloss div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:.92rem}
+.gloss dt{font-weight:700}
+.trad-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.trad-card{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:14px;padding:16px}
+.trad-card h3{margin:0 0 4px;color:var(--c)}
+.trad-card dl{margin:8px 0 0;font-size:.92rem}
+.trad-card dt{font-weight:600;margin-top:8px}
+.trad-card dd{margin:0;color:var(--muted)}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.vs > div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.layout > *{min-width:0}
+.tbl{display:block;max-width:100%;overflow-x:auto;width:100%;border-collapse:collapse;font-size:.9rem;margin:8px 0 14px}
+.tbl th,.tbl td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+@media (max-width:760px){ .layout{grid-template-columns:1fr} .toc{position:static;max-height:none;grid-auto-flow:column;grid-auto-columns:max-content;overflow-x:auto} .vs{grid-template-columns:1fr} }
+@media (max-width:520px){ .detail{padding:20px 16px} blockquote{font-size:1.02rem} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="topbar">
+      <div>
+        <h1 class="serif">Five Wisdom Traditions</h1>
+        <p>The common principles of the major religions, and the most-quoted passages of the Bible, Tao Te Ching, Quran, Buddhist sutras and the Analects of Confucius: what each one means, where it comes from, and how to live it today.</p>
+      </div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme">◐ Theme</button>
+    </div>
+  </header>
+</div>
+<nav class="tabs" aria-label="Sections">
+  <div class="wrap" role="tablist">
+    <button role="tab" data-tab="primer">Primer</button>
+    <button role="tab" data-tab="today">Today</button>
+    <button role="tab" data-tab="explore">Explore</button>
+    <button role="tab" data-tab="themes">Common threads</button>
+    <button role="tab" data-tab="learn">Learn</button>
+    <button role="tab" data-tab="quiz">Quiz</button>
+    <button role="tab" data-tab="practice">My practice</button>
+  </div>
+</nav>
+<main class="wrap" id="view"></main>
+<div class="wrap"><footer>Translations: Bible from the King James Version; Tao Te Ching, Analects and Dhammapada adapted from James Legge and Max Müller (public domain); Quran and other sutras rendered in plain modern English after public-domain translations. Translations are approximate. Use the "Read the full text" links to check each passage in context. The Primer is adapted from the discussion series <i>Common Principles of the Major Religions</i> (2017–2018).</footer></div>
+
+<dialog id="dlg" aria-label="Passage detail"></dialog>
+
+<script>
+const TRADITIONS = {
+  bible:     {name:"Bible", full:"The Bible", color:"var(--bible)"},
+  tao:       {name:"Tao Te Ching", full:"Tao Te Ching (Laozi)", color:"var(--tao)"},
+  quran:     {name:"Quran", full:"The Quran", color:"var(--quran)"},
+  buddha:    {name:"Buddhist Sutras", full:"Buddhist Sutras", color:"var(--buddha)"},
+  confucius: {name:"Confucius", full:"Analects of Confucius", color:"var(--confucius)"}
+};
+
+const THEMES = {
+  "golden-rule": {name:"The Golden Rule", desc:"Treat others as you would want to be treated. It is the ethical principle found most widely across the world's traditions.",
+    note:"Other forms of the rule: Rabbi Hillel: \"What is hateful to you, do not do to your neighbor\" (Talmud, Shabbat 31a). Dhammapada 129: \"Remember that you are like unto them, and do not kill.\" Hadith (Nawawi 13): \"None of you truly believes until he loves for his brother what he loves for himself.\" Tao Te Ching 49: \"To those who are good I am good; and to those who are not good I am also good.\""},
+  love:       {name:"Love & Compassion", desc:"Every tradition puts love for others at its center, whether it is called agapē, mettā, rahma or ren."},
+  peace:      {name:"Peace & Trust", desc:"Teachings for anxious minds: letting go of what you cannot control and resting in something larger than yourself."},
+  resilience: {name:"Hardship & Resilience", desc:"How to carry suffering, and why it is not the end of the story."},
+  self:       {name:"Self-Mastery", desc:"The hardest person to conquer is yourself. These passages are about daily self-examination and discipline."},
+  humility:   {name:"Humility", desc:"Taking the low place, admitting what you don't know, and not needing credit."},
+  wisdom:     {name:"Wisdom & Learning", desc:"How to know, how to learn, and how to tell real understanding from noise."},
+  simplicity: {name:"Contentment & Simplicity", desc:"Having enough, making space, and wanting less."},
+  action:     {name:"Right Action & Justice", desc:"Ethics in practice: justice, mercy, leading by example, and the worth of every life."},
+  mind:       {name:"The Mind", desc:"Thoughts shape reality. This is psychology from 2,500 years ago."}
+};
+
+const P = [
+/* ───────── BIBLE ───────── */
+{id:"john-3-16", trad:"bible", ref:"John 3:16", title:"For God so loved the world",
+ text:"For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.",
+ trans:"King James Version",
+ meaning:"This is the core Christian claim in one sentence. God's love reaches everyone (\"the world\"), it shows itself in a costly gift, and eternal life is offered to anyone who trusts in Christ. In this verse, love is something done, not just felt.",
+ context:"Jesus says this to Nicodemus, a respected Pharisee who came to him secretly at night with questions (John 3:1–21). Martin Luther called the verse \"the Gospel in miniature.\" It is probably the most-cited verse in the Bible.",
+ apply:["Love as an action: give something that costs you, like time, attention or patience, to someone today without expecting anything back.","Remember that \"the world\" includes the people you find difficult. Extend the same grace to one of them.","When you feel unworthy, read the verse slowly with your own name in place of \"the world.\""],
+ reflect:"Where in my life could love look more like giving and less like feeling?",
+ themes:["love"]},
+{id:"matt-7-12", trad:"bible", ref:"Matthew 7:12", title:"The Golden Rule",
+ text:"Therefore all things whatsoever ye would that men should do to you, do ye even so to them: for this is the law and the prophets.",
+ trans:"King James Version",
+ meaning:"Jesus gives the positive form of the rule. It goes beyond avoiding harm and asks you to take the first step in doing the good you would want done to you. He says it sums up all of Scripture's moral teaching.",
+ context:"This comes near the end of the Sermon on the Mount (Matthew 5–7), Jesus' longest recorded teaching. Jewish teachers before him, such as Hillel, taught the negative form: \"What is hateful to you, do not do to your neighbor.\" In Matthew 22:37–40, Jesus also sums up the Law as loving God and loving your neighbor as yourself.",
+ apply:["Before you answer a difficult message, ask yourself how you would want to be answered.","Do one unprompted kindness you would be glad to receive, such as a thank-you note, an offer of help or a compliment.","In a disagreement, state the other person's view in words they would accept before you give your own."],
+ reflect:"What good thing have I been waiting for someone else to do for me that I could do for them first?",
+ themes:["golden-rule","love","action"]},
+{id:"psalm-23", trad:"bible", ref:"Psalm 23:1–4", title:"The Lord is my shepherd",
+ text:"The LORD is my shepherd; I shall not want.\nHe maketh me to lie down in green pastures: he leadeth me beside the still waters.\nHe restoreth my soul…\nYea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me; thy rod and thy staff they comfort me.",
+ trans:"King James Version",
+ meaning:"God is pictured as a caring shepherd who provides, guides and restores. The psalm does not promise that you will avoid the dark valley. It promises company inside it: \"for thou art with me.\"",
+ context:"Tradition attributes this psalm to David, who was a shepherd before he became king. In the ancient Near East, \"shepherd\" was also a title for kings. It is the psalm most often read at funerals and in hospitals, and in times of crisis.",
+ apply:["Name your \"still waters\": a place, person or habit that restores you. Put it on your calendar this week.","When you feel anxious, breathe slowly while saying the first line: inhale on \"The Lord is my shepherd,\" exhale on \"I shall not want.\"","List three ways you are already provided for today."],
+ reflect:"What valley am I walking through, and who or what is walking with me?",
+ themes:["peace","resilience"]},
+{id:"1cor-13", trad:"bible", ref:"1 Corinthians 13:4–7", title:"Love is patient, love is kind",
+ text:"Charity suffereth long, and is kind; charity envieth not; charity vaunteth not itself, is not puffed up, doth not behave itself unseemly, seeketh not her own, is not easily provoked, thinketh no evil; rejoiceth not in iniquity, but rejoiceth in the truth; beareth all things, believeth all things, hopeth all things, endureth all things.",
+ trans:"King James Version (\"charity\" translates the Greek agapē, self-giving love)",
+ meaning:"Paul defines love by behavior rather than emotion: patience, kindness, no envy, no boasting, no keeping score of wrongs. It is a practical checklist for any relationship.",
+ context:"It is now read at weddings, but Paul wrote it as a correction. The church in Corinth was divided and status-conscious and proud of its showy spiritual gifts. Paul tells them that without love, even the most impressive gifts are \"sounding brass.\"",
+ apply:["Read the passage with your own name in place of \"charity\" and notice which line you can't honestly say.","Pick one line as today's focus, for example \"not easily provoked,\" and practice it in your most irritating moment.","Let go of one record of wrongs you have been keeping against someone."],
+ reflect:"Which line of this passage is hardest for me right now, and with whom?",
+ themes:["love","humility"]},
+{id:"prov-3-5", trad:"bible", ref:"Proverbs 3:5–6", title:"Trust, and lean not on your own understanding",
+ text:"Trust in the LORD with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths.",
+ trans:"King James Version",
+ meaning:"This is wholehearted trust together with humility about your own point of view. In Hebrew, \"heart\" means the mind and will, not just the emotions. \"Direct thy paths\" can also be translated \"make your paths straight.\"",
+ context:"Proverbs is Israel's wisdom literature, practical sayings about how to live. Chapters 1–9 are written as a parent's instructions to a child, so this verse is advice handed down from one generation to the next.",
+ apply:["Before a big decision, write down what you might not be seeing.","Ask someone wiser, or someone outside the situation, for counsel before you commit.","Pause, pray or reflect before you make your plans, not only after they go wrong."],
+ reflect:"Where am I relying only on my own understanding?",
+ themes:["peace","humility","wisdom"]},
+{id:"jer-29-11", trad:"bible", ref:"Jeremiah 29:11", title:"Plans for peace and a future",
+ text:"For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end.",
+ trans:"King James Version (\"an expected end\" = \"a future and a hope\")",
+ meaning:"God promises good intentions and a hopeful future. The context matters: the hope is long-term and shared by a community, and it is lived out in the middle of hardship rather than by escaping it.",
+ context:"Jeremiah wrote this in a letter to Jews exiled in Babylon around 597 BC. Just before it, he tells them to build houses, plant gardens and \"seek the peace of the city\" where they are captive (29:5–7), and warns that the exile will last 70 years (29:10). It is not a promise of quick personal success.",
+ apply:["\"Build houses where you are\": put real effort into your present situation even if it's not where you want to be.","Do one thing for the good of your neighborhood, workplace or city this week.","Keep your long-term hope, and pair it with patient daily action."],
+ reflect:"How can I make a good life in a season I didn't choose?",
+ themes:["resilience","peace"]},
+{id:"phil-4-6", trad:"bible", ref:"Philippians 4:6–7", title:"Be anxious for nothing",
+ text:"Be careful for nothing; but in every thing by prayer and supplication with thanksgiving let your requests be made known unto God. And the peace of God, which passeth all understanding, shall keep your hearts and minds through Christ Jesus.",
+ trans:"King James Version (\"be careful for nothing\" = \"don't be anxious about anything\")",
+ meaning:"The answer to anxiety here is to turn vague worry into specific requests and to give thanks at the same time. \"Keep\" is a military word meaning to guard like a garrison: peace stands guard over the heart.",
+ context:"Paul wrote this letter from prison, possibly facing execution, yet it is one of his most joyful letters. The words come from someone who was practicing them under pressure.",
+ apply:["Write each worry down as a specific request instead of letting it circle in your head.","Next to each worry, write one thing you are grateful for.","When the worry comes back, which it will, go through the practice again. That is how the guard works."],
+ reflect:"What am I anxious about that I haven't put into words?",
+ themes:["peace","mind"]},
+{id:"micah-6-8", trad:"bible", ref:"Micah 6:8", title:"Do justly, love mercy, walk humbly",
+ text:"He hath shewed thee, O man, what is good; and what doth the LORD require of thee, but to do justly, and to love mercy, and to walk humbly with thy God?",
+ trans:"King James Version",
+ meaning:"True religion is summed up in three things: justice (what you do), mercy (Hebrew hesed, loyal and steadfast kindness) and humility (how you carry yourself).",
+ context:"Micah was an 8th-century BC prophet. The verse comes at the end of a courtroom scene in which the people ask what would satisfy God: burnt offerings, thousands of rams, even their firstborn? The answer is no lavish ritual at all, but an ethical, humble life.",
+ apply:["Do one act of justice today: pay fairly, speak up for someone or correct an unfairness.","Do one act of mercy: give someone a second chance or the benefit of the doubt.","Ask yourself whether your religious or self-improvement routines have taken the place of plain decency."],
+ reflect:"Which of the three, justice, mercy or humility, is weakest in me?",
+ themes:["action","humility"]},
+
+/* ───────── TAO TE CHING ───────── */
+{id:"tao-1", trad:"tao", ref:"Tao Te Ching, Chapter 1", title:"The Tao that can be named",
+ text:"The Tao that can be trodden is not the enduring and unchanging Tao. The name that can be named is not the enduring and unchanging name.",
+ trans:"Adapted from James Legge (1891)",
+ meaning:"Ultimate reality (the Tao, \"the Way\") is beyond words and ideas. Labels are useful, but they are never the thing itself, so hold your concepts loosely.",
+ context:"These are the opening lines of the 81 short chapters traditionally attributed to Laozi (\"Old Master\"), said to have lived in the 6th century BC. The text was probably compiled around the 4th century BC. It is one of the most translated books in the world.",
+ apply:["Notice when a label (\"I'm bad at this,\" \"they're difficult\") is standing in for what you're actually experiencing.","For five minutes, experience something without naming it: a sound, the sky, your breath.","Hold one strong opinion more loosely today and ask what it leaves out."],
+ reflect:"What label am I treating as the whole truth?",
+ themes:["wisdom","humility"]},
+{id:"tao-8", trad:"tao", ref:"Tao Te Ching, Chapter 8", title:"The highest good is like water",
+ text:"The highest excellence is like water. The excellence of water appears in its benefiting all things, and in its occupying, without striving, the low place which all men dislike. Hence its way is near to that of the Tao.",
+ trans:"Adapted from James Legge (1891)",
+ meaning:"Water nourishes everything, doesn't compete and settles in the lowest place. The highest goodness is the same: useful, humble and adaptable.",
+ context:"Water is the Tao Te Ching's main image (see also chapter 78). The chapter goes on to praise goodness in where you live, in your heart, in your speech and in your timing. It is a practical description of a sage.",
+ apply:["Serve without needing credit. Do one helpful thing nobody will notice.","Take the \"low place\" by volunteering for the unglamorous task.","Adapt to a situation the way water takes the shape of its container, instead of forcing it."],
+ reflect:"Where am I competing when I could be nourishing?",
+ themes:["humility","simplicity"]},
+{id:"tao-33", trad:"tao", ref:"Tao Te Ching, Chapter 33", title:"Know yourself, master yourself",
+ text:"He who knows other men is discerning; he who knows himself is intelligent. He who overcomes others is strong; he who overcomes himself is mighty. He who is satisfied with his lot is rich.",
+ trans:"Adapted from James Legge (1891)",
+ meaning:"Understanding yourself matters more than understanding others, mastering yourself matters more than mastering others, and having enough is real wealth.",
+ context:"The chapter contrasts outward, worldly success with inner attainment, a central idea in Taoism. It closely parallels the Buddhist Dhammapada 103 (\"he who conquers himself is the greatest of conquerors\").",
+ apply:["Spend five minutes at the end of the day noticing your own reactions without judging them.","Measure strength by your self-control rather than your control over others.","Say \"this is enough\" about one thing you already have."],
+ reflect:"Am I trying to overcome other people or myself?",
+ themes:["self","simplicity"]},
+{id:"tao-64", trad:"tao", ref:"Tao Te Ching, Chapter 64", title:"A journey of a thousand miles",
+ text:"The tree which fills the arms grew from the tiniest sprout; the tower of nine storeys rose from a small heap of earth; the journey of a thousand li commenced with a single step.",
+ trans:"Adapted from James Legge (1891); a li is a Chinese measure of distance",
+ meaning:"Everything great starts small. The chapter also teaches the reverse: deal with problems while they are small, \"before they have arisen.\"",
+ context:"The famous line about the single step sits in a chapter about timing and prevention: \"Act before things exist; manage them before there is disorder.\" It is about starting small and also about stopping trouble early.",
+ apply:["Break your big goal into one step you can take today, and take it.","Fix one small problem before it grows: a misunderstanding, a bill or a creaky habit.","Don't look down on small beginnings, yours or anyone else's."],
+ reflect:"What single step have I been postponing?",
+ themes:["action","resilience"]},
+{id:"tao-11", trad:"tao", ref:"Tao Te Ching, Chapter 11", title:"The usefulness of emptiness",
+ text:"Thirty spokes unite in the one nave; but it is on the empty space for the axle that the use of the wheel depends. Clay is fashioned into vessels; but it is on their empty hollowness that their use depends.",
+ trans:"Adapted from James Legge (1891)",
+ meaning:"What is absent is as important as what is present. A bowl works because of its hollow and a room because of its open space. Emptiness makes room for function.",
+ context:"This is one of the Tao Te Ching's paradoxes about the value of wu (non-being). The chapter also mentions doors and windows cut into a room, and concludes that what exists gives benefit while what doesn't exist makes it useful.",
+ apply:["Leave real blank space in your calendar this week.","Listen to someone with an \"empty\" mind, without rehearsing your reply.","Clear one cluttered space, such as a drawer, a desk or your phone's home screen."],
+ reflect:"What in my life is too full to be useful?",
+ themes:["simplicity","mind"]},
+{id:"tao-46", trad:"tao", ref:"Tao Te Ching, Chapter 46", title:"Contentment is enough",
+ text:"There is no guilt greater than to sanction ambition; no calamity greater than to be discontented with one's lot; no fault greater than the wish to be getting. Therefore the sufficiency of contentment is an enduring and unchanging sufficiency.",
+ trans:"Adapted from James Legge (1891)",
+ meaning:"Endless wanting causes misery. The only \"enough\" that lasts is the one that comes from contentment, not from getting more.",
+ context:"The chapter opens with an image: when the Tao prevails, war horses are sent back to pull dung carts on farms, and when it doesn't, war horses breed on the frontier. Personal greed and social conflict come from the same root.",
+ apply:["Wait 48 hours before any non-essential purchase.","Write down what \"enough\" would actually look like for you, in money, work and possessions.","Notice when you compare yourself with others, and name one thing you already have."],
+ reflect:"What would I need to stop wanting in order to feel rich today?",
+ themes:["simplicity"]},
+{id:"tao-78", trad:"tao", ref:"Tao Te Ching, Chapter 78", title:"The soft overcomes the hard",
+ text:"There is nothing in the world more soft and weak than water, and yet for attacking things that are firm and strong there is nothing that can take precedence of it.",
+ trans:"Adapted from James Legge (1891)",
+ meaning:"Gentleness and persistence outlast force, just as water wears down stone. This is the Taoist idea of wu wei, effortless action that works with the grain of things.",
+ context:"The chapter continues: \"Everyone knows that the soft overcomes the hard, but no one is able to carry it out in practice.\" It ends by saying that a true leader takes on the country's disgrace and misfortune.",
+ apply:["Meet hostility with steadiness instead of more force.","Pick persistence over pressure: small, steady effort on a hard problem.","Soften your tone in one tense conversation and watch what changes."],
+ reflect:"Where am I using force when patience would work better?",
+ themes:["resilience","humility"]},
+{id:"tao-56", trad:"tao", ref:"Tao Te Ching, Chapter 56", title:"Those who know do not speak",
+ text:"He who knows the Tao does not care to speak about it; he who is ever ready to speak about it does not know it. He will keep his mouth shut and close the portals of his nostrils. He will blunt his sharp points and unravel the complications of things; he will attemper his brightness, and bring himself into agreement with the obscurity of others.",
+ trans:"Adapted from James Legge (1891)",
+ meaning:"Deep understanding tends to be quiet. The text isn't against speaking. It's against showing off, and it asks you to soften your edges and blend in rather than shine at others.",
+ context:"The chapter calls this \"the Mysterious Agreement\" and says such a person can't be won over by favor or by slight, by profit or by injury. Their peace doesn't depend on outside approval.",
+ apply:["In your next meeting or conversation, speak last.","Resist the urge to prove what you know. Let your work show it.","\"Blunt your sharp points\": soften one habit of being cutting or clever at others' expense."],
+ reflect:"When do I talk to be seen rather than to help?",
+ themes:["humility","wisdom"]},
+
+/* ───────── QURAN ───────── */
+{id:"fatiha", trad:"quran", ref:"Surah Al-Fatiha 1:1–7", title:"The Opening",
+ text:"In the name of God, the Most Gracious, the Most Merciful.\nPraise be to God, Lord of all the worlds,\nthe Most Gracious, the Most Merciful,\nMaster of the Day of Judgment.\nYou alone we worship, and You alone we ask for help.\nGuide us on the straight path,\nthe path of those You have blessed, not of those who earned Your anger, nor of those who went astray.",
+ trans:"Rendered after public-domain translations (Pickthall, Yusuf Ali)",
+ meaning:"In seven verses it praises God's mercy, acknowledges accountability, commits to worshipping God alone, and asks for guidance. It is a prayer for direction in life.",
+ context:"\"The Opening\" is the first surah. It is recited in every unit of the five daily prayers, at least 17 times a day, so it is the most recited passage in Islam. It is also called Umm al-Kitab, \"Mother of the Book.\"",
+ apply:["Start tasks with \"Bismillah\" (\"In the name of God\") as a way of setting your intention.","Ask for guidance before decisions, not only after things go wrong.","Keep mercy and accountability together when you think about yourself: forgiven, but responsible."],
+ reflect:"What is my \"straight path\" in the decision in front of me?",
+ themes:["peace","wisdom"]},
+{id:"kursi", trad:"quran", ref:"Surah Al-Baqarah 2:255 (Ayat al-Kursi)", title:"The Verse of the Throne",
+ text:"God — there is no deity but He, the Ever-Living, the Sustainer of all existence. Neither drowsiness overtakes Him nor sleep. To Him belongs whatever is in the heavens and on the earth… He knows what is before them and what is behind them… His Throne extends over the heavens and the earth, and preserving them does not tire Him. He is the Most High, the Most Great.",
+ trans:"Rendered after public-domain translations (excerpted)",
+ meaning:"A portrait of God's constant, untiring care: the One who never sleeps, holds everything together and knows everything.",
+ context:"A hadith in Sahih Muslim calls it the greatest verse in the Quran. Many Muslims recite it before sleep and after prayers for protection, and it is often written in calligraphy over doorways.",
+ apply:["Before sleep, reflect on it and hand over what you can't control. Someone else is awake.","When you feel overwhelmed, remember you are not the one holding everything up.","Use the line \"preserving them does not tire Him\" to put down a burden that was never yours to carry."],
+ reflect:"What am I trying to hold up that isn't mine to carry?",
+ themes:["peace"]},
+{id:"no-compulsion", trad:"quran", ref:"Surah Al-Baqarah 2:256", title:"No compulsion in religion",
+ text:"There is no compulsion in religion. The right way has become clearly distinct from error. So whoever rejects false gods and believes in God has grasped the most trustworthy handhold, which never breaks.",
+ trans:"Rendered after public-domain translations",
+ meaning:"Real faith can't be forced. Truth is clear on its own, and belief has to be freely chosen to mean anything.",
+ context:"This verse was revealed in Medina. Classical reports say some parents among the Ansar wanted to force their children, who had been raised Jewish, to convert, and the verse forbade it. It is a foundational text in Islamic discussions of freedom of conscience.",
+ apply:["Share what you believe by your example rather than by pressure.","Respect the freedom of conscience of family members who see things differently.","Notice when you are trying to control someone instead of persuading them."],
+ reflect:"Am I trying to win people or force them?",
+ themes:["action","wisdom"]},
+{id:"no-burden", trad:"quran", ref:"Surah Al-Baqarah 2:286", title:"No soul is burdened beyond its capacity",
+ text:"God does not burden a soul beyond what it can bear. It gets the good it has earned, and bears the evil it has earned. \"Our Lord, do not take us to task if we forget or make a mistake…\"",
+ trans:"Rendered after public-domain translations",
+ meaning:"Responsibility is matched to capacity. What you face, you can bear. The verse then turns into a humble prayer for forgiveness of honest mistakes.",
+ context:"This is the last verse of Al-Baqarah, the longest surah. A hadith says that whoever recites its last two verses at night will find them sufficient. Many Muslims recite them every evening.",
+ apply:["When you feel overwhelmed, remind yourself that today's load is bearable, one hour at a time.","Forgive yourself for honest mistakes and forgetfulness, as the prayer asks.","Don't put impossible burdens on others either: your children, your staff, your partner."],
+ reflect:"What am I carrying today that feels like too much, and what is the next small piece of it?",
+ themes:["resilience","peace"]},
+{id:"hearts-rest", trad:"quran", ref:"Surah Ar-Ra'd 13:28", title:"In remembrance, hearts find rest",
+ text:"Those who believe, and whose hearts find comfort in the remembrance of God — truly, in the remembrance of God do hearts find rest.",
+ trans:"Rendered after public-domain translations",
+ meaning:"A restless heart finds peace by turning toward God, not by getting more. The repetition in the verse stresses the point.",
+ context:"This verse is from Surah Ar-Ra'd (\"The Thunder\"). It underlies dhikr, the Islamic practice of remembrance: repeating short phrases such as SubhanAllah (\"Glory be to God\") and Alhamdulillah (\"Praise be to God\"), often on prayer beads.",
+ apply:["Use a short phrase of remembrance or gratitude at transitions: waking, before meals, getting in the car.","Replace one session of scrolling with five minutes of quiet or remembrance.","When you feel restless, notice what your heart is reaching for."],
+ reflect:"Where do I usually go looking for rest, and does it give me rest?",
+ themes:["peace","mind"]},
+{id:"nations-tribes", trad:"quran", ref:"Surah Al-Hujurat 49:13", title:"That you may know one another",
+ text:"O mankind! We created you from a male and a female, and made you into nations and tribes so that you may know one another. Truly, the most honored of you in the sight of God is the most righteous of you.",
+ trans:"Rendered after public-domain translations",
+ meaning:"Human diversity has a purpose: to know one another, not to rank or fear one another. A person's honor comes from their character, not their lineage, race or status.",
+ context:"Surah Al-Hujurat (\"The Chambers\") deals with how to treat one another. The verses just before this one (49:11–12) forbid mocking, name-calling, suspicion, spying and backbiting.",
+ apply:["Have a real conversation with someone from a different background, and ask about their story.","Catch one assumption you make about a group, and test it against an actual person.","Judge people by their conduct, not by their category."],
+ reflect:"Whom have I not yet taken the time to know?",
+ themes:["love","humility","golden-rule"]},
+{id:"save-one", trad:"quran", ref:"Surah Al-Ma'idah 5:32", title:"Whoever saves one life",
+ text:"…whoever kills a soul — unless for a soul or for corruption in the land — it is as if he had slain all of mankind. And whoever saves one, it is as if he had saved all of mankind.",
+ trans:"Rendered after public-domain translations",
+ meaning:"Every human life has infinite worth. Harming one person attacks humanity, and saving one person honors all of it.",
+ context:"The verse comes right after the story of Cain and Abel (5:27–31) and is described as a decree given to the Children of Israel. It closely parallels the Jewish Mishnah (Sanhedrin 4:5), which says that whoever saves one life saves an entire world.",
+ apply:["Treat the person in front of you as if they were the whole world, because to someone they are.","Do a concrete life-giving act: give blood, check on someone who is struggling, or support a rescue or relief effort.","Notice when you think about people as numbers or statistics."],
+ reflect:"Whose life could I make better this week?",
+ themes:["action","love"]},
+{id:"hardship-ease", trad:"quran", ref:"Surah Ash-Sharh 94:5–6", title:"With hardship comes ease",
+ text:"So truly, with hardship comes ease.\nTruly, with hardship comes ease.",
+ trans:"Rendered after public-domain translations",
+ meaning:"Ease doesn't only come after hardship. It comes with it. The repetition is meant to reassure: relief is already present in the middle of difficulty.",
+ context:"This is an early Meccan surah (\"The Relief\"), revealed during a very hard period for the Prophet Muhammad (peace be upon him). Classical commentators noted that \"hardship\" has the definite article in Arabic (al-'usr) and \"ease\" does not (yusr). They read this as one hardship accompanied by more than one ease.",
+ apply:["Look for the ease that is already present in your current difficulty: a person, a resource, a small mercy.","Write down a past hardship and the help that came along with it.","Text this verse, or your own version of it, to a friend who is struggling."],
+ reflect:"What ease is with me right now, even in this hardship?",
+ themes:["resilience"]},
+
+/* ───────── BUDDHIST SUTRAS ───────── */
+{id:"dh-1", trad:"buddha", ref:"Dhammapada 1–2", title:"All that we are is the result of our thoughts",
+ text:"All that we are is the result of what we have thought: it is founded on our thoughts, it is made up of our thoughts. If a man speaks or acts with an evil thought, pain follows him, as the wheel follows the foot of the ox that draws the carriage.\n…If a man speaks or acts with a pure thought, happiness follows him, like a shadow that never leaves him.",
+ trans:"Max Müller (1881). Müller's famous opening is loose; a closer modern rendering is \"Mind precedes all things; mind is their chief; they are mind-made.\"",
+ meaning:"The mind comes first. The intentions behind our words and actions shape our experience as reliably as a cart follows an ox, or a shadow follows a body.",
+ context:"These are the opening verses of the Dhammapada, a collection of 423 verses in the Pali Canon attributed to the Buddha. They open the \"Twin Verses\" chapter, where each teaching is given in a negative and a positive pair.",
+ apply:["Before you speak in a tense moment, check your intention. Is it to help or to hurt?","Notice how one recurring thought (\"I'm behind,\" \"they don't respect me\") colors your whole day.","Deliberately practice one wholesome thought, such as gratitude or goodwill, several times today."],
+ reflect:"What thought have I been feeding most this week?",
+ themes:["mind"]},
+{id:"dh-5", trad:"buddha", ref:"Dhammapada 5", title:"Hatred never ceases by hatred",
+ text:"For hatred does not cease by hatred at any time: hatred ceases by love. This is an old rule.",
+ trans:"Max Müller (1881). \"Love\" translates avera, non-enmity or friendliness",
+ meaning:"Revenge keeps the cycle going. Only non-hatred ends it. This isn't weakness. The Buddha calls it an eternal law (sanantana dhamma).",
+ context:"The commentary tells of two women whose feud carried on through several lifetimes until the Buddha taught them this verse. The verse before it reads: \"'He abused me, he beat me…' in those who harbor such thoughts hatred will never cease.\"",
+ apply:["Don't retaliate in kind today, even in small ways like a sharp reply or a cold shoulder.","When you're angry at someone, silently wish them well, even if it's hard.","Take one concrete step toward ending a grudge."],
+ reflect:"What grudge am I replaying, and what is it costing me?",
+ themes:["love","golden-rule"]},
+{id:"four-truths", trad:"buddha", ref:"Dhammacakkappavattana Sutta (SN 56.11)", title:"The Four Noble Truths",
+ text:"This is the noble truth of suffering (dukkha)…\nThis is the noble truth of the origin of suffering: it is craving…\nThis is the noble truth of the cessation of suffering: the fading away and letting go of that craving…\nThis is the noble truth of the way leading to the cessation of suffering: the Noble Eightfold Path — right view, right intention, right speech, right action, right livelihood, right effort, right mindfulness, right concentration.",
+ trans:"Rendered after public-domain translations (condensed)",
+ meaning:"This is the core of Buddhism, set out like a doctor's diagnosis: the illness (suffering), its cause (craving and clinging), the prognosis (it can end) and the treatment (the Eightfold Path).",
+ context:"This was the Buddha's first sermon after his awakening, given at the Deer Park in Sarnath to five former companions. Its title means \"Setting in Motion the Wheel of the Dharma.\"",
+ apply:["When you're upset, go through the four truths: What hurts? What am I craving or resisting? Can I let go? What helpful step can I take?","Choose one part of the path for the week, for example right speech: no gossip and no harsh words.","Separate the pain itself from the story you're adding to it."],
+ reflect:"What am I clinging to that is turning pain into suffering?",
+ themes:["mind","wisdom","resilience"]},
+{id:"heart-sutra", trad:"buddha", ref:"Heart Sutra (Prajñāpāramitā Hṛdaya)", title:"Form is emptiness, emptiness is form",
+ text:"Form is emptiness, emptiness is form. Emptiness is not other than form; form is not other than emptiness. The same is true of feelings, perceptions, mental formations and consciousness.\n…Gate gate pāragate pārasaṃgate bodhi svāhā.",
+ trans:"Rendered after public-domain translations (excerpted)",
+ meaning:"\"Emptiness\" (śūnyatā) doesn't mean nothing exists. It means nothing exists on its own, separately and permanently. Everything, including your sense of self, arises from causes and conditions. Seeing this frees you from rigid clinging.",
+ context:"This is the best-known Mahāyāna sutra. In it, the bodhisattva Avalokiteśvara teaches the disciple Śāriputra. It is chanted daily across Chinese, Japanese, Korean, Vietnamese and Tibetan Buddhism. The closing mantra means \"Gone, gone, gone beyond, gone completely beyond, awakening, so be it!\"",
+ apply:["When you feel stuck in a fixed story about yourself, remember that it is conditioned and can change.","Trace the dozens of people and conditions behind your morning coffee. Nothing stands alone.","Hold your roles and identities (job title, reputation) a little more lightly."],
+ reflect:"What part of \"me\" am I treating as permanent and solid?",
+ themes:["mind","wisdom"]},
+{id:"metta", trad:"buddha", ref:"Karaṇīya Mettā Sutta (Sn 1.8)", title:"Loving-kindness for all beings",
+ text:"May all beings be happy and secure; may their hearts be filled with joy…\nEven as a mother protects with her life her child, her only child, so with a boundless heart should one cherish all living beings.",
+ trans:"Rendered after public-domain translations (excerpted)",
+ meaning:"Loving-kindness (mettā) means wishing every being well, with no exceptions, as fiercely and tenderly as a mother protecting her only child.",
+ context:"Tradition says the Buddha taught this sutta to monks who were frightened while meditating in a forest. It is chanted daily in Theravāda countries such as Sri Lanka, Thailand and Myanmar, and it is the basis of loving-kindness meditation.",
+ apply:["Try a 5-minute mettā meditation: wish well to yourself, then a loved one, a neutral person, a difficult person and finally all beings.","On your commute or in a queue, silently wish strangers well: \"May you be happy.\"","Notice who you leave out of your circle of care."],
+ reflect:"Who is hardest for me to wish well, and can I try?",
+ themes:["love"]},
+{id:"dh-103", trad:"buddha", ref:"Dhammapada 103", title:"The greatest conqueror",
+ text:"If one man conquer in battle a thousand times thousand men, and if another conquer himself, he is the greatest of conquerors.",
+ trans:"Max Müller (1881)",
+ meaning:"Winning against others is easier than mastering your own mind, cravings and reactions, and less valuable too.",
+ context:"This verse is from the \"Thousands\" chapter of the Dhammapada, which repeatedly compares huge numbers with one meaningful thing: one verse that brings peace is better than a thousand meaningless ones.",
+ apply:["Pick one small battle with yourself to win today, such as your phone, your temper or snacking.","Treat success as self-mastery rather than outperforming others.","When you slip, start again without drama. Conquering yourself is a daily campaign."],
+ reflect:"What is the one inner battle that, if I won it, would change the most?",
+ themes:["self"]},
+{id:"kalama", trad:"buddha", ref:"Kālāma Sutta (AN 3.65)", title:"Test it for yourself",
+ text:"Do not go by repeated hearing, nor by tradition, nor by rumor, nor by scripture, nor by logic alone, nor by the authority of a teacher… When you know for yourselves: 'These things are good, blameless, praised by the wise, and when practiced lead to welfare and happiness' — then you should take them up and live by them.",
+ trans:"Rendered after public-domain translations (condensed)",
+ meaning:"Test teachings by their fruits: do they reduce greed, hatred and delusion, and lead to well-being? This applies to the Buddha's own words too.",
+ context:"The Kālāmas, a people confused by many traveling teachers who each praised their own doctrine and attacked the others, asked the Buddha whom to believe. The passage is often misquoted as \"believe nothing.\" In fact it pairs personal testing with the counsel of the wise.",
+ apply:["Judge advice, including self-help advice, by its real results in your life.","Check a claim before you share it online.","Notice when you accept something only because of who said it, or reject it for the same reason."],
+ reflect:"What belief do I hold that I've never actually tested?",
+ themes:["wisdom"]},
+{id:"last-words", trad:"buddha", ref:"Mahāparinibbāna Sutta (DN 16)", title:"Strive on with diligence",
+ text:"All conditioned things are subject to decay. Strive on with diligence.",
+ trans:"Pali: vayadhammā saṅkhārā, appamādena sampādetha",
+ meaning:"Everything that arises passes away. The right response to that isn't despair. It's wakeful, caring effort, because this moment won't come again.",
+ context:"These were the Buddha's last words, spoken at Kusinārā when he was about 80. Earlier in the same sutta he told his grieving attendant Ānanda to \"be islands unto yourselves, be a refuge unto yourselves\" and not to depend on the teacher.",
+ apply:["Do one thing today that you've been putting off \"until later.\"","Tell someone you appreciate them while you can.","When something ends or changes, let impermanence soften you rather than embitter you."],
+ reflect:"If I truly accepted that this will pass, what would I do differently today?",
+ themes:["resilience","action"]},
+
+/* ───────── CONFUCIUS ───────── */
+{id:"an-15-24", trad:"confucius", ref:"Analects 15:24", title:"Reciprocity: the one word for life",
+ text:"Zigong asked, \"Is there one word which may serve as a rule of practice for all one's life?\" The Master said, \"Is not reciprocity (shu) such a word? What you do not want done to yourself, do not do to others.\"",
+ trans:"Adapted from James Legge (1861)",
+ meaning:"This is Confucius' version of the Golden Rule. Shu means reciprocity, or putting yourself in another's place. It is the one principle that can guide a whole life.",
+ context:"Zigong was a gifted, eloquent disciple who later became a successful diplomat and merchant. Elsewhere (6:30) Confucius gives the positive form: wishing to establish himself, the humane person also establishes others.",
+ apply:["Before you criticize, imagine receiving the same words in the same tone.","Don't do to coworkers what you'd hate to have done to you: interrupting, taking credit, ghosting.","When you're unsure what's right, ask, \"What would I want if I were in their place?\""],
+ reflect:"Where am I treating others in a way I'd resent?",
+ themes:["golden-rule","love"]},
+{id:"an-2-17", trad:"confucius", ref:"Analects 2:17", title:"Knowing what you don't know",
+ text:"The Master said, \"Yu, shall I teach you what knowledge is? When you know a thing, to hold that you know it; and when you do not know a thing, to allow that you do not know it — this is knowledge.\"",
+ trans:"Adapted from James Legge (1861)",
+ meaning:"Real knowledge includes honesty about where your knowledge ends. Pretending to know is the enemy of learning.",
+ context:"Confucius said this to Zilu (Yu), a brave, impulsive disciple who tended to be overconfident. It is a personal correction, gently given.",
+ apply:["Say \"I don't know\" out loud at least once today.","Separate what you actually know from what you're assuming in a current decision.","Ask a question you would usually bluff your way past."],
+ reflect:"What am I pretending to know?",
+ themes:["wisdom","humility"]},
+{id:"an-1-1", trad:"confucius", ref:"Analects 1:1", title:"The joy of learning",
+ text:"The Master said, \"Is it not pleasant to learn with a constant perseverance and application? Is it not delightful to have friends coming from distant quarters? Is he not a man of complete virtue, who feels no discomposure though men may take no note of him?\"",
+ trans:"Adapted from James Legge (1861)",
+ meaning:"Three joys of a good life: learning and practicing what you've learned, friendship, and being at peace even when no one recognizes you.",
+ context:"These are the opening words of the Analects (Lunyu), compiled by his disciples after Confucius' death (551–479 BC). The character for \"practice\" (習) shows a young bird repeatedly practicing flight.",
+ apply:["Practice one thing you learned recently. Don't just read it, rehearse it.","Get in touch with a friend you haven't seen in a while.","Do excellent work today that no one will notice, and let that be enough."],
+ reflect:"Do I need recognition to feel my work is worthwhile?",
+ themes:["wisdom","self"]},
+{id:"an-7-22", trad:"confucius", ref:"Analects 7:22", title:"Everyone is my teacher",
+ text:"The Master said, \"When I walk along with two others, they may serve me as my teachers. I will select their good qualities and follow them, their bad qualities and avoid them.\"",
+ trans:"Adapted from James Legge (1861)",
+ meaning:"Everyone can teach you something. Good examples show you what to copy, and bad examples show you what to avoid in yourself.",
+ context:"Confucius was famous for having no single teacher and learning from everyone he met. In 7:1 he describes himself as \"a transmitter, not a maker,\" someone who loved learning above all.",
+ apply:["Pick one good quality from each person you deal with today.","When someone annoys you, ask whether you ever behave the same way.","Learn something from someone younger or less experienced than you."],
+ reflect:"What is the most irritating person in my life teaching me?",
+ themes:["wisdom","humility"]},
+{id:"an-2-4", trad:"confucius", ref:"Analects 2:4", title:"The stages of a life",
+ text:"At fifteen, I had my mind bent on learning. At thirty, I stood firm. At forty, I had no doubts. At fifty, I knew the decrees of Heaven. At sixty, my ear was an obedient organ for the reception of truth. At seventy, I could follow what my heart desired, without transgressing what was right.",
+ trans:"Adapted from James Legge (1861)",
+ meaning:"Character develops over a whole lifetime. The goal is a state where what you want and what is right become the same, so you are free without needing rules.",
+ context:"This is Confucius' short spiritual autobiography. The ages became proverbial in East Asia: in Chinese, \"standing firm\" (而立, 30) and \"without doubts\" (不惑, 40) are still used as names for those ages.",
+ apply:["Ask what stage of growth you're in, rather than comparing your timeline with others.","Take the long view. Character is built over decades, not weeks.","Notice one area where your desires already line up with what's right, and one where they don't yet."],
+ reflect:"What would it take for my heart's desire and what is right to become the same?",
+ themes:["self","wisdom"]},
+{id:"an-4-17", trad:"confucius", ref:"Analects 4:17", title:"See worth, and examine yourself",
+ text:"The Master said, \"When we see men of worth, we should think of equaling them; when we see men of a contrary character, we should turn inwards and examine ourselves.\"",
+ trans:"Adapted from James Legge (1861)",
+ meaning:"Turn admiration into imitation rather than envy, and turn criticism of others into examination of yourself.",
+ context:"Chapter 4 of the Analects is about ren (humaneness). This verse teaches that every encounter is a chance to cultivate yourself.",
+ apply:["Choose someone you admire and copy one specific habit of theirs.","The next time you judge someone, look for the same fault in yourself.","Replace envy with study: what did they do to become who they are?"],
+ reflect:"Whom do I envy, and what could I learn from them instead?",
+ themes:["self","humility"]},
+{id:"an-1-4", trad:"confucius", ref:"Analects 1:4", title:"Three questions every day",
+ text:"Zengzi said, \"I daily examine myself on three points: whether, in transacting business for others, I may have been not faithful; whether, in intercourse with friends, I may have been not sincere; whether I may have not mastered and practiced the instructions of my teacher.\"",
+ trans:"Adapted from James Legge (1861)",
+ meaning:"This is a simple daily review. Was I faithful in my work for others? Was I sincere with my friends? Did I practice what I learned?",
+ context:"Zengzi (Zeng Shen) was a younger disciple known for his devotion and careful self-cultivation. Tradition credits him with the Great Learning and with passing Confucius' teaching on to later generations.",
+ apply:["Tonight, answer Zengzi's three questions honestly in a journal or in your head.","Make it a habit: same time, same three questions, every evening for a week.","Write your own version of the three questions to fit your life."],
+ reflect:"Was I faithful, sincere and practicing today?",
+ themes:["self"]},
+{id:"an-2-1", trad:"confucius", ref:"Analects 2:1", title:"Lead like the North Star",
+ text:"The Master said, \"He who exercises government by means of his virtue may be compared to the north polar star, which keeps its place and all the stars turn towards it.\"",
+ trans:"Adapted from James Legge (1861)",
+ meaning:"Real leadership comes from moral example, not force. A good leader is steady, and others orient themselves by them naturally.",
+ context:"Confucius lived in the violent Spring and Autumn period and argued against ruling by punishment. In 2:3 he says that people governed by law and punishment avoid crime but feel no shame, while people led by virtue and ritual feel shame and correct themselves.",
+ apply:["Model the behavior you want from your team, kids or family before you ask for it.","Be steady. People orient themselves by consistency, not intensity.","Replace one rule or threat with an example you set yourself."],
+ reflect:"If people copied my behavior rather than my words, what would they learn?",
+ themes:["action","self"]},
+{id:"an-1-2", trad:"confucius", ref:"Analects 1:2", title:"Filial piety is the root",
+ text:"Youzi said, \"The superior man bends his attention to what is radical. That being established, all practical courses naturally grow up. Filial piety and fraternal submission! Are they not the root of all benevolent actions?\"",
+ trans:"Adapted from James Legge (1861)",
+ meaning:"Love starts at home. Caring for your parents and siblings (xiao, filial piety) is the root, and kindness toward the wider world grows from it. Someone who can't be kind at home will struggle to be truly humane anywhere else.",
+ context:"Youzi (You Ruo) was a disciple who looked so much like Confucius that the others briefly honored him as their teacher after the Master died. Filial piety is arguably the central Confucian virtue, and the Classic of Filial Piety (Xiaojing) was memorized by Chinese children for two thousand years.",
+ apply:["Call or visit a parent, grandparent or elder this week, and ask about their life rather than just updating them on yours.","Take care of one practical need for an elder in your family or neighborhood.","If your relationship with your parents is hard, honor them by how you live and by caring for the elders around you."],
+ reflect:"How is the love I show at home shaping the love I show everywhere else?",
+ themes:["love","action"]},
+{id:"an-12-1", trad:"confucius", ref:"Analects 12:1", title:"Return to propriety",
+ text:"Yan Yuan asked about perfect virtue. The Master said, \"To subdue one's self and return to propriety is perfect virtue… Look not at what is contrary to propriety; listen not to what is contrary to propriety; speak not what is contrary to propriety; make no movement which is contrary to propriety.\"",
+ trans:"Adapted from James Legge (1861)",
+ meaning:"Humaneness (ren) comes from mastering yourself and expressing love through the proper forms (li): courtesy, ritual and respectful conduct. Li is how love is shown in the right manner.",
+ context:"Yan Yuan (Yan Hui) was Confucius' favorite disciple, poor but devoted to learning, and his early death devastated the Master. Li originally meant sacrificial ritual. Confucius widened it to cover all the courtesies that keep relationships healthy, from greeting a guest to mourning a parent.",
+ apply:["Treat small courtesies such as greetings, thank-yous and punctuality as daily practice, not mere formality.","Guard your eyes, ears and speech for one day: skip the gossip, the outrage clip and the cutting remark.","Before a hard conversation, decide what a respectful form for it would look like: place, time and tone."],
+ reflect:"Where do I have love but express it in the wrong manner?",
+ themes:["self","action"]},
+{id:"shema", trad:"bible", ref:"Deuteronomy 6:4–5 (the Shema)", title:"Hear, O Israel",
+ text:"Hear, O Israel: The LORD our God is one LORD: And thou shalt love the LORD thy God with all thine heart, and with all thy soul, and with all thy might.",
+ trans:"King James Version",
+ meaning:"This is the central declaration of Judaism: God is one, and the response is love with your whole self, holding nothing back.",
+ context:"Observant Jews recite the Shema every morning and evening, and traditionally it is the last words spoken before death. The verses that follow command keeping these words on the heart, teaching them to children and writing them on doorposts, which is the origin of the mezuzah. When Jesus was asked for the greatest commandment, he quoted the Shema first (Mark 12:29–30) and added \"love your neighbour as yourself.\"",
+ apply:["Begin and end the day with one sentence that names what you love most.","Do one thing today with all your heart, soul and strength, fully attentive and not half-distracted.","Put a reminder on your own \"doorpost,\" such as a note by the door, of the one thing you want to live by."],
+ reflect:"What would loving with all my heart, soul and might look like in an ordinary Tuesday?",
+ themes:["love","peace"]},
+{id:"lords-prayer", trad:"bible", ref:"Matthew 6:9–13 (The Lord's Prayer)", title:"Our Father",
+ text:"Our Father which art in heaven, Hallowed be thy name. Thy kingdom come. Thy will be done in earth, as it is in heaven. Give us this day our daily bread. And forgive us our debts, as we forgive our debtors. And lead us not into temptation, but deliver us from evil: For thine is the kingdom, and the power, and the glory, for ever. Amen.",
+ trans:"King James Version",
+ meaning:"This is a pattern for prayer: reverence first, then aligning with God's will, then asking for just enough for today, for forgiveness tied to forgiving others, and for protection.",
+ context:"Jesus taught this prayer in the Sermon on the Mount, contrasting it with showy public prayer and \"vain repetitions\" (6:5–8). It is the most widely prayed prayer in Christianity, shared by Catholics, Orthodox and Protestants. The closing doxology (\"For thine is the kingdom…\") is absent from the oldest manuscripts and was likely added in early church worship.",
+ apply:["Ask only for \"daily bread\": what you need for today, not the whole future.","Notice the condition, \"as we forgive.\" Is there a debt you need to release today?","Pray or read it very slowly, one line per breath, letting each line land."],
+ reflect:"Which line of this prayer do I say most easily, and which do I avoid meaning?",
+ themes:["peace","love"]},
+{id:"tao-48", trad:"tao", ref:"Tao Te Ching, Chapter 48", title:"Every day, something is dropped",
+ text:"He who devotes himself to learning seeks from day to day to increase his knowledge; he who devotes himself to the Tao seeks from day to day to diminish his doing. He diminishes it and again diminishes it, till he arrives at doing nothing on purpose. Having arrived at this point of non-action, there is nothing which he does not do.",
+ trans:"Adapted from James Legge (1891)",
+ meaning:"Learning adds; the Way subtracts. Progress on the Tao means dropping striving, opinions and clutter until action flows naturally (wu wei, non-forcing action).",
+ context:"This is the Tao Te Ching's sharpest challenge to a self-improvement mindset, and a deliberate counterpoint to the Confucian love of study. The chapter ends by saying the world is won by those who don't meddle with it.",
+ apply:["Before adding a new habit, drop one: a commitment, an app or an obligation you keep out of guilt.","Ask \"what can I stop doing?\" before \"what should I do?\"","Spend ten minutes doing nothing on purpose: no phone, no goal."],
+ reflect:"What could I subtract from my life that would let the rest flow?",
+ themes:["simplicity","wisdom"]},
+{id:"righteousness", trad:"quran", ref:"Surah Al-Baqarah 2:177", title:"What true righteousness is",
+ text:"Righteousness is not that you turn your faces toward the east or the west; but righteous is the one who believes in God, the Last Day, the angels, the Book and the prophets; who gives wealth, despite loving it, to relatives, orphans, the needy, the traveler, those who ask, and to free those in bondage; who establishes prayer and gives zakah; who keeps their promises when they make them; and who is patient in poverty, in hardship and in times of danger. Those are the truthful, and those are the God-conscious.",
+ trans:"Rendered after public-domain translations",
+ meaning:"Religion isn't about outward forms like the direction you face in prayer. It is faith that shows itself in generosity, prayer, keeping your word and patience under pressure.",
+ context:"Revealed in Medina around the time the direction of prayer (qibla) changed from Jerusalem to Mecca, when people were arguing about which direction was correct. The verse moves the argument from ritual detail to character. It is often called the \"verse of righteousness\" (ayat al-birr).",
+ apply:["Give something you actually value, not just what's left over, to someone in need.","Keep one promise today that would be easy to quietly drop.","When you catch yourself arguing over religious or moral details, ask what righteousness would look like in action."],
+ reflect:"Am I more focused on the right forms or on the right character?",
+ themes:["action","love","resilience"]},
+{id:"diamond", trad:"buddha", ref:"Diamond Sutra (Vajracchedikā), closing verse", title:"Like a dream, a bubble, dew",
+ text:"All conditioned things are like a dream, an illusion, a bubble, a shadow, like dew or a flash of lightning. Thus should you contemplate them.",
+ trans:"Rendered after public-domain translations",
+ meaning:"Everything made of causes and conditions is fleeting and insubstantial. Seeing this clearly isn't gloomy. It loosens your grip, so you can enjoy things without clinging and lose them without despair.",
+ context:"This Mahāyāna sutra is a dialogue between the Buddha and his disciple Subhūti about the \"perfection of wisdom.\" A printed copy found at Dunhuang, dated 868 CE and now in the British Library, is the world's oldest surviving dated printed book, nearly six centuries before Gutenberg. The sutra is central in Chan and Zen; tradition says Hui-neng awakened on hearing a line from it.",
+ apply:["When you're consumed by a worry or a craving, silently name it \"a bubble\" and watch it change.","Enjoy something fully today, a meal or a conversation, knowing it won't last.","Let one criticism or slight evaporate like morning dew."],
+ reflect:"What am I gripping as if it were solid and permanent?",
+ themes:["mind","resilience","simplicity"]},
+{id:"anapanasati", trad:"buddha", ref:"Ānāpānasati Sutta (MN 118)", title:"Mindfulness of breathing",
+ text:"Breathing in long, one knows, 'I breathe in long.' Breathing out long, one knows, 'I breathe out long.' Breathing in short, one knows, 'I breathe in short.' Breathing out short, one knows, 'I breathe out short.'… One trains: 'I will breathe in calming the body.' One trains: 'I will breathe out calming the body.'",
+ trans:"Rendered after public-domain translations (excerpted)",
+ meaning:"This is the basic meditation instruction in Buddhism. Simply know the breath as it is, without forcing it, then let awareness of the breath calm the body and mind.",
+ context:"The sutta lays out sixteen steps, from noticing the breath to insight into impermanence and letting go. Tradition holds that mindfulness of breathing was the practice the Buddha used on the night of his awakening, and it is the foundation of most modern mindfulness programs.",
+ apply:["Sit for two minutes and simply know each breath: long or short, in or out.","Use red lights, loading screens or waiting rooms as reminders to take three conscious breaths.","Before you reply in anger, breathe out once, slowly, calming the body."],
+ reflect:"How often today was I actually present for my own breathing?",
+ themes:["mind","peace"]}
+];
+
+/* original-language text (where reliable) and links to read the full source */
+const EXTRA = {
+  "john-3-16":{src:"https://www.biblegateway.com/passage/?search=John+3&version=KJV"},
+  "matt-7-12":{src:"https://www.biblegateway.com/passage/?search=Matthew+7&version=KJV"},
+  "psalm-23":{src:"https://www.biblegateway.com/passage/?search=Psalm+23&version=KJV"},
+  "1cor-13":{src:"https://www.biblegateway.com/passage/?search=1+Corinthians+13&version=KJV"},
+  "prov-3-5":{src:"https://www.biblegateway.com/passage/?search=Proverbs+3&version=KJV"},
+  "jer-29-11":{src:"https://www.biblegateway.com/passage/?search=Jeremiah+29&version=KJV"},
+  "phil-4-6":{src:"https://www.biblegateway.com/passage/?search=Philippians+4&version=KJV"},
+  "micah-6-8":{src:"https://www.biblegateway.com/passage/?search=Micah+6&version=KJV"},
+  "shema":{src:"https://www.sefaria.org/Deuteronomy.6.4", orig:"שְׁמַע יִשְׂרָאֵל יְהוָה אֱלֹהֵינוּ יְהוָה אֶחָד", lang:"he"},
+  "lords-prayer":{src:"https://www.biblegateway.com/passage/?search=Matthew+6&version=KJV"},
+  "tao-1":{src:"https://ctext.org/dao-de-jing", orig:"道可道，非常道；名可名，非常名。", lang:"zh"},
+  "tao-8":{src:"https://ctext.org/dao-de-jing", orig:"上善若水。水善利萬物而不爭，處眾人之所惡，故幾於道。", lang:"zh"},
+  "tao-33":{src:"https://ctext.org/dao-de-jing", orig:"知人者智，自知者明。勝人者有力，自勝者強。知足者富。", lang:"zh"},
+  "tao-64":{src:"https://ctext.org/dao-de-jing", orig:"合抱之木，生於毫末；九層之臺，起於累土；千里之行，始於足下。", lang:"zh"},
+  "tao-11":{src:"https://ctext.org/dao-de-jing", orig:"三十輻共一轂，當其無，有車之用。埏埴以為器，當其無，有器之用。", lang:"zh"},
+  "tao-46":{src:"https://ctext.org/dao-de-jing", orig:"罪莫大於可欲，禍莫大於不知足，咎莫大於欲得。故知足之足，常足矣。", lang:"zh"},
+  "tao-78":{src:"https://ctext.org/dao-de-jing", orig:"天下莫柔弱於水，而攻堅強者莫之能勝。", lang:"zh"},
+  "tao-56":{src:"https://ctext.org/dao-de-jing", orig:"知者不言，言者不知。", lang:"zh"},
+  "tao-48":{src:"https://ctext.org/dao-de-jing", orig:"為學日益，為道日損。損之又損，以至於無為。無為而無不為。", lang:"zh"},
+  "fatiha":{src:"https://quran.com/1", lang:"ar", orig:"بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ\nالْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ\nالرَّحْمَٰنِ الرَّحِيمِ\nمَالِكِ يَوْمِ الدِّينِ\nإِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ\nاهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ\nصِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ"},
+  "kursi":{src:"https://quran.com/2/255", lang:"ar", orig:"اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ …"},
+  "no-compulsion":{src:"https://quran.com/2/256", lang:"ar", orig:"لَا إِكْرَاهَ فِي الدِّينِ …"},
+  "no-burden":{src:"https://quran.com/2/286", lang:"ar", orig:"لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا …"},
+  "hearts-rest":{src:"https://quran.com/13/28", lang:"ar", orig:"… أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ"},
+  "nations-tribes":{src:"https://quran.com/49/13", lang:"ar", orig:"يَا أَيُّهَا النَّاسُ إِنَّا خَلَقْنَاكُم مِّن ذَكَرٍ وَأُنثَىٰ وَجَعَلْنَاكُمْ شُعُوبًا وَقَبَائِلَ لِتَعَارَفُوا ۚ إِنَّ أَكْرَمَكُمْ عِندَ اللَّهِ أَتْقَاكُمْ …"},
+  "save-one":{src:"https://quran.com/5/32", lang:"ar", orig:"… مَن قَتَلَ نَفْسًا بِغَيْرِ نَفْسٍ أَوْ فَسَادٍ فِي الْأَرْضِ فَكَأَنَّمَا قَتَلَ النَّاسَ جَمِيعًا وَمَنْ أَحْيَاهَا فَكَأَنَّمَا أَحْيَا النَّاسَ جَمِيعًا …"},
+  "hardship-ease":{src:"https://quran.com/94", lang:"ar", orig:"فَإِنَّ مَعَ الْعُسْرِ يُسْرًا\nإِنَّ مَعَ الْعُسْرِ يُسْرًا"},
+  "righteousness":{src:"https://quran.com/2/177", lang:"ar", orig:"لَّيْسَ الْبِرَّ أَن تُوَلُّوا وُجُوهَكُمْ قِبَلَ الْمَشْرِقِ وَالْمَغْرِبِ …"},
+  "dh-1":{src:"https://suttacentral.net/dhp1-20", orig:"Manopubbaṅgamā dhammā, manoseṭṭhā manomayā…", lang:"pi"},
+  "dh-5":{src:"https://suttacentral.net/dhp1-20", orig:"Na hi verena verāni, sammantīdha kudācanaṃ;\nAverena ca sammanti, esa dhammo sanantano.", lang:"pi"},
+  "dh-103":{src:"https://suttacentral.net/dhp100-115", orig:"Yo sahassaṃ sahassena, saṅgāme mānuse jine;\nEkañca jeyyamattānaṃ, sa ve saṅgāmajuttamo.", lang:"pi"},
+  "four-truths":{src:"https://suttacentral.net/sn56.11"},
+  "heart-sutra":{src:"https://en.wikipedia.org/wiki/Heart_Sutra", orig:"色即是空，空即是色", lang:"zh"},
+  "metta":{src:"https://suttacentral.net/snp1.8"},
+  "kalama":{src:"https://suttacentral.net/an3.65"},
+  "last-words":{src:"https://suttacentral.net/dn16", orig:"Vayadhammā saṅkhārā, appamādena sampādetha.", lang:"pi"},
+  "diamond":{src:"https://en.wikipedia.org/wiki/Diamond_Sutra"},
+  "anapanasati":{src:"https://suttacentral.net/mn118"},
+  "an-15-24":{src:"https://ctext.org/analects/wei-ling-gong", orig:"子貢問曰：「有一言而可以終身行之者乎？」子曰：「其恕乎！己所不欲，勿施於人。」", lang:"zh"},
+  "an-2-17":{src:"https://ctext.org/analects/wei-zheng", orig:"子曰：「由！誨女知之乎！知之為知之，不知為不知，是知也。」", lang:"zh"},
+  "an-1-1":{src:"https://ctext.org/analects/xue-er", orig:"子曰：「學而時習之，不亦說乎？有朋自遠方來，不亦樂乎？人不知而不慍，不亦君子乎？」", lang:"zh"},
+  "an-7-22":{src:"https://ctext.org/analects/shu-er", orig:"子曰：「三人行，必有我師焉。擇其善者而從之，其不善者而改之。」", lang:"zh"},
+  "an-2-4":{src:"https://ctext.org/analects/wei-zheng", orig:"吾十有五而志于學，三十而立，四十而不惑，五十而知天命，六十而耳順，七十而從心所欲，不踰矩。", lang:"zh"},
+  "an-4-17":{src:"https://ctext.org/analects/li-ren", orig:"見賢思齊焉，見不賢而內自省也。", lang:"zh"},
+  "an-1-4":{src:"https://ctext.org/analects/xue-er", orig:"曾子曰：「吾日三省吾身：為人謀而不忠乎？與朋友交而不信乎？傳不習乎？」", lang:"zh"},
+  "an-2-1":{src:"https://ctext.org/analects/wei-zheng", orig:"為政以德，譬如北辰，居其所而眾星共之。", lang:"zh"},
+  "an-1-2":{src:"https://ctext.org/analects/xue-er", orig:"君子務本，本立而道生。孝弟也者，其為仁之本與！", lang:"zh"},
+  "an-12-1":{src:"https://ctext.org/analects/yan-yuan", orig:"克己復禮為仁。…非禮勿視，非禮勿聽，非禮勿言，非禮勿動。", lang:"zh"}
+};
+const LANG_NAME = {he:"Hebrew", zh:"Classical Chinese", ar:"Arabic", pi:"Pali"};
+const SRC_NAME = u => u.includes("biblegateway") ? "Bible Gateway" : u.includes("sefaria") ? "Sefaria" : u.includes("quran.com") ? "Quran.com" : u.includes("ctext") ? "Chinese Text Project" : u.includes("suttacentral") ? "SuttaCentral" : "Wikipedia";
+
+/* ───────── Primer: adapted from "Common Principles of the Major Religions" (2017–2018 discussion series) ───────── */
+const SAGES = [["Abraham","c. 2000 BC","bible"],["Lao Tzu","c. 600 BC","tao"],["Sakyamuni Buddha","c. 560 BC","buddha"],["Confucius","551 BC","confucius"],["Mencius","372 BC","confucius"],["Jesus","c. 6 BC","bible"],["Muhammad","AD 570","quran"],["Hui-neng","AD 638","buddha"]];
+const VIRTUES = [
+  ["Benevolence","仁","Wood","No killing","The feeling of commiseration"],
+  ["Righteousness","義","Metal","No stealing","The feeling of shame and dislike"],
+  ["Propriety","禮","Fire","No sexual misconduct","The feeling of modesty and complaisance"],
+  ["Wisdom","智","Water","No intoxicants","The feeling of approving and disapproving"],
+  ["Faith / Sincerity","信","Earth","No lying",""]
+];
+const PRIMER = [
+ {t:"Welcome", sub:"How to use this primer",
+  intro:`<p>Many of the world's great teachers lived thousands of miles and hundreds of years apart, yet they kept arriving at the same truths about how to live. This primer, adapted from the discussion series <i>Common Principles of the Major Religions</i>, puts their words side by side on one life question at a time and lets them speak for themselves.</p>
+  <p>The series ran with three simple ground rules, and they work just as well for reading alone:</p>
+  <ul><li><b>Open mind.</b></li><li><b>Learn from countless sages.</b></li><li><b>Maintain respect for all religions, philosophies and virtuous ones.</b></li></ul>
+  <p>Its stated goal: <i>"To awaken: go beyond the mundane world to something bigger than ourselves."</i></p>
+  <p>Each chapter gives the principle, the sages' words in parallel, questions to discuss or journal about, and links to related passages elsewhere in the app. Read it straight through, jump to any chapter, or skip it entirely. The quotes are always one tap away.</p>`,
+  sages:true},
+ {t:"The Five Constant Virtues", sub:"The backbone of the series",
+  intro:`<p>The series is built on five virtues that appear, under different names, in every tradition: <b>Benevolence, Righteousness, Propriety, Wisdom and Faith (Sincerity)</b>. Chinese thought links each one to one of the five elements, and Buddhism links each to one of the five precepts, so the same ethic shows up in three vocabularies.</p>
+  <p>Mencius taught that these virtues are not imposed from outside. Everyone is born with their seeds, the "four beginnings," just as they are born with four limbs.</p>`,
+  virtues:true,
+  q:[["confucius","Mencius","The feeling of commiseration is the principle of benevolence. The feeling of shame and dislike is the principle of righteousness. The feeling of modesty and complaisance is the principle of propriety. The feeling of approving and disapproving is the principle of knowledge. Men have these four principles just as they have their four limbs.","Mencius 2A.6"]],
+  ask:["Which of the five virtues comes most naturally to you? Which is hardest?","Where have you seen one of the \"four beginnings\" appear in a child, before anyone taught it?"]},
+ {t:"Purpose in Life", sub:"Why are we here?",
+  intro:`<p>Every tradition answers the question of purpose in a similar way: let go of the small self, store up treasure that can't be stolen, and stay soft and yielding. As the series puts it, the aim is to "overcome all the challenges thrown at us in life with a sort of softness, to let love guide us, to learn with a flexibility, patience, kindness as we grow."</p>`,
+  q:[["bible","Jesus","For whoever wants to save his life will lose it, but whoever loses his life for My sake will find it.","Matthew 16:25"],
+     ["bible","Jesus","Do not store up for yourselves treasures on earth, where moth and rust destroy… But store up for yourselves treasures in heaven.","Matthew 6:19–20"],
+     ["tao","Lao Tzu","Whoever is stiff and inflexible is a disciple of death. Whoever is soft and yielding is a disciple of life. The hard and stiff will be broken. The soft and supple will prevail.","Tao Te Ching 76"],
+     ["quran","Muhammad","Be in the world as if you were a stranger or a traveller along the path.","Hadith, al-Bukhari"],
+     ["quran","Quran","And whoever holds firmly to Allah has indeed been guided to a straight path.","Quran 3:101"],
+     ["buddha","Hui-neng","There is no bodhi tree, nor stand of a mirror bright. Since all is void, where can the dust alight?","Platform Sutra"],
+     ["confucius","Confucius","When the great principle prevails, the world is a commonwealth… Men do not regard as parents only their own parents, nor treat as children only their own children.","Book of Rites, \"The Great Harmony\""]],
+  ask:["Why are you born into this world, and for what purpose?","What \"treasure\" are you storing up that no thief can steal?"],
+  rel:["tao-78","last-words","diamond"]},
+ {t:"Benevolence", sub:"仁 · The mind that cannot bear others' suffering",
+  intro:`<p>Benevolence is the first and root virtue: a natural, inborn compassion. Mencius's famous example is that anyone who suddenly sees a child about to fall into a well feels alarm and distress, not to win the parents' favor or the neighbors' praise, but because the heart simply cannot bear it.</p>
+  <p>The series teaches benevolence through three stories: <b>the child at the well</b> (Mencius), <b>the Good Samaritan</b> (Jesus), and <b>the ants in a forest fire</b>, who roll into a ball around their queen so that the colony survives while the ants on the outside give their lives.</p>`,
+  q:[["bible","Jesus","Love your neighbor as yourself.","Mark 12:31"],
+     ["confucius","Confucius","The wise are free from perplexities; the virtuous from anxiety; and the bold from fear.","Analects 9:29"],
+     ["confucius","Mencius","The feeling of commiseration is the principle of benevolence.","Mencius 2A.6"],
+     ["confucius","Youzi","Filial piety and fraternal submission! Are they not the root of all benevolent actions?","Analects 1:2"]],
+  ask:["When did a stranger's kindness reach you when you needed it most?","Who is the \"man on the road to Jericho\" in your life this week?"],
+  rel:["matt-7-12","metta","an-15-24","an-1-2"]},
+ {t:"Propriety", sub:"禮 · Love shown in the right manner",
+  intro:`<p>Propriety (li) is outward respect flowing from inner benevolence. The character combines "divine" and "offering": a rite that trains us to transform our disposition for the better. In the series' words, love needs connection, so we "show love in the right manner."</p>
+  <p>Lao Tzu gives the counterweight: rules without the Tao become "just an outer show." Form without heart is empty, and heart without form often goes astray.</p>`,
+  q:[["confucius","Confucius","Without an acquaintance with the rules of propriety, it is impossible for the character to be established.","Analects 20:3"],
+     ["confucius","Confucius","Look not at what is contrary to propriety; listen not to what is contrary to propriety; speak not what is contrary to propriety; make no movement which is contrary to propriety.","Analects 12:1"],
+     ["confucius","Mencius","The benevolent man loves others. The man of propriety shows respect to others. He who loves others is constantly loved by them. He who respects others is constantly respected by them.","Mencius 4B.28"],
+     ["bible","Paul","Do nothing out of selfish ambition or vain conceit. Rather, in humility value others above yourselves.","Philippians 2:3"],
+     ["other","Madeleine L'Engle","Life… is like a sonnet: you're given the form, but you have to write the sonnet yourself.","A Wrinkle in Time"]],
+  ask:["How do you bring more respect and propriety into day-to-day life?","What small courtesy, such as please and thank you, has the biggest effect on your relationships?"],
+  rel:["an-12-1","1cor-13"]},
+ {t:"Righteousness", sub:"義 · The moral disposition to do good",
+  intro:`<p>The series defines righteousness as "the moral disposition to do good," and gives it two parts: <b>the willingness to act</b>, and <b>the ability to manage fear and anxiety so you can keep acting</b>. Its key insight: "With love one is fearless."</p>`,
+  q:[["confucius","Confucius","The mind of the superior man is conversant with righteousness; the mind of the mean man is conversant with gain.","Analects 4:16"],
+     ["confucius","Confucius","When he sees gain to be got, he thinks of righteousness.","Analects 16:10"],
+     ["quran","Quran","Righteousness is not that you turn your faces toward the east or the west…","Quran 2:177"],
+     ["bible","James","You see that a person is justified by works and not by faith alone.","James 2:24"],
+     ["other","Martin Luther","This life therefore is not righteousness, but growth in righteousness… not being but becoming.",""]],
+  ask:["What comes to mind when you hear \"righteousness\"?","How do you know what is right?","What fear most often stops you from doing the right thing?"],
+  rel:["righteousness","micah-6-8","save-one"]},
+ {t:"Wisdom", sub:"智 · Knowing yourself",
+  intro:`<p>Wisdom begins with knowing yourself. It is already inside everyone, uncovered by reflection and by accepting correction, and its model is water.</p>`,
+  q:[["tao","Lao Tzu","Knowing others is intelligence; knowing yourself is true wisdom. Mastering others is strength; mastering yourself is true power.","Tao Te Ching 33"],
+     ["confucius","Confucius","I am not one who was born in the possession of knowledge; I am one who is fond of antiquity, and earnest in seeking it there.","Analects 7:20"],
+     ["buddha","Hui-neng","The wisdom of enlightenment is inherent in every one of us.","Platform Sutra"],
+     ["buddha","Hui-neng","The light of a lamp can break up darkness which has been there for a thousand years.","Platform Sutra"],
+     ["bible","Proverbs","Listen to advice and accept discipline, and at the end you will be counted among the wise.","Proverbs 19:20"]],
+  ask:["Where does wisdom come from?","When did accepting correction make you wiser?"],
+  rel:["tao-33","an-2-17","kalama","tao-8"]},
+ {t:"Faith & Sincerity", sub:"信 · Belief grounded in truth",
+  intro:`<p>"Faith originates from sincerity. The source of faith is truth. Faith is ascertained from wisdom." The series warns against both extremes: "Those who know about truth but do not believe in it are known as fools, and those who simply believe without the basis of truth are superstitious."</p>`,
+  q:[["confucius","Mencius","Sincerity is the way of Heaven. To think how to be sincere is the way of man. Never has there been one possessed of complete sincerity who did not move others.","Mencius 4A.12"],
+     ["confucius","Confucius","He who attains to sincerity is he who chooses what is good, and firmly holds it fast.","Doctrine of the Mean 20"],
+     ["bible","Jesus","If you have faith as small as a mustard seed, you can say to this mountain, 'Move from here to there,' and it will move.","Matthew 17:20"],
+     ["buddha","Buddha","…will have an immediate uprising of pure faith.","Diamond Sutra, ch. 6"],
+     ["quran","Quran","This is the Book about which there is no doubt, a guidance for those conscious of God.","Quran 2:2"]],
+  ask:["What is the difference between faith and superstition?","Whose sincerity has moved you?"],
+  rel:["prov-3-5","shema"]},
+ {t:"Peacemaking & Forgiveness", sub:"Healing what divides us",
+  intro:`<p>The sages heal divisions: they reconcile before they worship, answer anger with virtue, and turn no one away. Forgiveness, in the series' words, "does not have any purpose… If you can put yourself in another's shoes, this is a type of forgiveness."</p>`,
+  q:[["bible","Jesus","Blessed are the peacemakers, for they will be called children of God.","Matthew 5:9"],
+     ["bible","Jesus","First go and be reconciled to your brother; then come and offer your gift.","Matthew 5:24"],
+     ["quran","Muhammad","Shall I tell you what acts are better than fasting, charity, and prayers? Making peace between enemies.","Hadith (Abu Dawud)"],
+     ["quran","Quran","And whoever is patient and forgives — indeed, that is of the matters requiring determination.","Quran 42:43"],
+     ["buddha","Buddha","He heals divisions and cements friendships… his words are ever the words of a peacemaker.","Majjhima Nikaya 27"],
+     ["tao","Lao Tzu","Respond to anger with virtue.","Tao Te Ching 63"],
+     ["tao","Lao Tzu","The sage honors his part of the settlement, but does not exact his due from others.","Tao Te Ching 79"],
+     ["bible","Jesus","Forgive, and you will be forgiven.","Luke 6:37"]],
+  ask:["Is there someone you need to be reconciled with before your \"gift\" means anything?","What makes forgiveness hard, and what makes it possible?"],
+  rel:["dh-5","lords-prayer","nations-tribes"]},
+ {t:"Introspection, Repentance & Vows", sub:"The cycle of self-correction",
+  intro:`<p>Look at yourself, not at others. Trace each mistake back to the thought behind it, and to the old concept behind that thought. "This is an effort, not knowledge; it cannot be attained by lip service… you were already wrong at the train station before you departed."</p>
+  <p><b>Repentance</b> means turning back. Hui-neng divides it into <i>ch'an</i> (repenting past wrongs) and <i>hui</i> (resolving about future conduct). The practice: "Every thought needs to be more positive and correct than the previous one."</p>
+  <p>A <b>vow</b> turns repentance into commitment: "an oath to keep one's mind under control, and the volition to fulfill it." It is "not what is written on a piece of paper for you to simply pay lip service to."</p>`,
+  q:[["confucius","Zengzi","I daily examine myself on three points…","Analects 1:4"],
+     ["confucius","Confucius","When we see men of worth, we should think of equaling them; when we see men of a contrary character, we should turn inwards and examine ourselves.","Analects 4:17"],
+     ["bible","Paul","Godly sorrow brings repentance that leads to salvation and leaves no regret.","2 Corinthians 7:10"],
+     ["quran","Quran","Whoever repents and does righteous deeds, indeed he turns to Allah with true repentance.","Quran 25:71"],
+     ["buddha","Samantabhadra","For all the evil deeds I have done in the past… I now know shame and repent them all.","Avatamsaka Sutra, ch. 40"],
+     ["bible","Ecclesiastes","It is better not to make a vow than to make one and not fulfill it.","Ecclesiastes 5:5"],
+     ["tao","Lao Tzu","Easy promises make for little trust… Because the sage always confronts difficulties, he never experiences them.","Tao Te Ching 63"]],
+  ask:["Pick a recent mistake. What thought came before it, and what concept was behind the thought?","Why do we repeat a mistake even after repenting?","What vow would change your life if you truly kept it?"],
+  rel:["an-1-4","an-4-17","dh-1"]},
+ {t:"Cause & Effect, Transforming Destiny", sub:"You reap what you sow",
+  intro:`<p>"Reap what you sow. What goes around comes around. Every action has an equal and opposite reaction. Karma." Every tradition teaches some version of cause and effect, and so destiny is not fixed: it is accumulated character, and it can be changed from within.</p>
+  <p>"Action after action will form a habit; habit after habit will form a concept; concept after concept will form a character; character after character will form a destiny." So "transform the mind when the thought arises," while things are still small.</p>`,
+  q:[["bible","Paul","Whatever a man sows, that shall he also reap.","Galatians 6:7"],
+     ["bible","Jesus","All who draw the sword will die by the sword.","Matthew 26:52"],
+     ["quran","Quran","Surely God changes not the condition of a people until they change what is in themselves.","Quran 13:11"],
+     ["quran","Quran","Whoever does a good deed, it is for himself; and whoever does evil, it is against himself.","Quran 45:15"],
+     ["buddha","Hui-neng","All the fields of merit are within one's own heart.","Platform Sutra"],
+     ["tao","Lao Tzu","Calamity is what blessing depends upon; in blessing calamity lies hidden.","Tao Te Ching 58"],
+     ["tao","Lao Tzu","Take on difficulties while they are still easy. Do great things while they are still small.","Tao Te Ching 63"]],
+  ask:["Does destiny exist? Do you believe in it?","Based on your current thoughts, habits and character, what do you believe your destiny is?","What mindset would you need to change to change it?"],
+  rel:["tao-64","dh-1","an-2-4"]},
+ {t:"The Path of Cultivation", sub:"Faith, repentance and vows, practice, accomplishment",
+  intro:`<p>The series maps spiritual growth in four steps:</p>
+  <ul><li><b>Faith:</b> share one mind, one view and one practice with the divine.</li><li><b>Repentance & vows:</b> a counteracting force to karma; treat everything as a cause.</li><li><b>Practice:</b> every thought, word and action more positive and correct than the previous one.</li><li><b>Accomplishment:</b> testify with your own experience.</li></ul>
+  <p>Its emblem is the <b>lotus</b>, which grows in mud yet blossoms pure. "How does one remain a lotus in the midst of the muddy world?" Living by our Heaven-given nature is itself the Way, and rites and seasons, like the new year, Lent and Ramadan, return us to it.</p>`,
+  q:[["confucius","Doctrine of the Mean","What Heaven has conferred is called the nature; an accordance with this nature is called the Path.","Doctrine of the Mean 1"],
+     ["confucius","Doctrine of the Mean","The superior man can find himself in no situation in which he is not himself.","Doctrine of the Mean 14"],
+     ["bible","Jesus","Consider the lilies… But seek first the kingdom of God.","Matthew 6:28–33"],
+     ["bible","Jesus","Everyone who hears these words of mine and puts them into practice is like a wise man who built his house on the rock.","Matthew 7:24"],
+     ["buddha","Vimalakirti Sutra","It is only within the mud of the afflictions that sentient beings give rise to the dharmas of a buddha.","Vimalakirti Sutra, ch. 8"],
+     ["other","Bhagavad Gita","As the lotus leaf is untouched by water.","Bhagavad Gita 5:10"]],
+  ask:["Why does one seek a spiritual path?","What is the \"mud\" in your life right now, and what could bloom from it?","What is the essence of a ritual? Why is it repeated?"],
+  rel:["an-2-4","tao-48","anapanasati"]},
+ {t:"The Six Paramitas", sub:"Six perfections for crossing to the other shore",
+  intro:`<p>Buddhism's six paramitas ("perfections") give a practical training, and the series finds a parallel to each one in the other traditions:</p>
+  <ul><li><b>Donation:</b> to give without a stingy mind, whether wealth, teaching or fearlessness, and without clinging to the merit of the gift.</li>
+  <li><b>Precepts:</b> by controlling oneself, one is freed from outside temptation. The five precepts parallel the Ten Commandments.</li>
+  <li><b>Endurance:</b> "One endurance can bring thousands of auspiciousness, and to yield one step can increase hundreds of blessings."</li>
+  <li><b>Diligence:</b> steady, joyful effort.</li>
+  <li><b>Meditation:</b> "Manifest calm and serene without falling into emptiness." Dhyana is freedom from attachment to outer things, and samadhi is inner peace. It is not just sitting still.</li>
+  <li><b>Wisdom (prajna):</b> "All wisdom comes from the essence of mind and not from an exterior source." It "is manifested in how you handle situations."</li></ul>`,
+  q:[["bible","Jesus","When you give to the needy, do not let your left hand know what your right hand is doing.","Matthew 6:3"],
+     ["quran","Quran","If you disclose your charitable expenditures, they are good; but if you conceal them and give them to the poor, it is better for you.","Quran 2:271"],
+     ["buddha","Buddha","Give, even if you only have a little.","Dhammapada 224"],
+     ["bible","Proverbs","He who is slow to anger quiets contention.","Proverbs 15:18"],
+     ["tao","Lao Tzu","Why do Heaven and Earth last forever? Because they do not live for themselves.","Tao Te Ching 7"],
+     ["bible","Jesus","The kingdom of God is within you.","Luke 17:21"],
+     ["tao","Lao Tzu","Those who seek knowledge collect something every day. Those who seek the Way let go of something every day.","Tao Te Ching 48"],
+     ["buddha","Hui-neng","A foolish passing thought makes one an ordinary person, while an enlightened second thought makes one a Buddha.","Platform Sutra, ch. 2"]],
+  ask:["What tries your patience, and why?","What is meditation? How can you gain inner peace?","How do you put wisdom into practice?"],
+  rel:["anapanasati","tao-48","dh-103","hearts-rest"]},
+ {t:"The Five Human Relationships", sub:"Where virtue is actually lived",
+  intro:`<p>Virtue is practiced in relationships. Following the Great Learning, cultivating yourself regulates the family, a regulated family steadies the nation, and an orderly nation brings peace to the world. Each relationship carries a duty on both sides:</p>
+  <table class="tbl"><tr><th>Relationship</th><th>The one above</th><th>The one below</th></tr>
+  <tr><td>Superior / subordinate (boss, teacher, coach)</td><td>Benevolence and care</td><td>Loyalty and respect</td></tr>
+  <tr><td>Parents / children</td><td>Love and kindness</td><td>Filial piety (孝)</td></tr>
+  <tr><td>Husband / wife</td><td colspan="2">Different responsibilities, working together; mutual respect, forgiveness and trust</td></tr>
+  <tr><td>Elder / younger siblings</td><td>Take care of the younger</td><td>Respect the elder (悌)</td></tr>
+  <tr><td>Friends</td><td colspan="2">Mutual trust: righteous, trustworthy, diligent</td></tr></table>
+  <p>Filial piety has three levels: <b>small</b>, material support for the body; <b>medium</b>, respect and obedience for the mind; and <b>great</b>, using your own virtue to help your parents' spiritual well-being. On marriage: "If there is only reason and logic but no love and affection between husband and wife, then it is like a judge trying a criminal."</p>`,
+  q:[["confucius","Confucius","A prince should employ his ministers according to the rules of propriety; ministers should serve their prince with faithfulness.","Analects 3:19"],
+     ["confucius","Mencius","When the prince regards his ministers as his hands and feet, his ministers regard their prince as their belly and heart.","Mencius 4B.3"],
+     ["quran","Quran","And lower to them the wing of humility out of mercy, and say: My Lord, have mercy upon them as they brought me up when I was small.","Quran 17:24"],
+     ["quran","Muhammad","The most perfect believer in faith is the one whose character is finest and who is kindest to his wife.","Hadith (Tirmidhi)"],
+     ["bible","Peter","Most important of all, continue to show deep love for each other, for love covers a multitude of sins.","1 Peter 4:8"],
+     ["bible","Proverbs","A friend loves at all times, and a brother is born for a time of adversity.","Proverbs 17:17"],
+     ["bible","Proverbs","Wounds from a friend can be trusted, but an enemy multiplies kisses.","Proverbs 27:6"],
+     ["buddha","Buddha","Should you find a wise critic to point out your faults, follow him as you would a guide to hidden treasure.","Dhammapada 76"],
+     ["confucius","Mencius","Friendship with a man is friendship with his virtue, and does not admit of assumptions of superiority.","Mencius 5B.3"]],
+  ask:["What have your parents done for you that you are grateful for, and how do you share that gratitude?","What are the values of a good husband or a good wife?","How can we become a better friend?","What personal examples made a teacher–student relationship special for you?"],
+  rel:["an-1-2","an-2-1","1cor-13","an-15-24"]},
+ {t:"Awakening", sub:"The questions that start the journey",
+  intro:`<p>The series ends where it began, with the oldest questions: <i>Why are you born into this world, and for what purpose? Why do you age, get sick and die?</i></p>
+  <p>Each tradition speaks of a truth beyond words. Jesus calls it the narrow gate, Lao Tzu "the Tao that cannot be named," and Zen a teaching "transmitted outside the scriptures." Several of the sages also looked ahead to an age when that truth would be awakened again. Confucius spoke of waiting for "the rise of a sage a hundred ages after," and the Diamond Sutra of "an uprising of pure faith" long after the Buddha.</p>
+  <p>The common principles in this primer, the five virtues, honest self-examination, cause and effect, and love lived out in every relationship, are the ground on which any awakening stands. The passages that follow are a place to practice them, one day at a time.</p>`,
+  q:[["bible","Jesus","Enter through the narrow gate.","Matthew 7:13"],
+     ["tao","Lao Tzu","The Tao that can be trodden is not the enduring and unchanging Tao.","Tao Te Ching 1"],
+     ["confucius","Confucius","At fifteen, I had my mind bent on learning… At seventy, I could follow what my heart desired, without transgressing what was right.","Analects 2:4"]],
+  ask:["How does one have a spiritual awakening?","What would you need to let go of to begin?"],
+  rel:["tao-1","heart-sutra","fatiha","an-2-4"]}
+];
+const QCOLOR = k => k === "other" ? "var(--muted)" : TRADITIONS[k].color;
+
+/* ───────── Learn: background for beginners ───────── */
+const TRAD_INFO = {
+  bible: {who:"The prophets of Israel; Jesus of Nazareth (c. 4 BC – c. AD 30) and his apostles", when:"Hebrew Bible written c. 1000–200 BC; New Testament c. AD 50–100",
+    texts:"Hebrew Bible / Old Testament (Torah, Prophets, Writings); New Testament (Gospels, Letters, Revelation)",
+    core:"One God who creates and loves the world, calls people into covenant, and (for Christians) reconciles the world through Jesus Christ. Love God and love your neighbor.",
+    branches:"Judaism (Hebrew Bible only); Christianity: Catholic, Orthodox and Protestant (which differ on some books, such as the Apocrypha)",
+    practice:"Prayer, worship, Sabbath or Sunday, scripture reading, sacraments, charity"},
+  tao: {who:"Laozi, \"the Old Master\" (traditionally 6th century BC; possibly legendary)", when:"Compiled c. 4th century BC",
+    texts:"Tao Te Ching (81 short chapters); also the Zhuangzi",
+    core:"The Tao (the Way) is the nameless source and flow of all things. Live in harmony with it through simplicity, humility and wu wei (effortless, non-forcing action).",
+    branches:"Philosophical Taoism; religious Taoism (temples, immortals, rituals)",
+    practice:"Meditation, tai chi and qigong, simplicity, living in harmony with nature"},
+  quran: {who:"Revealed to the Prophet Muhammad (c. 570–632 AD), peace be upon him", when:"Revealed over 23 years, 610–632 AD; compiled as a book soon after",
+    texts:"The Quran (114 surahs); the Hadith (sayings of the Prophet) and Sira (biography) guide its interpretation",
+    core:"There is one God (Allah), merciful and just. Human beings are called to submit (islam) to God, live righteously, show mercy and prepare for judgment.",
+    branches:"Sunni (about 85–90%), Shia; Sufism is a mystical dimension found in both",
+    practice:"The Five Pillars: declaration of faith, five daily prayers, charity (zakah), fasting in Ramadan, pilgrimage (Hajj)"},
+  buddha: {who:"Siddhartha Gautama, the Buddha, \"the Awakened One\" (c. 5th century BC)", when:"Taught orally; written down from c. 1st century BC",
+    texts:"Pali Canon (Theravāda), including the Dhammapada; Mahāyāna sutras such as the Heart, Diamond and Lotus Sutras",
+    core:"Life involves suffering (dukkha) caused by craving. Suffering can end through the Noble Eightfold Path of ethics, meditation and wisdom.",
+    branches:"Theravāda (Sri Lanka, Southeast Asia); Mahāyāna (China, Japan, Korea, Vietnam, including Zen and Pure Land); Vajrayāna (Tibet)",
+    practice:"Meditation, the Five Precepts, generosity, chanting, taking refuge in the Buddha, Dharma and Sangha"},
+  confucius: {who:"Confucius (Kong Fuzi, 551–479 BC) and his follower Mencius (c. 372–289 BC)", when:"Analects compiled by disciples in the 5th–4th centuries BC",
+    texts:"The Four Books: Analects, Mencius, Great Learning, Doctrine of the Mean; plus the Five Classics",
+    core:"A good society grows from cultivated people. Practice ren (humaneness), li (propriety), xiao (filial piety) and yi (righteousness) within the five human relationships.",
+    branches:"Classical Confucianism; Neo-Confucianism (Zhu Xi, Wang Yangming); a shaping influence across East Asia",
+    practice:"Self-cultivation, study, honoring parents and ancestors, courtesy and ritual, public service"}
+};
+const TIMELINE = [
+  ["c. 1200 BC","Moses and the Exodus (traditional dating)","bible"],
+  ["c. 800–200 BC","The \"Axial Age\": a burst of ethical and spiritual thought across Israel, India, China and Greece (Karl Jaspers' term, popularized by Karen Armstrong)",null],
+  ["c. 740 BC","Micah and Isaiah prophesy in Israel","bible"],
+  ["c. 6th c. BC","Laozi (traditional dating)","tao"],
+  ["c. 597–538 BC","Babylonian exile; Jeremiah's letter to the exiles","bible"],
+  ["551–479 BC","Confucius","confucius"],
+  ["c. 5th c. BC","The Buddha teaches in northern India","buddha"],
+  ["c. 4th c. BC","Tao Te Ching takes its present form","tao"],
+  ["c. 372–289 BC","Mencius","confucius"],
+  ["c. 4 BC – AD 30","Jesus of Nazareth","bible"],
+  ["c. AD 50–60","Paul's letters (1 Corinthians, Philippians)","bible"],
+  ["c. 1st c. BC – 2nd c. AD","Pali Canon written down; early Mahāyāna sutras appear","buddha"],
+  ["AD 610–632","The Quran is revealed to the Prophet Muhammad","quran"],
+  ["AD 638–713","Hui-neng, Sixth Patriarch of Chan (Zen) Buddhism","buddha"],
+  ["AD 868","Diamond Sutra printed: the oldest dated printed book","buddha"]
+];
+const GLOSSARY = [
+  ["Agapē","Greek: self-giving love; the \"charity\" of 1 Corinthians 13."],
+  ["Axial Age","c. 800–200 BC, when many world traditions took shape at the same time."],
+  ["Bodhisattva","In Mahāyāna Buddhism, one who seeks awakening for the sake of all beings."],
+  ["Dharma / Dhamma","The Buddha's teaching; also the truth or law of how things are."],
+  ["Dhikr","Islamic practice of remembering God through repeated phrases."],
+  ["Dukkha","Pali: suffering, dissatisfaction, the unease of life."],
+  ["Filial piety (xiao)","Love and respect for parents and elders; for Confucius, the root of benevolence."],
+  ["Gospel","\"Good news\": the four accounts of Jesus' life (Matthew, Mark, Luke, John)."],
+  ["Hadith","Recorded sayings and actions of the Prophet Muhammad."],
+  ["Hesed","Hebrew: steadfast, loyal love and mercy."],
+  ["Junzi","Confucian \"superior man\" or \"noble person\": one of cultivated character."],
+  ["Kenosis","Greek: self-emptying; a theme found across traditions."],
+  ["Li","Confucian ritual propriety: love expressed in the right manner."],
+  ["Mahāyāna","\"Great Vehicle\": the Buddhism of East Asia and Tibet."],
+  ["Mettā","Pali: loving-kindness."],
+  ["Pali Canon","The oldest complete collection of Buddhist scripture (Theravāda)."],
+  ["Ren","Confucian humaneness or benevolence. The character 仁 is \"person\" + \"two\": no separation between self and other."],
+  ["Shu","Confucian reciprocity: putting yourself in another's place."],
+  ["Śūnyatā","Emptiness: things lack fixed, independent existence."],
+  ["Surah / Ayah","A chapter / verse of the Quran."],
+  ["Sutra / Sutta","A Buddhist discourse (Sanskrit / Pali)."],
+  ["Tao","\"The Way\": the nameless source and flow of all things."],
+  ["Te","Virtue or power: the Tao expressed in a person."],
+  ["Theravāda","\"Teaching of the Elders\": the Buddhism of Sri Lanka and Southeast Asia."],
+  ["Torah","The first five books of the Hebrew Bible; more broadly, God's teaching."],
+  ["Wu wei","Effortless, non-forcing action in harmony with the Tao."],
+  ["Zakah","Obligatory charity, one of the Five Pillars of Islam."]
+];
+const HARD = [
+  {trad:"bible", ref:"Ephesians 5:22–24", text:"Wives, submit yourselves unto your own husbands, as unto the Lord.",
+   note:"Read it with the verse just before it, \"Submitting yourselves one to another\" (5:21), and the verse after: \"Husbands, love your wives, even as Christ also loved the church, and gave himself for it\" (5:25). Some Christians read a lasting order of roles here; others read mutual self-giving framed in first-century household customs."},
+  {trad:"bible", ref:"Joshua 6:21", text:"And they utterly destroyed all that was in the city…",
+   note:"The conquest stories trouble Jews and Christians alike. Readings range from historical (ancient warfare), to literary (exaggerated victory language common in the ancient Near East), to spiritual (destroying evil within)."},
+  {trad:"quran", ref:"Surah At-Tawbah 9:5", text:"…then kill the polytheists wherever you find them…",
+   note:"Context matters: it concerns tribes who broke a treaty (9:4 exempts those who kept theirs), and 9:6 commands granting asylum to any who seek it and escorting them to safety. Mainstream scholars read it as tied to a specific war, not a general command; extremists quote it out of context."},
+  {trad:"confucius", ref:"Analects 17:25", text:"Of all people, girls and servants are the most difficult to behave to…",
+   note:"Reflects the hierarchy of Zhou China. Modern Confucians debate whether it is a cultural limitation to set aside or a narrower comment about particular household situations."},
+  {trad:"tao", ref:"Tao Te Ching 65", text:"The ancients who showed their skill in practising the Tao did so, not to enlighten the people, but rather to make them simple and ignorant.",
+   note:"Can sound like a call to keep people uninformed. Many read it as praising simplicity over cunning and manipulation, but it shows the text's distrust of learning and cleverness."},
+  {trad:"buddha", ref:"Cullavagga X (founding of the nuns' order)", text:"The Buddha at first hesitated to ordain women, then set extra rules (the garudhammas) for nuns.",
+   note:"Scholars debate whether these passages are later additions. The Buddha did ordain women, and the Therīgāthā preserves their awakening poems, but nuns' full ordination was lost in many Theravāda lands and is still contested."}
+];
+const PROTHERO = [
+  ["Christianity","Sin","Salvation"],["Islam","Pride, self-sufficiency","Submission to God"],["Buddhism","Suffering","Awakening"],
+  ["Confucianism","Chaos","Social order"],["Taoism","Lifelessness","Flourishing"],["Judaism","Exile","Return"]
+];
+
+/* ───────── state & storage ───────── */
+const store = {
+  get(k, d){ try{ const v = localStorage.getItem("fwt:"+k); return v ? JSON.parse(v) : d; }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem("fwt:"+k, JSON.stringify(v)); }catch(e){} }
+};
+const state = {
+  tab: store.get("tab","primer"),
+  trad: "all", theme: "all", q: "",
+  saved: new Set(store.get("saved", [])),
+  log: store.get("log", {}),   // { "YYYY-MM-DD": [ids] }
+  quiz: null,
+  quizMode: "tradition",
+  journal: store.get("journal", {}), // { id: {text, date} }
+  quiet: store.get("quiet", false),
+  primerCh: store.get("primerCh", 0),
+  primerRead: new Set(store.get("primerRead", []))
+};
+const byId = Object.fromEntries(P.map(p => [p.id, p]));
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+const todayKey = (d = new Date()) => d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const dayIndex = () => { const d = new Date(); return Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 864e5); };
+
+/* ───────── theme toggle ───────── */
+(function(){
+  const saved = store.get("theme", null);
+  if (saved) document.documentElement.dataset.theme = saved;
+  $("#themeToggle").onclick = () => {
+    const cur = document.documentElement.dataset.theme ||
+      (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    const next = cur === "dark" ? "light" : "dark";
+    document.documentElement.dataset.theme = next; store.set("theme", next);
+  };
+})();
+
+/* ───────── rendering helpers ───────── */
+function card(p){
+  const t = TRADITIONS[p.trad];
+  return `<button class="card" style="--c:${t.color}" data-open="${p.id}">
+    <div class="meta"><b>${t.name}</b><span>${state.saved.has(p.id) ? "♥ " : ""}${esc(p.ref)}</span></div>
+    <h3 class="serif">${esc(p.title)}</h3>
+    <p class="quote serif">${esc(p.text.replace(/\n/g," "))}</p>
+    <div class="tags">${p.themes.map(th => `<span class="tag">${THEMES[th].name}</span>`).join("")}</div>
+  </button>`;
+}
+
+function detailHTML(p, opts = {}){
+  const t = TRADITIONS[p.trad];
+  const practiced = (state.log[todayKey()] || []).includes(p.id);
+  const practiceIdx = dayIndex() % p.apply.length;
+  const x = EXTRA[p.id] || {};
+  return `<div class="detail" style="--c:${t.color}">
+    ${opts.modal ? `<button class="close" data-close aria-label="Close">×</button>` : ""}
+    <div class="kicker">${opts.kicker || t.full}</div>
+    <h2 class="serif">${esc(p.title)}</h2>
+    <div class="ref">${esc(p.ref)}</div>
+    <blockquote class="serif">${esc(p.text)}</blockquote>
+    <div class="trans">${esc(p.trans)}</div>
+    ${x.orig ? `<div class="orig-wrap"><div class="trans">Original (${LANG_NAME[x.lang]})</div><div class="orig" lang="${x.lang}" dir="${x.lang==="ar"||x.lang==="he"?"rtl":"ltr"}">${esc(x.orig)}</div></div>` : ""}
+    <div class="src-row">
+      ${x.src ? `<a class="btn small" href="${x.src}" target="_blank" rel="noopener">Read the full text on ${SRC_NAME(x.src)} ↗</a>` : ""}
+      ${"speechSynthesis" in window ? `<button class="btn small" data-listen="${p.id}">🔊 Listen</button>` : ""}
+      ${x.orig && "speechSynthesis" in window && x.lang !== "pi" ? `<button class="btn small" data-listen-orig="${p.id}">🔊 Original</button>` : ""}
+    </div>
+    ${opts.daily ? `<div class="practice-box"><strong>Today's practice:</strong> ${esc(p.apply[practiceIdx])}</div>` : ""}
+    <div class="section"><h4>What it means</h4><p>${esc(p.meaning)}</p></div>
+    <div class="section"><h4>Context</h4><p>${esc(p.context)}</p></div>
+    <div class="section"><h4>Living it today</h4><ul class="apply">${p.apply.map(a => `<li>${esc(a)}</li>`).join("")}</ul></div>
+    <div class="section"><h4>Reflect</h4><p class="reflect serif">${esc(p.reflect)}</p>
+      <textarea class="journal" data-journal="${p.id}" rows="3" placeholder="Write your reflection. It's saved privately in this browser.">${esc((state.journal[p.id]||{}).text||"")}</textarea>
+      <div class="trans journal-status" id="js-${p.id}">${state.journal[p.id] ? "Last saved " + state.journal[p.id].date : ""}</div></div>
+    <div class="section"><h4>Themes</h4><div class="tags">${p.themes.map(th => `<span class="tag">${THEMES[th].name}</span>`).join("")}</div></div>
+    <div class="actions">
+      <button class="btn" data-save="${p.id}" aria-pressed="${state.saved.has(p.id)}">${state.saved.has(p.id) ? "♥ Saved" : "♡ Save"}</button>
+      ${state.quiet ? "" : `<button class="btn ${practiced ? "" : "primary"}" data-practice="${p.id}" aria-pressed="${practiced}">${practiced ? "✓ Practiced today" : "Mark as practiced today"}</button>`}
+      <button class="btn" data-copy="${p.id}">Copy passage</button>
+    </div>
+  </div>`;
+}
+
+function openDetail(id){
+  const dlg = $("#dlg");
+  dlg.innerHTML = detailHTML(byId[id], {modal:true});
+  if (!dlg.open) dlg.showModal();
+  dlg.scrollTop = 0;
+}
+
+/* ───────── views ───────── */
+const views = {
+  primer(){
+    const i = Math.min(state.primerCh, PRIMER.length - 1), ch = PRIMER[i];
+    state.primerRead.add(i); store.set("primerRead", [...state.primerRead]);
+    const toc = PRIMER.map((c,k) => `<button data-primer="${k}" aria-current="${k===i}"><span class="chk">${state.primerRead.has(k) && k!==i ? "✓" : ""}</span>${k ? k + ". " : ""}${esc(c.t)}</button>`).join("");
+    const sages = ch.sages ? `<h3 class="serif">The eight sages of the series</h3><ul class="tl">${SAGES.map(([n,d,k]) => `<li style="--c:${TRADITIONS[k].color}"><b>${d}</b>${n}</li>`).join("")}</ul>` : "";
+    const virtues = ch.virtues ? `<table class="tbl"><tr><th>Virtue</th><th>Element</th><th>Precept</th><th>Its seed (Mencius)</th></tr>${VIRTUES.map(v => `<tr><td><b>${v[0]}</b> <span lang="zh">${v[1]}</span></td><td>${v[2]}</td><td>${v[3]}</td><td>${v[4]}</td></tr>`).join("")}</table>` : "";
+    const quotes = ch.q ? `<h3 class="serif">What the sages say</h3>${ch.q.map(([k,who,txt,ref]) => `<div class="cite" style="--c:${QCOLOR(k)}"><div class="who">${esc(who)}</div><div class="serif">"${esc(txt)}"</div>${ref ? `<div class="src">${esc(ref)}</div>` : ""}</div>`).join("")}` : "";
+    const ask = ch.ask ? `<h3 class="serif">Questions for reflection or discussion</h3><ul>${ch.ask.map(a => `<li>${esc(a)}</li>`).join("")}</ul>` : "";
+    const rel = ch.rel ? `<h3 class="serif">Go deeper in the app</h3><div class="grid">${ch.rel.filter(id => byId[id]).map(id => card(byId[id])).join("")}</div>` : "";
+    return `<div class="banner"><p><b>Primer:</b> the common principles of the major religions, in ${PRIMER.length - 1} short chapters. Just here for the quotes?</p><button class="btn primary" data-skip-primer>Skip to the passages →</button></div>
+      <div class="layout"><nav class="toc" aria-label="Primer chapters">${toc}</nav>
+      <article class="prose">
+        <div class="kicker" style="--c:var(--accent)">${i ? "Chapter " + i : "Introduction"}</div>
+        <h2 class="serif">${esc(ch.t)}</h2><p class="ref" style="margin-bottom:14px">${esc(ch.sub)}</p>
+        ${ch.intro}${sages}${virtues}${quotes}${ask}
+      </article></div>
+      ${rel}
+      <div class="pager">${i > 0 ? `<button class="btn" data-primer="${i-1}">← ${esc(PRIMER[i-1].t)}</button>` : "<span></span>"}
+        ${i < PRIMER.length - 1 ? `<button class="btn primary" data-primer="${i+1}">${esc(PRIMER[i+1].t)} →</button>` : `<button class="btn primary" data-skip-primer>Start with today's passage →</button>`}</div>`;
+  },
+  today(){
+    const p = P[dayIndex() % P.length];
+    return `<div class="hero">${detailHTML(p, {daily:true, kicker:"Passage of the day · " + TRADITIONS[p.trad].full})}</div>
+      <p class="count" style="margin-top:14px">A new passage each day, rotating through all ${P.length}. Come back tomorrow, or <button class="chip" data-goto="explore">explore them all</button></p>`;
+  },
+  explore(){
+    const q = state.q.trim().toLowerCase();
+    const list = P.filter(p =>
+      (state.trad === "all" || p.trad === state.trad) &&
+      (state.theme === "all" || p.themes.includes(state.theme)) &&
+      (!q || [p.title,p.text,p.ref,p.meaning,p.context,p.apply.join(" ")].join(" ").toLowerCase().includes(q)));
+    const tradChips = [["all","All traditions",null], ...Object.entries(TRADITIONS).map(([k,v]) => [k,v.name,v.color])]
+      .map(([k,n,c]) => `<button class="chip" data-trad="${k}" aria-pressed="${state.trad===k}">${c?`<span class="dot" style="background:${c}"></span>`:""}${n}</button>`).join("");
+    const themeChips = [["all","Any theme"], ...Object.entries(THEMES).map(([k,v]) => [k,v.name])]
+      .map(([k,n]) => `<button class="chip" data-theme="${k}" aria-pressed="${state.theme===k}">${n}</button>`).join("");
+    return `<div class="controls"><input class="search" id="search" type="search" placeholder="Search words, ideas or references (e.g. anxiety, water, Psalm)" value="${esc(state.q)}"></div>
+      <div class="controls">${tradChips}</div>
+      <div class="controls">${themeChips}</div>
+      <p class="count">${list.length} passage${list.length===1?"":"s"}</p>
+      ${list.length ? `<div class="grid">${list.map(card).join("")}</div>` : `<p class="empty">No passages match. Try a different word or filter.</p>`}`;
+  },
+  themes(){
+    return Object.entries(THEMES).map(([k,v]) => {
+      const list = P.filter(p => p.themes.includes(k));
+      const trads = new Set(list.map(p => p.trad));
+      return `<section class="theme-block">
+        <h2 class="serif">${v.name}</h2>
+        <p>${v.desc} <em>Found in ${trads.size} of 5 traditions here.</em></p>
+        ${v.note ? `<p class="note">${esc(v.note)}</p>` : ""}
+        <div class="grid">${list.map(card).join("")}</div>
+      </section>`;
+    }).join("");
+  },
+  learn(){
+    const sec = state.learnSec || "traditions";
+    const segs = [["traditions","The five traditions"],["timeline","Timeline"],["glossary","Glossary"],["same","Same or different?"],["hard","Hard passages"]]
+      .map(([k,n]) => `<button data-learn="${k}" aria-pressed="${sec===k}">${n}</button>`).join("");
+    let body = "";
+    if (sec === "traditions") body = `<p class="count">New to a tradition? Start here: who, when, which books, and the big idea.</p><div class="trad-cards">${Object.entries(TRAD_INFO).map(([k,i]) => `
+      <div class="trad-card" style="--c:${TRADITIONS[k].color}"><h3 class="serif">${TRADITIONS[k].full}</h3>
+      <dl><dt>Founders and teachers</dt><dd>${esc(i.who)}</dd><dt>When</dt><dd>${esc(i.when)}</dd><dt>Key texts</dt><dd>${esc(i.texts)}</dd>
+      <dt>The big idea</dt><dd>${esc(i.core)}</dd><dt>Branches</dt><dd>${esc(i.branches)}</dd><dt>How it's practiced</dt><dd>${esc(i.practice)}</dd></dl>
+      <div class="actions"><button class="btn small" data-goto-trad="${k}">See its ${P.filter(p=>p.trad===k).length} passages →</button></div></div>`).join("")}</div>`;
+    if (sec === "timeline") body = `<div class="prose"><p>Four of these five traditions took shape within a few centuries of each other, in what historians call the Axial Age. Christianity and Islam built on the Hebrew prophets who came before them.</p></div>
+      <ul class="tl">${TIMELINE.map(([d,t,k]) => `<li style="--c:${k?TRADITIONS[k].color:"var(--accent)"}"><b>${d}</b>${esc(t)}</li>`).join("")}</ul>`;
+    if (sec === "glossary") body = `<dl class="gloss">${GLOSSARY.map(([t,d]) => `<div><dt>${esc(t)}</dt><dd style="margin:0">${esc(d)}</dd></div>`).join("")}</dl>`;
+    if (sec === "same") body = `<div class="prose"><h2 class="serif">Are they all saying the same thing?</h2>
+      <p>This app groups passages into "common threads," but serious thinkers disagree about how deep the common ground goes. Here are both sides, so you can decide for yourself.</p></div>
+      <div class="vs"><div><h3 class="serif" style="margin-top:0">Common ground</h3>
+        <p><b>Karen Armstrong</b> (<i>The Great Transformation</i>, <i>Twelve Steps to a Compassionate Life</i>) argues that the Axial Age sages all reached the same core insight: compassion and the Golden Rule, practiced every day, are the heart of religion. Religion is something you do, not just something you believe. Her Charter for Compassion (2009) invites people of all faiths to put this at the center.</p>
+        <p>This app's Primer, from <i>Common Principles of the Major Religions</i>, takes a similar view. It sets each tradition's words side by side on the same life question and finds five shared virtues underneath.</p></div>
+      <div><h3 class="serif" style="margin-top:0">Real differences</h3>
+        <p><b>Stephen Prothero</b> (<i>God Is Not One</i>, 2010) argues that the traditions ask different questions. Each names a different problem and offers a different solution, and claiming they're all the same disrespects what each one actually teaches.</p>
+        <table class="tbl"><tr><th>Tradition</th><th>The problem</th><th>The solution</th></tr>${PROTHERO.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("")}</table></div></div>
+      <div class="prose" style="margin-top:16px"><h3 class="serif">A useful middle path</h3><p>Shared ethics, different destinations. The traditions overlap strongly on how to treat people (compassion, honesty, humility, self-control) and differ on the deepest questions: who or what God is, what happens after death, and what salvation or liberation means. Notice both. Respect is easier when you understand the differences and don't erase them.</p></div>`;
+    if (sec === "hard") body = `<div class="prose"><h2 class="serif">Reading the hard passages</h2>
+      <p>Every tradition has passages that trouble modern readers. The most-quoted verses tend to be the comforting ones, so here are a few difficult ones, with how readers inside each tradition approach them. Karen Armstrong calls this the "principle of charity": read the hard texts in light of the tradition's own central teaching of compassion.</p>
+      <h3 class="serif">Four questions for any difficult text</h3><ul><li><b>Context:</b> what comes just before and after?</li><li><b>Audience:</b> who was it addressed to, when, and why?</li><li><b>The center:</b> how does it fit the tradition's own core teaching?</li><li><b>Tradition:</b> how have the tradition's own scholars read it?</li></ul></div>
+      ${HARD.map(h => `<div class="cite" style="--c:${TRADITIONS[h.trad].color}"><div class="who">${TRADITIONS[h.trad].name} · ${esc(h.ref)}</div><p class="serif" style="margin:4px 0 8px">"${esc(h.text)}"</p><p style="margin:0;font-size:.92rem">${esc(h.note)}</p></div>`).join("")}`;
+    return `<div class="seg" role="group" aria-label="Learn sections" style="flex-wrap:wrap">${segs}</div>${body}`;
+  },
+  quiz(){
+    if (!state.quiz) newQuiz();
+    const z = state.quiz;
+    const modes = `<div class="seg" role="group" aria-label="Quiz type"><button data-quiz-mode="tradition" aria-pressed="${state.quizMode==="tradition"}">Which tradition?</button><button data-quiz-mode="meaning" aria-pressed="${state.quizMode==="meaning"}">What does it mean?</button></div>`;
+    if (z.i >= z.items.length){
+      const pct = Math.round(z.score / z.items.length * 100);
+      return `<div class="quiz">${modes}<h2 class="serif">Quiz complete</h2>
+        <p class="score" style="font-size:1.2rem">You scored <b>${z.score} / ${z.items.length}</b> (${pct}%)</p>
+        <p>${pct >= 80 ? "Impressive. You know these teachings well." : pct >= 50 ? "Good work. The overlaps between traditions are what make this hard." : "These traditions sound alike more often than people expect. That's part of the lesson."}</p>
+        <button class="btn primary" data-quiz-restart>Play again</button></div>`;
+    }
+    const p = byId[z.items[z.i]];
+    const right = z.mode === "tradition" ? p.trad : p.id;
+    const choices = z.mode === "tradition"
+      ? Object.entries(TRADITIONS).map(([k,v]) => [k, `<span class="dot" style="background:${v.color}"></span>${v.name}`])
+      : z.choices[z.i].map(id => [id, esc(byId[id].title)]);
+    const opts = choices.map(([k,label]) => {
+      let cls = "";
+      if (z.answered){ if (k === right) cls = "right"; else if (k === z.answered) cls = "wrong"; }
+      return `<button class="qopt ${cls}" data-answer="${k}" ${z.answered?"disabled":""}>${label}</button>`;
+    }).join("");
+    const prompt = z.mode === "tradition"
+      ? `<h2 class="serif" style="margin:4px 0">Which tradition is this from?</h2><blockquote class="serif" style="--c:var(--line)">${esc(quizText(p))}</blockquote>`
+      : `<h2 class="serif" style="margin:4px 0">Which passage does this explain?</h2><blockquote style="--c:var(--line)">${esc(p.meaning)}</blockquote>`;
+    return `<div class="quiz">${modes}
+      <div class="score">Question ${z.i+1} of ${z.items.length} · Score ${z.score}</div>
+      ${prompt}
+      <div class="qopts">${opts}</div>
+      ${z.answered ? `<div class="feedback">
+        <p><b>${z.answered === right ? "Correct!" : "Not quite."}</b> This is <b>${esc(p.ref)}</b> (${TRADITIONS[p.trad].name}): "${esc(p.title)}." ${z.mode === "tradition" ? esc(p.meaning) : "Try it today: " + esc(p.apply[0])}</p>
+        <div class="actions"><button class="btn primary" data-quiz-next>${z.i+1 < z.items.length ? "Next question" : "See results"}</button><button class="btn" data-open="${p.id}">Read more</button></div>
+      </div>` : ""}
+    </div>`;
+  },
+  practice(){
+    const days = Object.keys(state.log).filter(d => state.log[d].length).sort().reverse();
+    const total = days.reduce((n,d) => n + state.log[d].length, 0);
+    let streak = 0; const d = new Date();
+    if (!(state.log[todayKey(d)]||[]).length) d.setDate(d.getDate()-1);
+    while ((state.log[todayKey(d)]||[]).length){ streak++; d.setDate(d.getDate()-1); }
+    const saved = [...state.saved].filter(id => byId[id]).map(id => byId[id]);
+    const notes = Object.entries(state.journal).filter(([id,j]) => byId[id] && j.text.trim()).sort((a,b) => b[1].date.localeCompare(a[1].date));
+    const tradCount = Object.fromEntries(Object.keys(TRADITIONS).map(k => [k,0]));
+    days.forEach(day => state.log[day].forEach(id => byId[id] && tradCount[byId[id].trad]++));
+    const quietToggle = `<div class="banner"><p><b>Quiet mode</b> ${state.quiet ? "is on. Streaks, counts and \"mark as practiced\" are hidden." : "hides streaks, counts and \"mark as practiced\". As Chapter 46 says, there is no fault greater than the wish to be getting."}</p>
+      <button class="btn" data-quiet aria-pressed="${state.quiet}">${state.quiet ? "Turn off quiet mode" : "Turn on quiet mode"}</button></div>`;
+    const stats = state.quiet ? "" : `<div class="stats">
+        <div class="stat"><div class="n">${streak}</div><div class="l">day streak</div></div>
+        <div class="stat"><div class="n">${days.length}</div><div class="l">days practiced</div></div>
+        <div class="stat"><div class="n">${total}</div><div class="l">teachings practiced</div></div>
+        <div class="stat"><div class="n">${notes.length}</div><div class="l">reflections written</div></div>
+      </div>
+      ${total ? `<p class="count">By tradition: ${Object.entries(tradCount).map(([k,n]) => `<span style="color:${TRADITIONS[k].color};font-weight:600">${TRADITIONS[k].name} ${n}</span>`).join(" · ")}</p>` : ""}`;
+    return `${quietToggle}${stats}
+      <h2 class="sub serif">My reflections</h2>
+      ${notes.length ? notes.map(([id,j]) => `<div class="cite" style="--c:${TRADITIONS[byId[id].trad].color}"><div class="who"><a href="#" data-open="${id}" style="color:inherit">${esc(byId[id].title)}</a> · ${j.date}</div><div class="src serif" style="font-style:italic">${esc(byId[id].reflect)}</div><p style="margin:6px 0 0;white-space:pre-line">${esc(j.text)}</p></div>`).join("")
+        : `<p class="empty">Open any passage and write in the box under "Reflect". Your answers collect here.</p>`}
+      <h2 class="sub serif">Saved passages</h2>
+      ${saved.length ? `<div class="grid">${saved.map(card).join("")}</div>` : `<p class="empty">Nothing saved yet. Tap ♡ Save on any passage.</p>`}
+      ${state.quiet ? "" : `<h2 class="sub serif">Practice journal</h2>
+      ${days.length ? `<ul class="log">${days.slice(0,30).map(day => `<li><b>${day}</b>: ${state.log[day].filter(id=>byId[id]).map(id => `<a href="#" data-open="${id}" style="color:${TRADITIONS[byId[id].trad].color}">${esc(byId[id].title)}</a>`).join(", ")}</li>`).join("")}</ul>`
+        : `<p class="empty">When you live out a teaching, open it and tap "Mark as practiced today" to build your streak.</p>`}`}
+      <p class="trans" style="margin-top:24px">Everything on this page is stored only in this browser on this device.</p>`;
+  }
+};
+
+function quizText(p){
+  // hide giveaway names
+  return p.text.replace(/\n/g," ")
+    .replace(/\b(LORD|God|Christ Jesus|Christ|Tao|Zigong|Zengzi|Yu|Master|Allah)\b/g, "___")
+    .replace(/…?Gate gate.*$/,"").slice(0, 320) + (p.text.length > 320 ? "…" : "");
+}
+const shuffle = a => { a = [...a]; for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+function newQuiz(){
+  const ids = shuffle(P.map(p => p.id)).slice(0, 10);
+  const choices = ids.map(id => shuffle([id, ...shuffle(P.map(p => p.id).filter(x => x !== id)).slice(0, 3)]));
+  state.quiz = {mode: state.quizMode, items: ids, choices, i: 0, score: 0, answered: null};
+}
+
+function render(){
+  document.querySelectorAll("nav.tabs button").forEach(b => b.setAttribute("aria-selected", b.dataset.tab === state.tab));
+  $("#view").innerHTML = views[state.tab]();
+  const s = $("#search");
+  if (s){ s.oninput = e => { state.q = e.target.value; const pos = e.target.selectionStart; render(); const n = $("#search"); n.focus(); n.setSelectionRange(pos,pos); }; }
+}
+
+/* ───────── events ───────── */
+document.addEventListener("click", e => {
+  const el = e.target.closest("[data-tab],[data-goto],[data-open],[data-trad],[data-theme],[data-save],[data-practice],[data-copy],[data-close],[data-answer],[data-quiz-next],[data-quiz-restart],[data-primer],[data-skip-primer],[data-learn],[data-goto-trad],[data-quiz-mode],[data-quiet],[data-listen],[data-listen-orig]");
+  if (!el) return;
+  const d = el.dataset;
+  if (d.tab || d.goto){ state.tab = d.tab || d.goto; store.set("tab", state.tab); render(); window.scrollTo({top:0}); return; }
+  if (d.open){ e.preventDefault(); openDetail(d.open); return; }
+  if (d.trad){ state.trad = d.trad; render(); return; }
+  if (d.primer){ state.primerCh = +d.primer; store.set("primerCh", state.primerCh); render(); window.scrollTo({top:0}); return; }
+  if ("skipPrimer" in d){ state.tab = "today"; store.set("tab", "today"); render(); window.scrollTo({top:0}); return; }
+  if (d.learn){ state.learnSec = d.learn; render(); return; }
+  if (d.gotoTrad){ state.tab = "explore"; state.trad = d.gotoTrad; state.theme = "all"; state.q = ""; store.set("tab","explore"); render(); window.scrollTo({top:0}); return; }
+  if (d.quizMode){ state.quizMode = d.quizMode; newQuiz(); render(); return; }
+  if ("quiet" in d){ state.quiet = !state.quiet; store.set("quiet", state.quiet); render(); return; }
+  if (d.listen || d.listenOrig){
+    const p = byId[d.listen || d.listenOrig], x = EXTRA[p.id] || {};
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(d.listen ? p.text.replace(/…/g, ", ") : x.orig);
+    u.lang = d.listen ? "en-US" : ({zh:"zh-CN", ar:"ar-SA", he:"he-IL"}[x.lang]); u.rate = .92;
+    speechSynthesis.speak(u); return;
+  }
+  if (d.theme){ state.theme = d.theme; render(); return; }
+  if ("close" in d){ $("#dlg").close(); return; }
+  if (d.save){
+    state.saved.has(d.save) ? state.saved.delete(d.save) : state.saved.add(d.save);
+    store.set("saved", [...state.saved]); refreshDetail(d.save); return;
+  }
+  if (d.practice){
+    const k = todayKey(); const arr = state.log[k] || [];
+    state.log[k] = arr.includes(d.practice) ? arr.filter(x => x !== d.practice) : [...arr, d.practice];
+    store.set("log", state.log); refreshDetail(d.practice); return;
+  }
+  if (d.copy){
+    const p = byId[d.copy];
+    const txt = `"${p.text}"\n— ${p.ref}`;
+    (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(
+      () => { el.textContent = "Copied ✓"; }, () => { el.textContent = "Copy unavailable"; });
+    return;
+  }
+  if (d.answer){
+    const z = state.quiz; if (z.answered) return;
+    const it = byId[z.items[z.i]];
+    z.answered = d.answer; if (d.answer === (z.mode === "tradition" ? it.trad : it.id)) z.score++;
+    render(); return;
+  }
+  if ("quizNext" in d){ state.quiz.i++; state.quiz.answered = null; render(); return; }
+  if ("quizRestart" in d){ newQuiz(); render(); return; }
+});
+function refreshDetail(id){
+  const dlg = $("#dlg");
+  if (dlg.open){ const st = dlg.scrollTop; dlg.innerHTML = detailHTML(byId[id], {modal:true}); dlg.scrollTop = st; }
+  render();
+}
+let jt;
+document.addEventListener("input", e => {
+  const id = e.target.dataset && e.target.dataset.journal; if (!id) return;
+  clearTimeout(jt);
+  jt = setTimeout(() => {
+    const text = e.target.value;
+    if (text.trim()) state.journal[id] = {text, date: todayKey()}; else delete state.journal[id];
+    store.set("journal", state.journal);
+    const st = document.getElementById("js-" + id); if (st) st.textContent = text.trim() ? "Saved ✓" : "";
+  }, 400);
+});
+$("#dlg").addEventListener("click", e => { if (e.target.id === "dlg") e.target.close(); });
+$("#dlg").addEventListener("close", () => { if ("speechSynthesis" in window) speechSynthesis.cancel(); if (state.tab === "practice" || state.tab === "explore") render(); });
+
+if (!views[state.tab]) state.tab = "today";
+render();
+</script>
+</body>
+</html>
