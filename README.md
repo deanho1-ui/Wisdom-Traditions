@@ -13,9 +13,20 @@ A single-page app on the common principles of the major religions, and the most-
 - **Learn:** an introduction to each tradition, a timeline, a glossary, the "same or different?" debate, and how to read hard passages.
 - **Quiz** and **My practice:** reflections, saved passages and an optional practice streak.
 
-## Running it
+## Installing it as an app
 
-It's one self-contained file. Open `index.html` in any browser, with no build step or server. Saved passages and reflections are stored only in the visitor's own browser.
+The site is an installable web app: it opens full-screen with its own icon and works offline.
+
+- **iPhone / iPad:** open the site in Safari, tap Share, then Add to Home Screen.
+- **Android:** open the site in Chrome, tap the menu, then Add to Home screen (or Install app).
+- **Computer:** in Chrome or Edge, click the install icon in the address bar.
+
+## Files
+
+- `index.html`: the whole app (no build step). It also works when opened directly from disk.
+- `manifest.webmanifest`, `sw.js`, `icons/`: what makes it installable and available offline.
+
+Saved passages and reflections are stored only in each visitor's own browser.
 
 ## Translations
 

@@ -2,191 +2,333 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Five Wisdom Traditions</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="The common principles of the major religions, and the most-quoted passages of the Bible, Tao Te Ching, Quran, Buddhist sutras and Confucius, with meaning, context and daily practice.">
+<meta name="theme-color" content="#F4F4EF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F131A" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Wisdom">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&family=Figtree:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500&family=Noto+Serif+TC:wght@400;500&family=Noto+Serif+Hebrew:wght@400&display=swap">
 <style>
+/* Layout: an app shell. A left rail of sections on desktop and a bottom tab bar on phones, around a single reading column; passages open in a side sheet. */
 :root{
-  --bg:#f7f3ec; --surface:#fffdf9; --surface-2:#f0eadf; --ink:#2a251f; --muted:#6d6457; --line:#e2d9ca;
-  --accent:#7a4f1d; --focus:#b7791f;
-  --bible:#9b2c2c; --tao:#2c7a7b; --quran:#2f6b45; --buddha:#b7791f; --confucius:#4c4699;
-  --shadow:0 1px 2px rgba(60,40,10,.06),0 4px 16px rgba(60,40,10,.06);
+  --paper:#F4F4EF; --surface:#FFFFFF; --sunk:#EBECE5; --ink:#18202D; --muted:#596170; --line:#D9DBD2; --line-strong:#C3C6BB;
+  --gold:#8E6418; --gold-wash:#F1E8D3; --on-gold:#FFFFFF; --scrim:rgba(14,18,26,.48);
+  --bible:#9A2E3B; --tao:#16707A; --quran:#2E7440; --buddha:#A9620C; --confucius:#3D4A9C;
+  --good:#2E7440; --bad:#9A2E3B;
+  --f-display:"Marcellus","Trajan Pro",Georgia,serif;
+  --f-read:"Literata","Iowan Old Style",Georgia,serif;
+  --f-ui:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-ar:"Noto Naskh Arabic","Geeza Pro","Traditional Arabic",serif;
+  --f-zh:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --f-he:"Noto Serif Hebrew","Times New Roman",serif;
+  --r:14px; --r-sm:9px;
+  --shadow:0 1px 2px rgba(24,32,45,.05),0 8px 24px -12px rgba(24,32,45,.18);
+  --rail:248px; --bar:64px;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#16130f; --surface:#1f1b16; --surface-2:#2a251e; --ink:#efe7da; --muted:#a99e8d; --line:#3a332a;
-    --accent:#e0b475; --focus:#e0b475;
-    --bible:#f08a8a; --tao:#6fd0d1; --quran:#7fd19e; --buddha:#f2c46b; --confucius:#a9a3f2;
-    --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);
+    --paper:#0F131A; --surface:#171C25; --sunk:#1E2430; --ink:#E9E7E0; --muted:#9BA2AE; --line:#2A3140; --line-strong:#3A4252;
+    --gold:#D9B568; --gold-wash:#2D2719; --on-gold:#1A1408; --scrim:rgba(0,0,0,.6);
+    --bible:#EE8E99; --tao:#6CCAD2; --quran:#86CF93; --buddha:#F0B963; --confucius:#AAB2F6;
+    --good:#86CF93; --bad:#EE8E99;
+    --shadow:0 1px 2px rgba(0,0,0,.35),0 10px 28px -12px rgba(0,0,0,.6);
+    color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#16130f; --surface:#1f1b16; --surface-2:#2a251e; --ink:#efe7da; --muted:#a99e8d; --line:#3a332a;
-  --accent:#e0b475; --focus:#e0b475;
-  --bible:#f08a8a; --tao:#6fd0d1; --quran:#7fd19e; --buddha:#f2c46b; --confucius:#a9a3f2;
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);
+  --paper:#0F131A; --surface:#171C25; --sunk:#1E2430; --ink:#E9E7E0; --muted:#9BA2AE; --line:#2A3140; --line-strong:#3A4252;
+  --gold:#D9B568; --gold-wash:#2D2719; --on-gold:#1A1408; --scrim:rgba(0,0,0,.6);
+  --bible:#EE8E99; --tao:#6CCAD2; --quran:#86CF93; --buddha:#F0B963; --confucius:#AAB2F6;
+  --good:#86CF93; --bad:#EE8E99;
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 10px 28px -12px rgba(0,0,0,.6);
+  color-scheme:dark;
 }
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-.serif{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+html{-webkit-text-size-adjust:100%;height:100%}
+body{margin:0;min-height:100%;background:var(--paper);color:var(--ink);font:16px/1.6 var(--f-ui);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--paper)}
 button{font:inherit;color:inherit;cursor:pointer}
-button:focus-visible,input:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
-.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
-header{padding:28px 0 8px}
-header h1{margin:0;font-size:clamp(1.6rem,4vw,2.3rem);letter-spacing:-.01em}
-header p{margin:6px 0 0;color:var(--muted);max-width:60ch}
-.topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
-.theme-toggle{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:.85rem;white-space:nowrap}
-nav.tabs{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);margin-top:16px}
-nav.tabs .wrap{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
-nav.tabs button{background:none;border:0;padding:12px 14px;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap;font-weight:500}
-nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
-main{padding:20px 0 60px}
-.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:16px}
-.search{flex:1 1 220px;min-width:0;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit}
-.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:.88rem;display:inline-flex;align-items:center;gap:6px}
-.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:none}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;text-align:left;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px;border-top:4px solid var(--c);transition:transform .12s}
-.card:hover{transform:translateY(-2px)}
-.card .meta{display:flex;justify-content:space-between;gap:8px;font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
-.card .meta b{color:var(--c);font-weight:600}
-.card h3{margin:0;font-size:1.08rem}
-.card .quote{margin:0;color:var(--muted);font-size:.95rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}
-.tag{font-size:.74rem;background:var(--surface-2);border-radius:6px;padding:2px 8px;color:var(--muted)}
-.empty{color:var(--muted);padding:30px 0;text-align:center}
-.count{color:var(--muted);font-size:.85rem;margin:-6px 0 12px}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:6px}
+h1,h2,h3{text-wrap:balance}
+.ic{width:20px;height:20px;flex:none;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+[hidden]{display:none!important}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important} }
 
-/* detail */
-dialog{border:0;padding:0;border-radius:18px;width:min(760px,calc(100vw - 24px));max-height:calc(100vh - 32px);background:var(--surface);color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.35)}
-dialog::backdrop{background:rgba(20,15,10,.55)}
-.detail{padding:24px 22px 22px;border-top:6px solid var(--c)}
-.detail .close{position:sticky;top:0;float:right;background:var(--surface-2);border:0;border-radius:999px;width:36px;height:36px;font-size:1.2rem;line-height:1}
-.kicker{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--c);font-weight:600}
-.detail h2{margin:4px 0 2px;font-size:1.5rem}
-.ref{color:var(--muted);font-size:.9rem}
-blockquote{margin:18px 0;padding:16px 18px;background:var(--surface-2);border-left:4px solid var(--c);border-radius:0 10px 10px 0;font-size:1.12rem;line-height:1.6;white-space:pre-line}
-.trans{font-size:.78rem;color:var(--muted);margin-top:-10px}
-.section{margin-top:20px}
-.section h4{margin:0 0 6px;font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
-.section p{margin:0}
-.apply{list-style:none;padding:0;margin:0;display:grid;gap:8px}
-.apply li{background:var(--surface-2);border-radius:10px;padding:10px 12px 10px 38px;position:relative}
-.apply li::before{content:"→";position:absolute;left:14px;color:var(--c);font-weight:700}
-.reflect{font-style:italic}
-.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
-.btn{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 14px;font-weight:500}
-.btn.primary{background:var(--accent);color:var(--bg);border-color:var(--accent)}
-.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+/* ── shell ── */
+.rail{position:fixed;inset:0 auto 0 0;width:var(--rail);padding:calc(28px + env(safe-area-inset-top,0px)) 18px 24px max(18px,env(safe-area-inset-left,0px));border-right:1px solid var(--line);display:flex;flex-direction:column;gap:28px;background:var(--paper);z-index:20}
+.mark{display:flex;align-items:center;gap:12px;text-decoration:none}
+.mark svg{width:38px;height:38px;flex:none}
+.mark b{font:400 1.18rem/1.1 var(--f-display);letter-spacing:.04em;display:block}
+.mark small{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+.nav{display:grid;gap:2px}
+.nav button{display:flex;align-items:center;gap:12px;background:none;border:0;border-radius:10px;padding:10px 12px;color:var(--muted);font-weight:500;text-align:left}
+.nav button:hover{background:var(--sunk);color:var(--ink)}
+.nav button[aria-current="page"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+.nav button[aria-current="page"] .ic{stroke:var(--gold)}
+.rail-foot{margin-top:auto;display:grid;gap:8px}
+.ghost{display:flex;align-items:center;gap:10px;background:none;border:1px solid var(--line);border-radius:10px;padding:8px 12px;color:var(--muted);font-size:.88rem}
+.ghost:hover{color:var(--ink);border-color:var(--line-strong)}
+.topbar{display:none}
+.bottombar{display:none}
+main{margin-left:var(--rail);padding-block:36px 72px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.page{max-width:1040px;margin:0 auto;padding:0 clamp(0px,3vw,32px)}
 
-/* daily */
-.hero{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
-.hero .detail{border-top-width:8px}
-.practice-box{margin-top:18px;padding:14px 16px;border:2px dashed var(--c);border-radius:12px}
-.practice-box strong{color:var(--c)}
+@media (max-width:900px){
+  .rail{display:none}
+  main{margin-left:0;padding-block:12px calc(var(--bar) + 32px + env(safe-area-inset-bottom,0px))}
+  .topbar{display:flex;position:sticky;top:env(safe-area-inset-top,0px);z-index:20;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border-bottom:1px solid var(--line);padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .topbar .mark svg{width:30px;height:30px}
+  .topbar .mark b{font-size:1.02rem}
+  .topbar .mark small{display:none}
+  .iconbtn{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--surface)}
+  .bottombar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;inset:auto 0 0 0;z-index:25;background:var(--surface);border-top:1px solid var(--line);padding:6px max(6px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(6px,env(safe-area-inset-left,0px))}
+  .bottombar button{display:grid;justify-items:center;gap:2px;background:none;border:0;padding:6px 0;color:var(--muted);font-size:.7rem;font-weight:600;letter-spacing:.02em}
+  .bottombar button[aria-current="page"]{color:var(--ink)}
+  .bottombar button[aria-current="page"] .ic{stroke:var(--gold)}
+  .bottombar .ic{width:22px;height:22px}
+}
 
-/* themes */
-.theme-block{margin-bottom:34px}
-.theme-block h2{margin:0 0 4px;font-size:1.3rem}
-.theme-block > p{margin:0 0 12px;color:var(--muted);max-width:75ch}
-.note{font-size:.88rem;background:var(--surface-2);border-radius:10px;padding:10px 12px;margin:0 0 12px;color:var(--muted)}
+/* ── type & common ── */
+.eyebrow{font:600 .72rem/1.3 var(--f-ui);letter-spacing:.14em;text-transform:uppercase;color:var(--c,var(--gold))}
+.h1{font:400 clamp(1.9rem,4.4vw,2.7rem)/1.12 var(--f-display);letter-spacing:.01em;margin:6px 0 0}
+.h2{font:400 1.55rem/1.2 var(--f-display);letter-spacing:.01em;margin:0}
+.h3{font:600 1.02rem/1.35 var(--f-ui);margin:0}
+.lede{color:var(--muted);max-width:62ch;margin:10px 0 0}
+.page-head{margin-bottom:26px}
+.muted{color:var(--muted)}
+.small{font-size:.86rem}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line-strong);background:var(--surface);border-radius:999px;padding:9px 16px;font-weight:600;font-size:.92rem;text-decoration:none;color:var(--ink)}
+.btn:hover{border-color:var(--ink)}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:var(--on-gold)}
+.btn.gold:hover{filter:brightness(1.06)}
+.btn.sm{padding:6px 12px;font-size:.84rem}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.btn .ic{width:17px;height:17px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.seg{display:flex;gap:4px;padding:4px;background:var(--sunk);border-radius:999px;overflow-x:auto;scrollbar-width:none;max-width:100%;width:max-content}
+.seg button{border:0;background:none;border-radius:999px;padding:7px 14px;font-size:.88rem;font-weight:600;color:var(--muted);white-space:nowrap}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.chip{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:.85rem;font-weight:500;color:var(--muted)}
+.chip:hover{color:var(--ink)}
+.chip[aria-pressed="true"]{border-color:var(--ink);color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--c);flex:none}
+.trad{display:inline-flex;align-items:center;gap:7px;font:600 .72rem/1 var(--f-ui);letter-spacing:.12em;text-transform:uppercase;color:var(--c)}
+.empty{color:var(--muted);padding:28px 0;text-align:center}
+.search{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:0 14px}
+.search:focus-within{border-color:var(--ink)}
+.search input{flex:1;min-width:0;border:0;background:none;padding:12px 0;font:inherit;color:var(--ink);outline:none}
+.toolbar{display:grid;gap:12px;margin-bottom:22px}
+.count{font-size:.84rem;color:var(--muted);font-variant-numeric:tabular-nums}
 
-/* quiz */
-.quiz{max-width:680px;margin:0 auto;text-align:center}
-.quiz blockquote{text-align:left}
-.qopts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin-top:10px}
-.qopt{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px;display:flex;gap:8px;align-items:center;justify-content:center;font-weight:500}
-.qopt.right{border-color:var(--quran);background:color-mix(in srgb,var(--quran) 15%,var(--surface))}
-.qopt.wrong{border-color:var(--bible);background:color-mix(in srgb,var(--bible) 15%,var(--surface))}
-.score{color:var(--muted);margin-bottom:6px}
-.feedback{margin-top:14px;text-align:left}
+/* ── cards ── */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.card{position:relative;display:flex;flex-direction:column;gap:10px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px 18px 16px;transition:border-color .15s,transform .15s}
+.card:hover{border-color:var(--c);transform:translateY(-1px)}
+.card .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.card .ref{font-size:.78rem;color:var(--muted);font-variant-numeric:tabular-nums;text-align:right}
+.card h3{font:400 1.2rem/1.25 var(--f-display);margin:0;letter-spacing:.01em}
+.card p{margin:0;font:400 .95rem/1.55 var(--f-read);color:var(--muted);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card .foot{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:4px;font-size:.78rem;color:var(--muted)}
+.card .saved{color:var(--gold)}
 
-/* practice */
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:22px}
-.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
-.stat .n{font-size:1.8rem;font-weight:700}
-.stat .l{color:var(--muted);font-size:.85rem}
-.log{list-style:none;padding:0;margin:0;display:grid;gap:6px}
-.log li{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:.92rem}
-h2.sub{font-size:1.1rem;margin:24px 0 10px}
-footer{color:var(--muted);font-size:.8rem;padding:0 0 30px}
-.orig-wrap{margin-top:14px}
-.orig{font-size:1.25rem;line-height:1.9;white-space:pre-line;margin-top:4px}
-.orig[lang="ar"]{font-family:"Amiri","Scheherazade New","Noto Naskh Arabic","Geeza Pro",serif;font-size:1.45rem}
-.src-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-.btn.small{padding:6px 11px;font-size:.85rem;text-decoration:none;color:var(--ink)}
-.journal{width:100%;margin-top:10px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;resize:vertical}
-.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;margin-bottom:14px}
-.seg button{border:0;background:var(--surface);padding:7px 14px;font-size:.88rem}
-.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
-.prose{max-width:70ch}
-.prose h2{font-size:1.45rem;margin:0 0 6px}
-.prose h3{font-size:1.1rem;margin:22px 0 6px}
-.prose p{margin:0 0 12px}
-.prose ul{margin:0 0 12px;padding-left:20px}
-.cite{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--c,var(--accent));border-radius:0 10px 10px 0;padding:10px 14px;margin:0 0 10px}
-.cite .who{font-size:.76rem;text-transform:uppercase;letter-spacing:.05em;color:var(--c,var(--muted));font-weight:600;margin-bottom:2px}
-.cite .src{font-size:.8rem;color:var(--muted)}
-.layout{display:grid;grid-template-columns:240px 1fr;gap:26px;align-items:start}
-.toc{position:sticky;top:60px;display:grid;gap:4px;max-height:calc(100vh - 80px);overflow:auto}
-.toc button{text-align:left;background:none;border:0;border-radius:8px;padding:7px 10px;color:var(--muted);font-size:.9rem;display:flex;gap:8px}
+/* ── passage (detail + today) ── */
+.passage{--c:var(--gold)}
+.passage .ref{color:var(--muted);font-size:.92rem;margin-top:4px}
+.scripture{position:relative;margin:24px 0 8px;padding:4px 0 4px 22px;border-left:2px solid var(--c);font:400 clamp(1.08rem,2.2vw,1.24rem)/1.7 var(--f-read);white-space:pre-line}
+.trans{font-size:.8rem;color:var(--muted)}
+.orig{margin-top:18px;padding:14px 16px;background:var(--sunk);border-radius:var(--r-sm)}
+.orig .t{font-size:1.2rem;line-height:1.9;white-space:pre-line;margin-top:4px}
+.orig .t[lang="ar"]{font-family:var(--f-ar);font-size:1.45rem;line-height:2.1}
+.orig .t[lang="zh"]{font-family:var(--f-zh);letter-spacing:.06em}
+.orig .t[lang="he"]{font-family:var(--f-he);font-size:1.4rem}
+.orig .t[lang="pi"]{font-family:var(--f-read);font-style:italic}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.practice{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:start;margin:22px 0 4px;padding:16px 18px;border-radius:var(--r);background:var(--gold-wash)}
+.practice .ic{stroke:var(--gold);width:24px;height:24px;margin-top:2px;grid-row:span 2}
+.practice b{font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.sec{margin-top:26px}
+.sec h4{margin:0 0 8px;font:600 .74rem/1 var(--f-ui);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.sec p{margin:0;max-width:66ch}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:8px;counter-reset:s}
+.steps li{position:relative;padding:12px 14px 12px 46px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface);counter-increment:s}
+.steps li::before{content:counter(s);position:absolute;left:14px;top:12px;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:.76rem;font-weight:700;color:var(--c);box-shadow:inset 0 0 0 1.5px var(--c)}
+.reflect{font:italic 400 1.08rem/1.5 var(--f-read)}
+textarea.journal{width:100%;margin-top:12px;padding:12px 14px;border-radius:var(--r-sm);border:1px solid var(--line);background:var(--paper);color:var(--ink);font:inherit;resize:vertical;min-height:90px}
+textarea.journal:focus{border-color:var(--ink);outline:none}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:.78rem;border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--muted);background:none}
+button.tag:hover{color:var(--ink);border-color:var(--ink)}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px;padding-top:20px;border-top:1px solid var(--line)}
+
+/* ── sheet ── */
+.sheet{position:fixed;inset:0;z-index:40;display:none}
+.sheet.open{display:block}
+.sheet .scrim{position:absolute;inset:0;background:var(--scrim);animation:fade .2s ease}
+.sheet .panel{position:absolute;top:0;right:0;bottom:0;width:min(640px,100%);background:var(--paper);overflow-y:auto;box-shadow:-20px 0 60px -20px rgba(0,0,0,.35);animation:slide .26s cubic-bezier(.2,.8,.2,1);padding:calc(18px + env(safe-area-inset-top,0px)) max(24px,env(safe-area-inset-right,0px)) calc(40px + env(safe-area-inset-bottom,0px)) 28px;border-top:4px solid var(--c)}
+.sheet .close{position:sticky;top:0;float:right;margin:-4px -8px 0 12px;z-index:2}
+@keyframes fade{from{opacity:0}}
+@keyframes slide{from{transform:translateX(40px);opacity:.4}}
+@media (max-width:640px){ .sheet .panel{padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))} }
+.iconbtn{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--surface)}
+
+/* ── today ── */
+.today{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:40px;align-items:start}
+.today .aside{display:grid;gap:14px;position:sticky;top:24px}
+.panel-box{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px}
+.panel-box .h3{margin-bottom:6px}
+.panel-box p{margin:0 0 12px;font-size:.92rem;color:var(--muted)}
+.meter{height:6px;border-radius:99px;background:var(--sunk);overflow:hidden;margin:10px 0 12px}
+.meter i{display:block;height:100%;background:var(--gold);border-radius:99px}
+@media (max-width:1100px){ .today{grid-template-columns:minmax(0,1fr)} .today .aside{position:static;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))} }
+
+/* ── primer ── */
+.primer{display:grid;grid-template-columns:230px minmax(0,1fr);gap:44px;align-items:start}
+.toc{position:sticky;top:24px;display:grid;gap:1px}
+.toc button{display:grid;grid-template-columns:26px 1fr;gap:6px;align-items:baseline;text-align:left;background:none;border:0;border-radius:8px;padding:7px 10px;color:var(--muted);font-size:.9rem;line-height:1.35}
+.toc button:hover{color:var(--ink)}
+.toc button span{font-variant-numeric:tabular-nums;font-size:.78rem}
 .toc button[aria-current="true"]{background:var(--surface);color:var(--ink);font-weight:600;box-shadow:var(--shadow)}
-.toc .chk{width:16px;flex:none;color:var(--quran)}
-.banner{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:20px;box-shadow:var(--shadow)}
-.banner p{margin:0;max-width:60ch}
-.pager{display:flex;justify-content:space-between;gap:10px;margin-top:24px;flex-wrap:wrap}
-.tl{list-style:none;padding:0;margin:0;border-left:2px solid var(--line)}
-.tl li{position:relative;padding:0 0 14px 18px}
-.tl li::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--c,var(--accent))}
-.tl b{display:block;font-size:.85rem;color:var(--muted)}
-.gloss{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
-.gloss div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:.92rem}
-.gloss dt{font-weight:700}
-.trad-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
-.trad-card{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:14px;padding:16px}
-.trad-card h3{margin:0 0 4px;color:var(--c)}
-.trad-card dl{margin:8px 0 0;font-size:.92rem}
-.trad-card dt{font-weight:600;margin-top:8px}
-.trad-card dd{margin:0;color:var(--muted)}
-.vs{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.vs > div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
-.layout > *{min-width:0}
-.tbl{display:block;max-width:100%;overflow-x:auto;width:100%;border-collapse:collapse;font-size:.9rem;margin:8px 0 14px}
-.tbl th,.tbl td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
-@media (max-width:760px){ .layout{grid-template-columns:1fr} .toc{position:static;max-height:none;grid-auto-flow:column;grid-auto-columns:max-content;overflow-x:auto} .vs{grid-template-columns:1fr} }
-@media (max-width:520px){ .detail{padding:20px 16px} blockquote{font-size:1.02rem} }
+.toc button.read span{color:var(--gold)}
+.prose{max-width:68ch;font:400 1.04rem/1.75 var(--f-read)}
+.prose p{margin:0 0 16px}
+.prose ul{margin:0 0 16px;padding-left:22px}
+.prose li{margin-bottom:4px}
+.prose h3{font:400 1.25rem/1.3 var(--f-display);margin:34px 0 14px}
+.prose .tbl{font-family:var(--f-ui)}
+.cite{margin:0 0 12px;padding:14px 16px 12px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm)}
+.cite .who{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.cite .src{font:400 .78rem var(--f-ui);color:var(--muted)}
+.cite q{display:block;font:400 1rem/1.65 var(--f-read);quotes:"\201C" "\201D"}
+.ask{list-style:none;padding:0!important;display:grid;gap:8px}
+.ask li{padding:10px 14px;border-left:2px solid var(--gold);background:var(--gold-wash);border-radius:0 var(--r-sm) var(--r-sm) 0;font-family:var(--f-ui);font-size:.95rem}
+.banner{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between;padding:14px 18px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);margin-bottom:30px}
+.banner p{margin:0;max-width:60ch;font-size:.94rem}
+.pager{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:36px;padding-top:22px;border-top:1px solid var(--line)}
+@media (max-width:900px){ .primer{grid-template-columns:minmax(0,1fr);gap:18px} .toc{position:static;display:flex;overflow-x:auto;scrollbar-width:none;gap:6px} .toc button{display:flex;white-space:nowrap;border:1px solid var(--line);border-radius:999px;padding:6px 12px;background:var(--surface)} }
+
+/* ── tables, timeline, learn ── */
+.tbl{display:block;overflow-x:auto;max-width:100%;border-collapse:collapse;font-size:.9rem;margin:6px 0 18px}
+.tbl th,.tbl td{text-align:left;padding:8px 12px 8px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl th{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.tl{list-style:none;padding:0;margin:0;position:relative}
+.tl::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:1px;background:var(--line-strong)}
+.tl li{position:relative;padding:0 0 16px 28px;font-size:.95rem}
+.tl li::before{content:"";position:absolute;left:0;top:6px;width:11px;height:11px;border-radius:50%;background:var(--paper);box-shadow:inset 0 0 0 2.5px var(--c,var(--gold))}
+.tl b{display:block;font:600 .78rem var(--f-ui);color:var(--muted);font-variant-numeric:tabular-nums}
+.gloss{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:0 28px;margin:0}
+.gloss div{padding:12px 0;border-bottom:1px solid var(--line)}
+.gloss dt{font:400 1.05rem var(--f-display)}
+.gloss dd{margin:2px 0 0;font-size:.9rem;color:var(--muted)}
+.tcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.tcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.tcard .h2{color:var(--c);font-size:1.35rem;margin-top:6px}
+.tcard dl{margin:12px 0 0;display:grid;gap:10px}
+.tcard dt{font:600 .7rem/1 var(--f-ui);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.tcard dd{margin:3px 0 0;font-size:.92rem}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0}
+.vs > div{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;min-width:0}
+.vs p{font-size:.95rem}
+@media (max-width:760px){ .vs{grid-template-columns:1fr} }
+.hard{border-left:2px solid var(--c);padding:4px 0 4px 18px;margin:0 0 22px}
+.hard q{display:block;font:italic 400 1.02rem/1.6 var(--f-read);margin:6px 0}
+.hard p{margin:0;font-size:.94rem;color:var(--muted);max-width:68ch}
+
+/* ── quiz ── */
+.quiz{max-width:720px}
+.quiz .scripture{margin-top:18px}
+.qopts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;margin-top:18px}
+.qopt{display:flex;align-items:center;gap:10px;border:1px solid var(--line-strong);background:var(--surface);border-radius:12px;padding:13px 14px;font-weight:600;text-align:left}
+.qopt:hover:not(:disabled){border-color:var(--ink)}
+.qopt:disabled{cursor:default}
+.qopt.right{border-color:var(--good);box-shadow:inset 0 0 0 1.5px var(--good)}
+.qopt.wrong{border-color:var(--bad);box-shadow:inset 0 0 0 1.5px var(--bad);opacity:.85}
+.qprog{display:flex;gap:4px;margin-top:6px}
+.qprog i{flex:1;height:4px;border-radius:99px;background:var(--sunk)}
+.qprog i.done{background:var(--gold)}
+.feedback{margin-top:20px;padding:16px 18px;border-radius:var(--r);background:var(--surface);border:1px solid var(--line)}
+.feedback p{margin:0 0 12px}
+.score-big{font:400 3.4rem/1 var(--f-display);color:var(--gold);font-variant-numeric:tabular-nums}
+
+/* ── practice ── */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-bottom:28px}
+.stat{background:var(--surface);padding:16px 18px}
+.stat .n{font:400 2rem/1 var(--f-display);font-variant-numeric:tabular-nums}
+.stat .l{font-size:.8rem;color:var(--muted);margin-top:6px}
+@media (max-width:640px){ .stats{grid-template-columns:repeat(2,1fr)} }
+.sub{font:400 1.3rem/1.2 var(--f-display);margin:34px 0 14px}
+.note{padding:14px 16px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface);margin-bottom:10px}
+.note .meta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:.8rem;color:var(--muted)}
+.note .q{font:italic .92rem/1.5 var(--f-read);color:var(--muted);margin:6px 0}
+.note p{margin:0;white-space:pre-line}
+.log{list-style:none;padding:0;margin:0}
+.log li{display:grid;grid-template-columns:110px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:.92rem}
+.log li b{font-variant-numeric:tabular-nums;color:var(--muted);font-weight:500}
+.log a{text-decoration:none;color:var(--c)}
+.log a:hover{text-decoration:underline}
+.install{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start}
+.install svg.app{width:52px;height:52px}
+footer.site{max-width:1040px;margin:56px auto 0;padding:22px clamp(0px,3vw,32px) 0;border-top:1px solid var(--line);font-size:.8rem;color:var(--muted)}
+footer.site p{margin:0 0 6px;max-width:80ch}
+.toast{position:fixed;left:50%;bottom:calc(var(--bar) + 20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:50;background:var(--ink);color:var(--paper);border-radius:999px;padding:10px 18px;font-size:.88rem;font-weight:600;box-shadow:var(--shadow);animation:fade .2s}
+@media (min-width:901px){ .toast{bottom:28px} }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <div class="topbar">
-      <div>
-        <h1 class="serif">Five Wisdom Traditions</h1>
-        <p>The common principles of the major religions, and the most-quoted passages of the Bible, Tao Te Ching, Quran, Buddhist sutras and the Analects of Confucius: what each one means, where it comes from, and how to live it today.</p>
-      </div>
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme">◐ Theme</button>
-    </div>
-  </header>
-</div>
-<nav class="tabs" aria-label="Sections">
-  <div class="wrap" role="tablist">
-    <button role="tab" data-tab="primer">Primer</button>
-    <button role="tab" data-tab="today">Today</button>
-    <button role="tab" data-tab="explore">Explore</button>
-    <button role="tab" data-tab="themes">Common threads</button>
-    <button role="tab" data-tab="learn">Learn</button>
-    <button role="tab" data-tab="quiz">Quiz</button>
-    <button role="tab" data-tab="practice">My practice</button>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="logo" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="var(--ink)"/><circle cx="32" cy="32" r="21" fill="none" stroke="var(--gold)" stroke-width="1.2" opacity=".55"/><g fill="var(--gold)"><circle cx="32" cy="11" r="3.4"/><circle cx="51.97" cy="25.51" r="3.4"/><circle cx="44.34" cy="49" r="3.4"/><circle cx="19.66" cy="49" r="3.4"/><circle cx="12.03" cy="25.51" r="3.4"/></g><circle cx="32" cy="32" r="5" fill="var(--paper)"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M3 5.5C5.5 4.5 8.5 4.5 12 6.5c3.5-2 6.5-2 9-1V19c-2.5-1-5.5-1-9 1-3.5-2-6.5-2-9-1z"/><path d="M12 6.5V20"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></symbol>
+    <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></symbol>
+    <symbol id="i-cap" viewBox="0 0 24 24"><path d="m2.5 9 9.5-4.5L21.5 9 12 13.5z"/><path d="M6.5 11v4.5c1.5 1.5 3.5 2.3 5.5 2.3s4-.8 5.5-2.3V11M21.5 9v5"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 15-14-1 10-6 15-14 15"/><path d="M5 19c3-4 6-7 10-9"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10A4.5 4.5 0 0 1 12 7.2 4.5 4.5 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M4 10v4h3.5L12 18V6L7.5 10z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+    <symbol id="i-seed" viewBox="0 0 24 24"><path d="M12 21v-8"/><path d="M12 13C12 8 8.5 5 4 5c0 4.5 3 8 8 8zM12 13c0-4 3-7 8-7 0 4-3 7-8 7z"/></symbol>
+  </defs>
+</svg>
+
+<aside class="rail" aria-label="Sections">
+  <a class="mark" href="#today" data-tab="today"><svg aria-hidden="true"><use href="#logo"/></svg><span><b>Five Wisdom Traditions</b><small>Common principles</small></span></a>
+  <nav class="nav" id="nav"></nav>
+  <div class="rail-foot">
+    <button class="ghost" data-install hidden><svg class="ic"><use href="#i-down"/></svg>Install app</button>
+    <button class="ghost" data-theme-toggle><svg class="ic"><use href="#i-moon"/></svg>Light / dark</button>
   </div>
-</nav>
-<main class="wrap" id="view"></main>
-<div class="wrap"><footer>Translations: Bible from the King James Version; Tao Te Ching, Analects and Dhammapada adapted from James Legge and Max Müller (public domain); Quran and other sutras rendered in plain modern English after public-domain translations. Translations are approximate. Use the "Read the full text" links to check each passage in context. The Primer is adapted from the discussion series <i>Common Principles of the Major Religions</i> (2017–2018).</footer></div>
-
-<dialog id="dlg" aria-label="Passage detail"></dialog>
-
+</aside>
+<header class="topbar">
+  <a class="mark" href="#today" data-tab="today"><svg aria-hidden="true"><use href="#logo"/></svg><span><b>Five Wisdom Traditions</b></span></a>
+  <button class="iconbtn" data-theme-toggle aria-label="Switch light or dark theme"><svg class="ic"><use href="#i-moon"/></svg></button>
+</header>
+<main><div class="page" id="view"></div>
+  <footer class="site">
+    <p>The Primer is adapted from the discussion series <i>Common Principles of the Major Religions</i> (Cincinnati, 2017–2018).</p>
+    <p>Translations: the Bible from the King James Version; the Tao Te Ching, Analects and Dhammapada adapted from James Legge and Max Müller (public domain); the Quran and other sutras rendered in plain modern English after public-domain translations. Translations are approximate. Use the source links to read each passage in context.</p>
+  </footer>
+</main>
+<nav class="bottombar" id="bottombar" aria-label="Sections"></nav>
+<div class="sheet" id="sheet" aria-hidden="true"><div class="scrim" data-close></div><div class="panel" role="dialog" aria-modal="true" aria-label="Passage" id="panel" tabindex="-1"></div></div>
 <script>
 const TRADITIONS = {
   bible:     {name:"Bible", full:"The Bible", color:"var(--bible)"},
@@ -937,205 +1079,229 @@ const store = {
   get(k, d){ try{ const v = localStorage.getItem("fwt:"+k); return v ? JSON.parse(v) : d; }catch(e){ return d; } },
   set(k, v){ try{ localStorage.setItem("fwt:"+k, JSON.stringify(v)); }catch(e){} }
 };
+const TABS = [
+  ["today","Today","i-sun"],
+  ["primer","Primer","i-book"],
+  ["explore","Passages","i-compass"],
+  ["learn","Learn","i-cap"],
+  ["practice","Practice","i-leaf"]
+];
 const state = {
-  tab: store.get("tab","primer"),
-  trad: "all", theme: "all", q: "",
+  tab: store.get("tab", "primer"),
+  exploreView: "all", trad: "all", theme: "all", q: "",
+  learnSec: "quiz",
   saved: new Set(store.get("saved", [])),
-  log: store.get("log", {}),   // { "YYYY-MM-DD": [ids] }
-  quiz: null,
-  quizMode: "tradition",
-  journal: store.get("journal", {}), // { id: {text, date} }
+  log: store.get("log", {}),
+  journal: store.get("journal", {}),
   quiet: store.get("quiet", false),
   primerCh: store.get("primerCh", 0),
-  primerRead: new Set(store.get("primerRead", []))
+  primerRead: new Set(store.get("primerRead", [])),
+  quizMode: "tradition", quiz: null
 };
 const byId = Object.fromEntries(P.map(p => [p.id, p]));
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+const icon = (id, cls = "ic") => `<svg class="${cls}" aria-hidden="true"><use href="#${id}"/></svg>`;
 const todayKey = (d = new Date()) => d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
 const dayIndex = () => { const d = new Date(); return Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 864e5); };
+const tradTag = k => `<span class="trad" style="--c:${TRADITIONS[k].color}"><span class="dot"></span>${TRADITIONS[k].name}</span>`;
+const shuffle = a => { a = [...a]; for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+function toast(msg){ const t = document.createElement("div"); t.className = "toast"; t.textContent = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 1800); }
 
-/* ───────── theme toggle ───────── */
+/* ───────── theme ───────── */
 (function(){
   const saved = store.get("theme", null);
   if (saved) document.documentElement.dataset.theme = saved;
-  $("#themeToggle").onclick = () => {
-    const cur = document.documentElement.dataset.theme ||
-      (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-    const next = cur === "dark" ? "light" : "dark";
-    document.documentElement.dataset.theme = next; store.set("theme", next);
-  };
 })();
+function toggleTheme(){
+  const cur = document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  const next = cur === "dark" ? "light" : "dark";
+  document.documentElement.dataset.theme = next; store.set("theme", next);
+}
 
-/* ───────── rendering helpers ───────── */
+/* ───────── shared pieces ───────── */
 function card(p){
   const t = TRADITIONS[p.trad];
   return `<button class="card" style="--c:${t.color}" data-open="${p.id}">
-    <div class="meta"><b>${t.name}</b><span>${state.saved.has(p.id) ? "♥ " : ""}${esc(p.ref)}</span></div>
-    <h3 class="serif">${esc(p.title)}</h3>
-    <p class="quote serif">${esc(p.text.replace(/\n/g," "))}</p>
-    <div class="tags">${p.themes.map(th => `<span class="tag">${THEMES[th].name}</span>`).join("")}</div>
+    <div class="top">${tradTag(p.trad)}<span class="ref">${esc(p.ref)}</span></div>
+    <h3>${esc(p.title)}</h3>
+    <p>${esc(p.text.replace(/\n/g," "))}</p>
+    <div class="foot"><span>${p.themes.map(th => THEMES[th].name).slice(0,2).join(" · ")}</span>${state.saved.has(p.id) ? `<span class="saved">${icon("i-heart","ic")}</span>` : ""}</div>
   </button>`;
 }
 
-function detailHTML(p, opts = {}){
-  const t = TRADITIONS[p.trad];
+function passageHTML(p, opts = {}){
+  const t = TRADITIONS[p.trad], x = EXTRA[p.id] || {};
   const practiced = (state.log[todayKey()] || []).includes(p.id);
-  const practiceIdx = dayIndex() % p.apply.length;
-  const x = EXTRA[p.id] || {};
-  return `<div class="detail" style="--c:${t.color}">
-    ${opts.modal ? `<button class="close" data-close aria-label="Close">×</button>` : ""}
-    <div class="kicker">${opts.kicker || t.full}</div>
-    <h2 class="serif">${esc(p.title)}</h2>
+  const saved = state.saved.has(p.id);
+  const j = state.journal[p.id];
+  return `<article class="passage" style="--c:${t.color}">
+    <div class="eyebrow">${opts.kicker || t.full}</div>
+    <h1 class="h1">${esc(p.title)}</h1>
     <div class="ref">${esc(p.ref)}</div>
-    <blockquote class="serif">${esc(p.text)}</blockquote>
+    <blockquote class="scripture">${esc(p.text)}</blockquote>
     <div class="trans">${esc(p.trans)}</div>
-    ${x.orig ? `<div class="orig-wrap"><div class="trans">Original (${LANG_NAME[x.lang]})</div><div class="orig" lang="${x.lang}" dir="${x.lang==="ar"||x.lang==="he"?"rtl":"ltr"}">${esc(x.orig)}</div></div>` : ""}
-    <div class="src-row">
-      ${x.src ? `<a class="btn small" href="${x.src}" target="_blank" rel="noopener">Read the full text on ${SRC_NAME(x.src)} ↗</a>` : ""}
-      ${"speechSynthesis" in window ? `<button class="btn small" data-listen="${p.id}">🔊 Listen</button>` : ""}
-      ${x.orig && "speechSynthesis" in window && x.lang !== "pi" ? `<button class="btn small" data-listen-orig="${p.id}">🔊 Original</button>` : ""}
+    ${x.orig ? `<div class="orig"><div class="eyebrow" style="--c:var(--muted)">Original · ${LANG_NAME[x.lang]}</div><div class="t" lang="${x.lang}" dir="${x.lang==="ar"||x.lang==="he"?"rtl":"ltr"}">${esc(x.orig)}</div></div>` : ""}
+    <div class="tools">
+      ${x.src ? `<a class="btn sm" href="${x.src}" target="_blank" rel="noopener">${icon("i-ext")}Full text · ${SRC_NAME(x.src)}</a>` : ""}
+      ${"speechSynthesis" in window ? `<button class="btn sm" data-listen="${p.id}">${icon("i-play")}Listen</button>` : ""}
+      ${x.orig && "speechSynthesis" in window && x.lang !== "pi" ? `<button class="btn sm" data-listen-orig="${p.id}">${icon("i-play")}Original</button>` : ""}
     </div>
-    ${opts.daily ? `<div class="practice-box"><strong>Today's practice:</strong> ${esc(p.apply[practiceIdx])}</div>` : ""}
-    <div class="section"><h4>What it means</h4><p>${esc(p.meaning)}</p></div>
-    <div class="section"><h4>Context</h4><p>${esc(p.context)}</p></div>
-    <div class="section"><h4>Living it today</h4><ul class="apply">${p.apply.map(a => `<li>${esc(a)}</li>`).join("")}</ul></div>
-    <div class="section"><h4>Reflect</h4><p class="reflect serif">${esc(p.reflect)}</p>
-      <textarea class="journal" data-journal="${p.id}" rows="3" placeholder="Write your reflection. It's saved privately in this browser.">${esc((state.journal[p.id]||{}).text||"")}</textarea>
-      <div class="trans journal-status" id="js-${p.id}">${state.journal[p.id] ? "Last saved " + state.journal[p.id].date : ""}</div></div>
-    <div class="section"><h4>Themes</h4><div class="tags">${p.themes.map(th => `<span class="tag">${THEMES[th].name}</span>`).join("")}</div></div>
+    ${opts.daily ? `<div class="practice">${icon("i-seed")}<b>Today's practice</b><div>${esc(p.apply[dayIndex() % p.apply.length])}</div></div>` : ""}
+    <section class="sec"><h4>What it means</h4><p>${esc(p.meaning)}</p></section>
+    <section class="sec"><h4>Context</h4><p>${esc(p.context)}</p></section>
+    <section class="sec"><h4>Living it today</h4><ol class="steps">${p.apply.map(a => `<li>${esc(a)}</li>`).join("")}</ol></section>
+    <section class="sec"><h4>Reflect</h4><p class="reflect">${esc(p.reflect)}</p>
+      <label class="sr" for="j-${opts.daily ? "d-" : ""}${p.id}">Your reflection</label>
+      <textarea class="journal" id="j-${opts.daily ? "d-" : ""}${p.id}" data-journal="${p.id}" rows="3" placeholder="Write your reflection. It stays private in this browser.">${esc(j ? j.text : "")}</textarea>
+      <div class="trans" data-jstatus="${p.id}">${j ? "Saved " + j.date : ""}</div>
+    </section>
+    <section class="sec"><h4>Themes</h4><div class="tags">${p.themes.map(th => `<button class="tag" data-goto-theme="${th}">${THEMES[th].name}</button>`).join("")}</div></section>
     <div class="actions">
-      <button class="btn" data-save="${p.id}" aria-pressed="${state.saved.has(p.id)}">${state.saved.has(p.id) ? "♥ Saved" : "♡ Save"}</button>
-      ${state.quiet ? "" : `<button class="btn ${practiced ? "" : "primary"}" data-practice="${p.id}" aria-pressed="${practiced}">${practiced ? "✓ Practiced today" : "Mark as practiced today"}</button>`}
-      <button class="btn" data-copy="${p.id}">Copy passage</button>
+      <button class="btn" data-save="${p.id}" aria-pressed="${saved}">${icon("i-heart")}${saved ? "Saved" : "Save"}</button>
+      ${state.quiet ? "" : `<button class="btn ${practiced ? "" : "gold"}" data-practice="${p.id}" aria-pressed="${practiced}">${icon("i-check")}${practiced ? "Practiced today" : "Mark as practiced"}</button>`}
+      <button class="btn" data-copy="${p.id}">${icon("i-copy")}Copy</button>
     </div>
-  </div>`;
+  </article>`;
 }
 
-function openDetail(id){
-  const dlg = $("#dlg");
-  dlg.innerHTML = detailHTML(byId[id], {modal:true});
-  if (!dlg.open) dlg.showModal();
-  dlg.scrollTop = 0;
+/* ───────── sheet ───────── */
+let lastFocus = null, sheetId = null;
+function openSheet(id){
+  sheetId = id; lastFocus = document.activeElement;
+  const p = byId[id], sh = $("#sheet"), panel = $("#panel");
+  panel.style.setProperty("--c", TRADITIONS[p.trad].color);
+  panel.innerHTML = `<button class="iconbtn close" data-close aria-label="Close">${icon("i-x")}</button>` + passageHTML(p);
+  sh.classList.add("open"); sh.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+  panel.scrollTop = 0; panel.focus();
+}
+function closeSheet(){
+  const sh = $("#sheet"); if (!sh.classList.contains("open")) return;
+  sh.classList.remove("open"); sh.setAttribute("aria-hidden","true"); sheetId = null;
+  document.body.style.overflow = "";
+  if ("speechSynthesis" in window) speechSynthesis.cancel();
+  render(false);
+  if (lastFocus && document.contains(lastFocus)) lastFocus.focus();
+}
+function refreshSheet(){
+  if (!sheetId) return;
+  const panel = $("#panel"), st = panel.scrollTop;
+  panel.innerHTML = `<button class="iconbtn close" data-close aria-label="Close">${icon("i-x")}</button>` + passageHTML(byId[sheetId]);
+  panel.scrollTop = st;
 }
 
 /* ───────── views ───────── */
 const views = {
+  today(){
+    const p = P[dayIndex() % P.length];
+    const read = state.primerRead.size, total = PRIMER.length;
+    const next = Math.min(state.primerCh + (state.primerRead.has(state.primerCh) ? 1 : 0), total - 1);
+    const dateStr = new Date().toLocaleDateString(undefined, {weekday:"long", month:"long", day:"numeric"});
+    const savedCount = state.saved.size;
+    return `<div class="today">
+      <div>${passageHTML(p, {daily:true, kicker:`Passage of the day · ${esc(dateStr)}`})}</div>
+      <aside class="aside">
+        <div class="panel-box"><div class="eyebrow">Primer</div><div class="h3" style="margin-top:6px">${read >= total ? "You've read the whole primer" : esc(PRIMER[next].t)}</div>
+          <div class="meter" role="img" aria-label="${read} of ${total} sections read"><i style="width:${Math.round(read/total*100)}%"></i></div>
+          <p>${read} of ${total} sections read</p>
+          <button class="btn sm" data-primer="${next}">${read ? "Continue reading" : "Start the primer"}${icon("i-arrow")}</button></div>
+        <div class="panel-box"><div class="eyebrow">Test yourself</div><div class="h3" style="margin-top:6px">Which tradition said it?</div>
+          <p>Ten quotes, five traditions. Harder than it sounds.</p>
+          <button class="btn sm" data-goto-learn="quiz">Take the quiz${icon("i-arrow")}</button></div>
+        <div class="panel-box"><div class="eyebrow">Explore</div><div class="h3" style="margin-top:6px">${P.length} passages, ${Object.keys(THEMES).length} common threads</div>
+          <p>${savedCount ? `${savedCount} saved so far.` : "Browse by tradition or by theme."}</p>
+          <button class="btn sm" data-tab="explore">Browse passages${icon("i-arrow")}</button></div>
+      </aside></div>`;
+  },
+
   primer(){
     const i = Math.min(state.primerCh, PRIMER.length - 1), ch = PRIMER[i];
     state.primerRead.add(i); store.set("primerRead", [...state.primerRead]);
-    const toc = PRIMER.map((c,k) => `<button data-primer="${k}" aria-current="${k===i}"><span class="chk">${state.primerRead.has(k) && k!==i ? "✓" : ""}</span>${k ? k + ". " : ""}${esc(c.t)}</button>`).join("");
-    const sages = ch.sages ? `<h3 class="serif">The eight sages of the series</h3><ul class="tl">${SAGES.map(([n,d,k]) => `<li style="--c:${TRADITIONS[k].color}"><b>${d}</b>${n}</li>`).join("")}</ul>` : "";
-    const virtues = ch.virtues ? `<table class="tbl"><tr><th>Virtue</th><th>Element</th><th>Precept</th><th>Its seed (Mencius)</th></tr>${VIRTUES.map(v => `<tr><td><b>${v[0]}</b> <span lang="zh">${v[1]}</span></td><td>${v[2]}</td><td>${v[3]}</td><td>${v[4]}</td></tr>`).join("")}</table>` : "";
-    const quotes = ch.q ? `<h3 class="serif">What the sages say</h3>${ch.q.map(([k,who,txt,ref]) => `<div class="cite" style="--c:${QCOLOR(k)}"><div class="who">${esc(who)}</div><div class="serif">"${esc(txt)}"</div>${ref ? `<div class="src">${esc(ref)}</div>` : ""}</div>`).join("")}` : "";
-    const ask = ch.ask ? `<h3 class="serif">Questions for reflection or discussion</h3><ul>${ch.ask.map(a => `<li>${esc(a)}</li>`).join("")}</ul>` : "";
-    const rel = ch.rel ? `<h3 class="serif">Go deeper in the app</h3><div class="grid">${ch.rel.filter(id => byId[id]).map(id => card(byId[id])).join("")}</div>` : "";
-    return `<div class="banner"><p><b>Primer:</b> the common principles of the major religions, in ${PRIMER.length - 1} short chapters. Just here for the quotes?</p><button class="btn primary" data-skip-primer>Skip to the passages →</button></div>
-      <div class="layout"><nav class="toc" aria-label="Primer chapters">${toc}</nav>
-      <article class="prose">
-        <div class="kicker" style="--c:var(--accent)">${i ? "Chapter " + i : "Introduction"}</div>
-        <h2 class="serif">${esc(ch.t)}</h2><p class="ref" style="margin-bottom:14px">${esc(ch.sub)}</p>
-        ${ch.intro}${sages}${virtues}${quotes}${ask}
-      </article></div>
-      ${rel}
-      <div class="pager">${i > 0 ? `<button class="btn" data-primer="${i-1}">← ${esc(PRIMER[i-1].t)}</button>` : "<span></span>"}
-        ${i < PRIMER.length - 1 ? `<button class="btn primary" data-primer="${i+1}">${esc(PRIMER[i+1].t)} →</button>` : `<button class="btn primary" data-skip-primer>Start with today's passage →</button>`}</div>`;
+    const toc = PRIMER.map((c,k) => `<button data-primer="${k}" aria-current="${k===i}" class="${state.primerRead.has(k) ? "read" : ""}"><span>${k ? String(k).padStart(2,"0") : "—"}</span>${esc(c.t)}</button>`).join("");
+    const sages = ch.sages ? `<h3>The eight sages of the series</h3><ul class="tl">${SAGES.map(([n,d,k]) => `<li style="--c:${TRADITIONS[k].color}"><b>${d}</b>${n}</li>`).join("")}</ul>` : "";
+    const virtues = ch.virtues ? `<table class="tbl"><thead><tr><th>Virtue</th><th>Element</th><th>Precept</th><th>Its seed (Mencius)</th></tr></thead><tbody>${VIRTUES.map(v => `<tr><td><b>${v[0]}</b> <span lang="zh" style="font-family:var(--f-zh)">${v[1]}</span></td><td>${v[2]}</td><td>${v[3]}</td><td>${v[4] || "—"}</td></tr>`).join("")}</tbody></table>` : "";
+    const quotes = ch.q ? `<h3>What the sages say</h3>${ch.q.map(([k,who,txt,ref]) => `<div class="cite"><div class="who"><span class="trad" style="--c:${QCOLOR(k)}"><span class="dot"></span>${esc(who)}</span>${ref ? `<span class="src">${esc(ref)}</span>` : ""}</div><q>${esc(txt)}</q></div>`).join("")}` : "";
+    const ask = ch.ask ? `<h3>For reflection or discussion</h3><ul class="ask">${ch.ask.map(a => `<li>${esc(a)}</li>`).join("")}</ul>` : "";
+    const rel = ch.rel ? `<h3>Related passages</h3><div class="grid" style="font-family:var(--f-ui)">${ch.rel.filter(id => byId[id]).map(id => card(byId[id])).join("")}</div>` : "";
+    return `<div class="banner"><p><b>The Primer</b> sets out the common principles of the major religions in ${PRIMER.length - 1} short chapters. Here for the passages?</p><button class="btn gold sm" data-skip-primer>Skip to the passages${icon("i-arrow")}</button></div>
+      <div class="primer">
+        <nav class="toc" aria-label="Primer chapters">${toc}</nav>
+        <div style="min-width:0">
+          <div class="eyebrow">${i ? "Chapter " + i + " of " + (PRIMER.length - 1) : "Introduction"}</div>
+          <h1 class="h1">${esc(ch.t)}</h1>
+          <p class="lede">${esc(ch.sub)}</p>
+          <div class="prose" style="margin-top:22px">${ch.intro}${sages}${virtues}${quotes}${ask}${rel}</div>
+          <div class="pager">${i > 0 ? `<button class="btn" data-primer="${i-1}">${icon("i-back")}${esc(PRIMER[i-1].t)}</button>` : "<span></span>"}
+            ${i < PRIMER.length - 1 ? `<button class="btn gold" data-primer="${i+1}">${esc(PRIMER[i+1].t)}${icon("i-arrow")}</button>` : `<button class="btn gold" data-tab="today">Go to today's passage${icon("i-arrow")}</button>`}</div>
+        </div>
+      </div>`;
   },
-  today(){
-    const p = P[dayIndex() % P.length];
-    return `<div class="hero">${detailHTML(p, {daily:true, kicker:"Passage of the day · " + TRADITIONS[p.trad].full})}</div>
-      <p class="count" style="margin-top:14px">A new passage each day, rotating through all ${P.length}. Come back tomorrow, or <button class="chip" data-goto="explore">explore them all</button></p>`;
-  },
+
   explore(){
+    const head = `<div class="page-head"><div class="eyebrow">Passages</div><h1 class="h1">The most-quoted words of five traditions</h1>
+      <p class="lede">Each passage comes with its meaning, its context, and three ways to live it.</p></div>
+      <div class="seg" role="group" aria-label="View" style="margin-bottom:20px"><button data-explore="all" aria-pressed="${state.exploreView==="all"}">All passages</button><button data-explore="threads" aria-pressed="${state.exploreView==="threads"}">Common threads</button></div>`;
+    if (state.exploreView === "threads"){
+      return head + Object.entries(THEMES).map(([k,v]) => {
+        const list = P.filter(p => p.themes.includes(k));
+        const trads = new Set(list.map(p => p.trad));
+        return `<section style="margin-bottom:40px" id="th-${k}">
+          <div class="row" style="justify-content:space-between;align-items:baseline"><h2 class="h2">${v.name}</h2><span class="count">${list.length} passages · ${trads.size} of 5 traditions</span></div>
+          <p class="lede" style="margin:6px 0 14px">${v.desc}</p>
+          ${v.note ? `<p class="small muted" style="max-width:80ch;margin:0 0 14px;padding:12px 14px;background:var(--sunk);border-radius:var(--r-sm)">${esc(v.note)}</p>` : ""}
+          <div class="grid">${list.map(card).join("")}</div></section>`;
+      }).join("");
+    }
     const q = state.q.trim().toLowerCase();
     const list = P.filter(p =>
       (state.trad === "all" || p.trad === state.trad) &&
       (state.theme === "all" || p.themes.includes(state.theme)) &&
       (!q || [p.title,p.text,p.ref,p.meaning,p.context,p.apply.join(" ")].join(" ").toLowerCase().includes(q)));
     const tradChips = [["all","All traditions",null], ...Object.entries(TRADITIONS).map(([k,v]) => [k,v.name,v.color])]
-      .map(([k,n,c]) => `<button class="chip" data-trad="${k}" aria-pressed="${state.trad===k}">${c?`<span class="dot" style="background:${c}"></span>`:""}${n}</button>`).join("");
+      .map(([k,n,c]) => `<button class="chip" data-trad="${k}" aria-pressed="${state.trad===k}" ${c?`style="--c:${c}"`:""}>${c?`<span class="dot"></span>`:""}${n}</button>`).join("");
     const themeChips = [["all","Any theme"], ...Object.entries(THEMES).map(([k,v]) => [k,v.name])]
       .map(([k,n]) => `<button class="chip" data-theme="${k}" aria-pressed="${state.theme===k}">${n}</button>`).join("");
-    return `<div class="controls"><input class="search" id="search" type="search" placeholder="Search words, ideas or references (e.g. anxiety, water, Psalm)" value="${esc(state.q)}"></div>
-      <div class="controls">${tradChips}</div>
-      <div class="controls">${themeChips}</div>
+    return head + `<div class="toolbar">
+        <label class="search">${icon("i-search")}<span class="sr">Search passages</span><input id="search" type="search" placeholder="Search: anxiety, water, forgiveness, Psalm…" value="${esc(state.q)}" autocomplete="off"></label>
+        <div class="chips" role="group" aria-label="Tradition">${tradChips}</div>
+        <div class="chips" role="group" aria-label="Theme">${themeChips}</div>
+      </div>
       <p class="count">${list.length} passage${list.length===1?"":"s"}</p>
-      ${list.length ? `<div class="grid">${list.map(card).join("")}</div>` : `<p class="empty">No passages match. Try a different word or filter.</p>`}`;
+      ${list.length ? `<div class="grid">${list.map(card).join("")}</div>` : `<p class="empty">No passages match. Try another word or clear a filter.</p>`}`;
   },
-  themes(){
-    return Object.entries(THEMES).map(([k,v]) => {
-      const list = P.filter(p => p.themes.includes(k));
-      const trads = new Set(list.map(p => p.trad));
-      return `<section class="theme-block">
-        <h2 class="serif">${v.name}</h2>
-        <p>${v.desc} <em>Found in ${trads.size} of 5 traditions here.</em></p>
-        ${v.note ? `<p class="note">${esc(v.note)}</p>` : ""}
-        <div class="grid">${list.map(card).join("")}</div>
-      </section>`;
-    }).join("");
-  },
+
   learn(){
-    const sec = state.learnSec || "traditions";
-    const segs = [["traditions","The five traditions"],["timeline","Timeline"],["glossary","Glossary"],["same","Same or different?"],["hard","Hard passages"]]
+    const sec = state.learnSec;
+    const segs = [["quiz","Quiz"],["traditions","The five traditions"],["timeline","Timeline"],["glossary","Glossary"],["same","Same or different?"],["hard","Hard passages"]]
       .map(([k,n]) => `<button data-learn="${k}" aria-pressed="${sec===k}">${n}</button>`).join("");
     let body = "";
-    if (sec === "traditions") body = `<p class="count">New to a tradition? Start here: who, when, which books, and the big idea.</p><div class="trad-cards">${Object.entries(TRAD_INFO).map(([k,i]) => `
-      <div class="trad-card" style="--c:${TRADITIONS[k].color}"><h3 class="serif">${TRADITIONS[k].full}</h3>
-      <dl><dt>Founders and teachers</dt><dd>${esc(i.who)}</dd><dt>When</dt><dd>${esc(i.when)}</dd><dt>Key texts</dt><dd>${esc(i.texts)}</dd>
-      <dt>The big idea</dt><dd>${esc(i.core)}</dd><dt>Branches</dt><dd>${esc(i.branches)}</dd><dt>How it's practiced</dt><dd>${esc(i.practice)}</dd></dl>
-      <div class="actions"><button class="btn small" data-goto-trad="${k}">See its ${P.filter(p=>p.trad===k).length} passages →</button></div></div>`).join("")}</div>`;
-    if (sec === "timeline") body = `<div class="prose"><p>Four of these five traditions took shape within a few centuries of each other, in what historians call the Axial Age. Christianity and Islam built on the Hebrew prophets who came before them.</p></div>
-      <ul class="tl">${TIMELINE.map(([d,t,k]) => `<li style="--c:${k?TRADITIONS[k].color:"var(--accent)"}"><b>${d}</b>${esc(t)}</li>`).join("")}</ul>`;
-    if (sec === "glossary") body = `<dl class="gloss">${GLOSSARY.map(([t,d]) => `<div><dt>${esc(t)}</dt><dd style="margin:0">${esc(d)}</dd></div>`).join("")}</dl>`;
-    if (sec === "same") body = `<div class="prose"><h2 class="serif">Are they all saying the same thing?</h2>
-      <p>This app groups passages into "common threads," but serious thinkers disagree about how deep the common ground goes. Here are both sides, so you can decide for yourself.</p></div>
-      <div class="vs"><div><h3 class="serif" style="margin-top:0">Common ground</h3>
-        <p><b>Karen Armstrong</b> (<i>The Great Transformation</i>, <i>Twelve Steps to a Compassionate Life</i>) argues that the Axial Age sages all reached the same core insight: compassion and the Golden Rule, practiced every day, are the heart of religion. Religion is something you do, not just something you believe. Her Charter for Compassion (2009) invites people of all faiths to put this at the center.</p>
-        <p>This app's Primer, from <i>Common Principles of the Major Religions</i>, takes a similar view. It sets each tradition's words side by side on the same life question and finds five shared virtues underneath.</p></div>
-      <div><h3 class="serif" style="margin-top:0">Real differences</h3>
-        <p><b>Stephen Prothero</b> (<i>God Is Not One</i>, 2010) argues that the traditions ask different questions. Each names a different problem and offers a different solution, and claiming they're all the same disrespects what each one actually teaches.</p>
-        <table class="tbl"><tr><th>Tradition</th><th>The problem</th><th>The solution</th></tr>${PROTHERO.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("")}</table></div></div>
-      <div class="prose" style="margin-top:16px"><h3 class="serif">A useful middle path</h3><p>Shared ethics, different destinations. The traditions overlap strongly on how to treat people (compassion, honesty, humility, self-control) and differ on the deepest questions: who or what God is, what happens after death, and what salvation or liberation means. Notice both. Respect is easier when you understand the differences and don't erase them.</p></div>`;
-    if (sec === "hard") body = `<div class="prose"><h2 class="serif">Reading the hard passages</h2>
-      <p>Every tradition has passages that trouble modern readers. The most-quoted verses tend to be the comforting ones, so here are a few difficult ones, with how readers inside each tradition approach them. Karen Armstrong calls this the "principle of charity": read the hard texts in light of the tradition's own central teaching of compassion.</p>
-      <h3 class="serif">Four questions for any difficult text</h3><ul><li><b>Context:</b> what comes just before and after?</li><li><b>Audience:</b> who was it addressed to, when, and why?</li><li><b>The center:</b> how does it fit the tradition's own core teaching?</li><li><b>Tradition:</b> how have the tradition's own scholars read it?</li></ul></div>
-      ${HARD.map(h => `<div class="cite" style="--c:${TRADITIONS[h.trad].color}"><div class="who">${TRADITIONS[h.trad].name} · ${esc(h.ref)}</div><p class="serif" style="margin:4px 0 8px">"${esc(h.text)}"</p><p style="margin:0;font-size:.92rem">${esc(h.note)}</p></div>`).join("")}`;
-    return `<div class="seg" role="group" aria-label="Learn sections" style="flex-wrap:wrap">${segs}</div>${body}`;
+    if (sec === "quiz") body = quizHTML();
+    if (sec === "traditions") body = `<div class="tcards">${Object.entries(TRAD_INFO).map(([k,i]) => `
+      <div class="tcard" style="--c:${TRADITIONS[k].color}">${tradTag(k)}<h2 class="h2">${TRADITIONS[k].full}</h2>
+      <dl><div><dt>Founders and teachers</dt><dd>${esc(i.who)}</dd></div><div><dt>When</dt><dd>${esc(i.when)}</dd></div><div><dt>Key texts</dt><dd>${esc(i.texts)}</dd></div>
+      <div><dt>The big idea</dt><dd>${esc(i.core)}</dd></div><div><dt>Branches</dt><dd>${esc(i.branches)}</dd></div><div><dt>Practice</dt><dd>${esc(i.practice)}</dd></div></dl>
+      <div style="margin-top:16px"><button class="btn sm" data-goto-trad="${k}">Read its ${P.filter(p=>p.trad===k).length} passages${icon("i-arrow")}</button></div></div>`).join("")}</div>`;
+    if (sec === "timeline") body = `<p class="lede" style="margin:0 0 22px">Four of these traditions took shape within a few centuries of each other, in what historians call the Axial Age. Christianity and Islam built on the Hebrew prophets who came before.</p>
+      <ul class="tl">${TIMELINE.map(([d,t,k]) => `<li style="--c:${k?TRADITIONS[k].color:"var(--gold)"}"><b>${d}</b>${esc(t)}</li>`).join("")}</ul>`;
+    if (sec === "glossary") body = `<dl class="gloss">${GLOSSARY.map(([t,d]) => `<div><dt>${esc(t)}</dt><dd>${esc(d)}</dd></div>`).join("")}</dl>`;
+    if (sec === "same") body = `<p class="lede" style="margin:0">The Primer and the "common threads" view group the traditions together, but serious thinkers disagree about how deep the common ground goes. Here are both sides.</p>
+      <div class="vs"><div><div class="eyebrow">Common ground</div><h2 class="h2" style="margin:6px 0 10px">Karen Armstrong</h2>
+        <p>In <i>The Great Transformation</i> and <i>Twelve Steps to a Compassionate Life</i>, Armstrong argues that the Axial Age sages reached the same core insight: compassion and the Golden Rule, practiced daily, are the heart of religion, and religion is something you do, not only something you believe. Her Charter for Compassion (2009) invites people of every faith to put this at the center.</p>
+        <p>The <i>Common Principles</i> series behind the Primer takes a similar view. It sets each tradition's words side by side on one life question and finds five shared virtues underneath.</p></div>
+      <div><div class="eyebrow">Real differences</div><h2 class="h2" style="margin:6px 0 10px">Stephen Prothero</h2>
+        <p>In <i>God Is Not One</i> (2010), Prothero argues that each tradition names a different problem and offers a different solution, and that calling them all the same disrespects what each actually teaches.</p>
+        <table class="tbl"><thead><tr><th>Tradition</th><th>Problem</th><th>Solution</th></tr></thead><tbody>${PROTHERO.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("")}</tbody></table></div></div>
+      <h2 class="h2" style="margin-top:8px">A useful middle path</h2>
+      <p class="lede">Shared ethics, different destinations. The traditions overlap strongly on how to treat people: compassion, honesty, humility, self-control. They differ on the deepest questions: who or what God is, what happens after death, and what salvation or liberation means. Respect comes more easily when you understand the differences instead of erasing them.</p>`;
+    if (sec === "hard") body = `<p class="lede" style="margin:0 0 18px">Every tradition has passages that trouble modern readers. The most-quoted verses tend to be the comforting ones, so here are some difficult ones and how readers within each tradition approach them. Karen Armstrong calls this the "principle of charity": read a hard text in light of the tradition's own central teaching of compassion.</p>
+      <div class="panel-box" style="margin-bottom:26px;max-width:68ch"><div class="h3">Four questions for any difficult text</div>
+        <ol class="steps" style="margin-top:10px;--c:var(--gold)"><li><b>Context:</b> what comes just before and after?</li><li><b>Audience:</b> who was it addressed to, when, and why?</li><li><b>The center:</b> how does it fit the tradition's own core teaching?</li><li><b>Tradition:</b> how have its own scholars read it?</li></ol></div>
+      ${HARD.map(h => `<div class="hard" style="--c:${TRADITIONS[h.trad].color}"><div class="row" style="justify-content:space-between">${tradTag(h.trad)}<span class="count">${esc(h.ref)}</span></div><q>${esc(h.text)}</q><p>${esc(h.note)}</p></div>`).join("")}`;
+    return `<div class="page-head"><div class="eyebrow">Learn</div><h1 class="h1">Background, context and practice</h1></div>
+      <div class="seg" role="group" aria-label="Learn sections" style="margin-bottom:26px">${segs}</div>${body}`;
   },
-  quiz(){
-    if (!state.quiz) newQuiz();
-    const z = state.quiz;
-    const modes = `<div class="seg" role="group" aria-label="Quiz type"><button data-quiz-mode="tradition" aria-pressed="${state.quizMode==="tradition"}">Which tradition?</button><button data-quiz-mode="meaning" aria-pressed="${state.quizMode==="meaning"}">What does it mean?</button></div>`;
-    if (z.i >= z.items.length){
-      const pct = Math.round(z.score / z.items.length * 100);
-      return `<div class="quiz">${modes}<h2 class="serif">Quiz complete</h2>
-        <p class="score" style="font-size:1.2rem">You scored <b>${z.score} / ${z.items.length}</b> (${pct}%)</p>
-        <p>${pct >= 80 ? "Impressive. You know these teachings well." : pct >= 50 ? "Good work. The overlaps between traditions are what make this hard." : "These traditions sound alike more often than people expect. That's part of the lesson."}</p>
-        <button class="btn primary" data-quiz-restart>Play again</button></div>`;
-    }
-    const p = byId[z.items[z.i]];
-    const right = z.mode === "tradition" ? p.trad : p.id;
-    const choices = z.mode === "tradition"
-      ? Object.entries(TRADITIONS).map(([k,v]) => [k, `<span class="dot" style="background:${v.color}"></span>${v.name}`])
-      : z.choices[z.i].map(id => [id, esc(byId[id].title)]);
-    const opts = choices.map(([k,label]) => {
-      let cls = "";
-      if (z.answered){ if (k === right) cls = "right"; else if (k === z.answered) cls = "wrong"; }
-      return `<button class="qopt ${cls}" data-answer="${k}" ${z.answered?"disabled":""}>${label}</button>`;
-    }).join("");
-    const prompt = z.mode === "tradition"
-      ? `<h2 class="serif" style="margin:4px 0">Which tradition is this from?</h2><blockquote class="serif" style="--c:var(--line)">${esc(quizText(p))}</blockquote>`
-      : `<h2 class="serif" style="margin:4px 0">Which passage does this explain?</h2><blockquote style="--c:var(--line)">${esc(p.meaning)}</blockquote>`;
-    return `<div class="quiz">${modes}
-      <div class="score">Question ${z.i+1} of ${z.items.length} · Score ${z.score}</div>
-      ${prompt}
-      <div class="qopts">${opts}</div>
-      ${z.answered ? `<div class="feedback">
-        <p><b>${z.answered === right ? "Correct!" : "Not quite."}</b> This is <b>${esc(p.ref)}</b> (${TRADITIONS[p.trad].name}): "${esc(p.title)}." ${z.mode === "tradition" ? esc(p.meaning) : "Try it today: " + esc(p.apply[0])}</p>
-        <div class="actions"><button class="btn primary" data-quiz-next>${z.i+1 < z.items.length ? "Next question" : "See results"}</button><button class="btn" data-open="${p.id}">Read more</button></div>
-      </div>` : ""}
-    </div>`;
-  },
+
   practice(){
     const days = Object.keys(state.log).filter(d => state.log[d].length).sort().reverse();
     const total = days.reduce((n,d) => n + state.log[d].length, 0);
@@ -1144,103 +1310,152 @@ const views = {
     while ((state.log[todayKey(d)]||[]).length){ streak++; d.setDate(d.getDate()-1); }
     const saved = [...state.saved].filter(id => byId[id]).map(id => byId[id]);
     const notes = Object.entries(state.journal).filter(([id,j]) => byId[id] && j.text.trim()).sort((a,b) => b[1].date.localeCompare(a[1].date));
-    const tradCount = Object.fromEntries(Object.keys(TRADITIONS).map(k => [k,0]));
-    days.forEach(day => state.log[day].forEach(id => byId[id] && tradCount[byId[id].trad]++));
-    const quietToggle = `<div class="banner"><p><b>Quiet mode</b> ${state.quiet ? "is on. Streaks, counts and \"mark as practiced\" are hidden." : "hides streaks, counts and \"mark as practiced\". As Chapter 46 says, there is no fault greater than the wish to be getting."}</p>
-      <button class="btn" data-quiet aria-pressed="${state.quiet}">${state.quiet ? "Turn off quiet mode" : "Turn on quiet mode"}</button></div>`;
     const stats = state.quiet ? "" : `<div class="stats">
-        <div class="stat"><div class="n">${streak}</div><div class="l">day streak</div></div>
-        <div class="stat"><div class="n">${days.length}</div><div class="l">days practiced</div></div>
-        <div class="stat"><div class="n">${total}</div><div class="l">teachings practiced</div></div>
-        <div class="stat"><div class="n">${notes.length}</div><div class="l">reflections written</div></div>
-      </div>
-      ${total ? `<p class="count">By tradition: ${Object.entries(tradCount).map(([k,n]) => `<span style="color:${TRADITIONS[k].color};font-weight:600">${TRADITIONS[k].name} ${n}</span>`).join(" · ")}</p>` : ""}`;
-    return `${quietToggle}${stats}
-      <h2 class="sub serif">My reflections</h2>
-      ${notes.length ? notes.map(([id,j]) => `<div class="cite" style="--c:${TRADITIONS[byId[id].trad].color}"><div class="who"><a href="#" data-open="${id}" style="color:inherit">${esc(byId[id].title)}</a> · ${j.date}</div><div class="src serif" style="font-style:italic">${esc(byId[id].reflect)}</div><p style="margin:6px 0 0;white-space:pre-line">${esc(j.text)}</p></div>`).join("")
-        : `<p class="empty">Open any passage and write in the box under "Reflect". Your answers collect here.</p>`}
-      <h2 class="sub serif">Saved passages</h2>
-      ${saved.length ? `<div class="grid">${saved.map(card).join("")}</div>` : `<p class="empty">Nothing saved yet. Tap ♡ Save on any passage.</p>`}
-      ${state.quiet ? "" : `<h2 class="sub serif">Practice journal</h2>
-      ${days.length ? `<ul class="log">${days.slice(0,30).map(day => `<li><b>${day}</b>: ${state.log[day].filter(id=>byId[id]).map(id => `<a href="#" data-open="${id}" style="color:${TRADITIONS[byId[id].trad].color}">${esc(byId[id].title)}</a>`).join(", ")}</li>`).join("")}</ul>`
-        : `<p class="empty">When you live out a teaching, open it and tap "Mark as practiced today" to build your streak.</p>`}`}
-      <p class="trans" style="margin-top:24px">Everything on this page is stored only in this browser on this device.</p>`;
+        <div class="stat"><div class="n">${streak}</div><div class="l">Day streak</div></div>
+        <div class="stat"><div class="n">${days.length}</div><div class="l">Days practiced</div></div>
+        <div class="stat"><div class="n">${total}</div><div class="l">Teachings practiced</div></div>
+        <div class="stat"><div class="n">${notes.length}</div><div class="l">Reflections</div></div></div>`;
+    const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+    const standalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone;
+    const install = standalone ? "" : `<div class="panel-box install" style="margin-bottom:14px"><svg class="app" aria-hidden="true"><use href="#logo"/></svg><div>
+        <div class="h3">Keep it on your home screen</div>
+        <p style="margin:4px 0 10px">Install the app to open it full-screen, with its own icon, even when you're offline.</p>
+        ${deferredInstall ? `<button class="btn gold sm" data-install>${icon("i-down")}Install app</button>`
+          : isIOS ? `<p class="small" style="margin:0">On iPhone or iPad, open this site in Safari, tap <b>Share</b>, then <b>Add to Home Screen</b>.</p>`
+          : `<p class="small" style="margin:0">In Chrome or Edge, use <b>Install app</b> in the address bar or browser menu. On Android, tap the menu, then <b>Add to Home screen</b>.</p>`}</div></div>`;
+    return `<div class="page-head"><div class="eyebrow">Practice</div><h1 class="h1">Your practice</h1><p class="lede">Your reflections, saved passages and practice history. Everything here is stored only in this browser, on this device.</p></div>
+      ${install}
+      <div class="panel-box row" style="justify-content:space-between;margin-bottom:26px"><div style="max-width:60ch"><div class="h3">Quiet mode${state.quiet ? " is on" : ""}</div><p style="margin:2px 0 0">Hides streaks, counts and the practiced button. "There is no fault greater than the wish to be getting." (Tao Te Ching 46)</p></div>
+        <button class="btn sm" data-quiet aria-pressed="${state.quiet}">${state.quiet ? "Turn off" : "Turn on"}</button></div>
+      ${stats}
+      <h2 class="sub">Reflections</h2>
+      ${notes.length ? notes.map(([id,j]) => `<div class="note"><div class="meta"><a href="#" data-open="${id}" style="color:${TRADITIONS[byId[id].trad].color};font-weight:600;text-decoration:none">${esc(byId[id].title)}</a><span>${j.date}</span></div><div class="q">${esc(byId[id].reflect)}</div><p>${esc(j.text)}</p></div>`).join("")
+        : `<p class="muted">Open any passage and write in the box under "Reflect". Your answers collect here.</p>`}
+      <h2 class="sub">Saved passages</h2>
+      ${saved.length ? `<div class="grid">${saved.map(card).join("")}</div>` : `<p class="muted">Nothing saved yet. Tap Save on any passage.</p>`}
+      ${state.quiet ? "" : `<h2 class="sub">History</h2>
+      ${days.length ? `<ul class="log">${days.slice(0,30).map(day => `<li><b>${day}</b><span>${state.log[day].filter(id=>byId[id]).map(id => `<a href="#" data-open="${id}" style="--c:${TRADITIONS[byId[id].trad].color}">${esc(byId[id].title)}</a>`).join(" · ")}</span></li>`).join("")}</ul>`
+        : `<p class="muted">When you live out a teaching, open it and tap "Mark as practiced" to start a streak.</p>`}`}`;
   }
 };
 
+/* ───────── quiz ───────── */
 function quizText(p){
-  // hide giveaway names
   return p.text.replace(/\n/g," ")
-    .replace(/\b(LORD|God|Christ Jesus|Christ|Tao|Zigong|Zengzi|Yu|Master|Allah)\b/g, "___")
+    .replace(/\b(LORD|God|Christ Jesus|Christ|Tao|Zigong|Zengzi|Youzi|Yan Yuan|Yu|Master|Allah|Israel)\b/g, "___")
     .replace(/…?Gate gate.*$/,"").slice(0, 320) + (p.text.length > 320 ? "…" : "");
 }
-const shuffle = a => { a = [...a]; for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 function newQuiz(){
   const ids = shuffle(P.map(p => p.id)).slice(0, 10);
   const choices = ids.map(id => shuffle([id, ...shuffle(P.map(p => p.id).filter(x => x !== id)).slice(0, 3)]));
   state.quiz = {mode: state.quizMode, items: ids, choices, i: 0, score: 0, answered: null};
 }
-
-function render(){
-  document.querySelectorAll("nav.tabs button").forEach(b => b.setAttribute("aria-selected", b.dataset.tab === state.tab));
-  $("#view").innerHTML = views[state.tab]();
-  const s = $("#search");
-  if (s){ s.oninput = e => { state.q = e.target.value; const pos = e.target.selectionStart; render(); const n = $("#search"); n.focus(); n.setSelectionRange(pos,pos); }; }
+function quizHTML(){
+  if (!state.quiz) newQuiz();
+  const z = state.quiz;
+  const modes = `<div class="row" style="gap:6px;margin-bottom:6px"><button class="chip" data-quiz-mode="tradition" aria-pressed="${state.quizMode==="tradition"}">Which tradition?</button><button class="chip" data-quiz-mode="meaning" aria-pressed="${state.quizMode==="meaning"}">What does it mean?</button></div>`;
+  const prog = `<div class="qprog" aria-hidden="true">${z.items.map((_,k) => `<i class="${k < z.i || (k === z.i && z.answered) ? "done" : ""}"></i>`).join("")}</div>`;
+  if (z.i >= z.items.length){
+    const pct = Math.round(z.score / z.items.length * 100);
+    return `<div class="quiz">${modes}${prog}<div style="margin-top:28px"><div class="score-big">${z.score}<span class="muted" style="font-size:1.6rem"> / ${z.items.length}</span></div>
+      <p class="lede">${pct >= 80 ? "Impressive. You know these teachings well." : pct >= 50 ? "Good work. The overlaps between traditions are what make this hard." : "These traditions sound alike more often than people expect, and that is part of the lesson."}</p>
+      <div class="row" style="margin-top:18px"><button class="btn gold" data-quiz-restart>Play again</button></div></div></div>`;
+  }
+  const p = byId[z.items[z.i]];
+  const right = z.mode === "tradition" ? p.trad : p.id;
+  const choices = z.mode === "tradition"
+    ? Object.entries(TRADITIONS).map(([k,v]) => [k, `<span class="dot" style="--c:${v.color}"></span>${v.name}`])
+    : z.choices[z.i].map(id => [id, esc(byId[id].title)]);
+  const opts = choices.map(([k,label]) => {
+    let cls = "";
+    if (z.answered){ if (k === right) cls = "right"; else if (k === z.answered) cls = "wrong"; }
+    return `<button class="qopt ${cls}" data-answer="${k}" ${z.answered?"disabled":""}>${label}</button>`;
+  }).join("");
+  const prompt = z.mode === "tradition"
+    ? `<h2 class="h2" style="margin-top:22px">Which tradition is this from?</h2><blockquote class="scripture" style="--c:var(--line-strong)">${esc(quizText(p))}</blockquote>`
+    : `<h2 class="h2" style="margin-top:22px">Which passage does this explain?</h2><blockquote class="scripture" style="--c:var(--line-strong);font-family:var(--f-ui);font-size:1.02rem">${esc(p.meaning)}</blockquote>`;
+  return `<div class="quiz">${modes}<div class="count" style="margin-top:14px">Question ${z.i+1} of ${z.items.length} · Score ${z.score}</div>${prog}
+    ${prompt}<div class="qopts">${opts}</div>
+    ${z.answered ? `<div class="feedback" style="--c:${TRADITIONS[p.trad].color}"><p><b style="color:${z.answered === right ? "var(--good)" : "var(--bad)"}">${z.answered === right ? "Correct." : "Not quite."}</b> This is <b>${esc(p.ref)}</b> (${TRADITIONS[p.trad].name}), "${esc(p.title)}." ${z.mode === "tradition" ? esc(p.meaning) : "Try it today: " + esc(p.apply[0])}</p>
+      <div class="row"><button class="btn gold sm" data-quiz-next>${z.i+1 < z.items.length ? "Next question" : "See your score"}${icon("i-arrow")}</button><button class="btn sm" data-open="${p.id}">Read the passage</button></div></div>` : ""}
+  </div>`;
 }
+
+/* ───────── render & routing ───────── */
+function nav(){
+  const items = TABS.map(([k,n,ic]) => `<button data-tab="${k}" aria-current="${state.tab===k ? "page" : "false"}">${icon(ic)}<span>${n}</span></button>`).join("");
+  $("#nav").innerHTML = items; $("#bottombar").innerHTML = items;
+}
+function render(scroll = true){
+  if (!views[state.tab]) state.tab = "today";
+  nav();
+  $("#view").innerHTML = views[state.tab]();
+  document.querySelectorAll("[data-install]").forEach(b => { if (b.closest(".rail")) b.hidden = !deferredInstall; });
+  const s = $("#search");
+  if (s) s.oninput = e => { state.q = e.target.value; const pos = e.target.selectionStart; render(false); const n = $("#search"); n.focus(); n.setSelectionRange(pos,pos); };
+  if (scroll) window.scrollTo({top:0});
+}
+function go(tab){
+  state.tab = tab; store.set("tab", tab);
+  if (location.hash !== "#" + tab) history.replaceState(null, "", "#" + tab);
+  render();
+}
+{ const h = location.hash.slice(1); if (TABS.some(t => t[0] === h)) state.tab = h; }
 
 /* ───────── events ───────── */
 document.addEventListener("click", e => {
-  const el = e.target.closest("[data-tab],[data-goto],[data-open],[data-trad],[data-theme],[data-save],[data-practice],[data-copy],[data-close],[data-answer],[data-quiz-next],[data-quiz-restart],[data-primer],[data-skip-primer],[data-learn],[data-goto-trad],[data-quiz-mode],[data-quiet],[data-listen],[data-listen-orig]");
+  const el = e.target.closest("[data-tab],[data-open],[data-trad],[data-theme],[data-save],[data-practice],[data-copy],[data-close],[data-answer],[data-quiz-next],[data-quiz-restart],[data-primer],[data-skip-primer],[data-learn],[data-goto-trad],[data-goto-theme],[data-goto-learn],[data-quiz-mode],[data-quiet],[data-listen],[data-listen-orig],[data-explore],[data-theme-toggle],[data-install]");
   if (!el) return;
   const d = el.dataset;
-  if (d.tab || d.goto){ state.tab = d.tab || d.goto; store.set("tab", state.tab); render(); window.scrollTo({top:0}); return; }
-  if (d.open){ e.preventDefault(); openDetail(d.open); return; }
-  if (d.trad){ state.trad = d.trad; render(); return; }
-  if (d.primer){ state.primerCh = +d.primer; store.set("primerCh", state.primerCh); render(); window.scrollTo({top:0}); return; }
-  if ("skipPrimer" in d){ state.tab = "today"; store.set("tab", "today"); render(); window.scrollTo({top:0}); return; }
-  if (d.learn){ state.learnSec = d.learn; render(); return; }
-  if (d.gotoTrad){ state.tab = "explore"; state.trad = d.gotoTrad; state.theme = "all"; state.q = ""; store.set("tab","explore"); render(); window.scrollTo({top:0}); return; }
-  if (d.quizMode){ state.quizMode = d.quizMode; newQuiz(); render(); return; }
-  if ("quiet" in d){ state.quiet = !state.quiet; store.set("quiet", state.quiet); render(); return; }
+  if (d.tab){ e.preventDefault(); closeSheet(); go(d.tab); return; }
+  if (d.open){ e.preventDefault(); openSheet(d.open); return; }
+  if ("close" in d){ closeSheet(); return; }
+  if ("themeToggle" in d){ toggleTheme(); return; }
+  if ("install" in d){ if (deferredInstall){ deferredInstall.prompt(); deferredInstall.userChoice.finally(() => { deferredInstall = null; render(false); }); } return; }
+  if (d.trad){ state.trad = d.trad; render(false); return; }
+  if (d.theme){ state.theme = d.theme; render(false); return; }
+  if (d.explore){ state.exploreView = d.explore; render(false); return; }
+  if (d.primer){ state.primerCh = +d.primer; store.set("primerCh", state.primerCh); closeSheet(); go("primer"); return; }
+  if ("skipPrimer" in d){ go("explore"); return; }
+  if (d.learn){ state.learnSec = d.learn; render(false); return; }
+  if (d.gotoLearn){ state.learnSec = d.gotoLearn; go("learn"); return; }
+  if (d.gotoTrad){ Object.assign(state, {trad: d.gotoTrad, theme: "all", q: "", exploreView: "all"}); go("explore"); return; }
+  if (d.gotoTheme){ Object.assign(state, {theme: d.gotoTheme, trad: "all", q: "", exploreView: "all"}); closeSheet(); go("explore"); return; }
+  if (d.quizMode){ state.quizMode = d.quizMode; newQuiz(); render(false); return; }
+  if ("quiet" in d){ state.quiet = !state.quiet; store.set("quiet", state.quiet); render(false); return; }
+  if (d.save){
+    const had = state.saved.has(d.save);
+    had ? state.saved.delete(d.save) : state.saved.add(d.save);
+    store.set("saved", [...state.saved]); refreshSheet(); if (!sheetId) render(false); toast(had ? "Removed from saved" : "Saved"); return;
+  }
+  if (d.practice){
+    const k = todayKey(), arr = state.log[k] || [];
+    const had = arr.includes(d.practice);
+    state.log[k] = had ? arr.filter(x => x !== d.practice) : [...arr, d.practice];
+    store.set("log", state.log); refreshSheet(); if (!sheetId) render(false); if (!had) toast("Marked as practiced today"); return;
+  }
+  if (d.copy){
+    const p = byId[d.copy], txt = `"${p.text}"\n— ${p.ref}`;
+    (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(() => toast("Copied"), () => toast("Copy isn't available here"));
+    return;
+  }
   if (d.listen || d.listenOrig){
     const p = byId[d.listen || d.listenOrig], x = EXTRA[p.id] || {};
     speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(d.listen ? p.text.replace(/…/g, ", ") : x.orig);
-    u.lang = d.listen ? "en-US" : ({zh:"zh-CN", ar:"ar-SA", he:"he-IL"}[x.lang]); u.rate = .92;
+    u.lang = d.listen ? "en-US" : ({zh:"zh-TW", ar:"ar-SA", he:"he-IL"}[x.lang]); u.rate = .92;
     speechSynthesis.speak(u); return;
-  }
-  if (d.theme){ state.theme = d.theme; render(); return; }
-  if ("close" in d){ $("#dlg").close(); return; }
-  if (d.save){
-    state.saved.has(d.save) ? state.saved.delete(d.save) : state.saved.add(d.save);
-    store.set("saved", [...state.saved]); refreshDetail(d.save); return;
-  }
-  if (d.practice){
-    const k = todayKey(); const arr = state.log[k] || [];
-    state.log[k] = arr.includes(d.practice) ? arr.filter(x => x !== d.practice) : [...arr, d.practice];
-    store.set("log", state.log); refreshDetail(d.practice); return;
-  }
-  if (d.copy){
-    const p = byId[d.copy];
-    const txt = `"${p.text}"\n— ${p.ref}`;
-    (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(
-      () => { el.textContent = "Copied ✓"; }, () => { el.textContent = "Copy unavailable"; });
-    return;
   }
   if (d.answer){
     const z = state.quiz; if (z.answered) return;
     const it = byId[z.items[z.i]];
     z.answered = d.answer; if (d.answer === (z.mode === "tradition" ? it.trad : it.id)) z.score++;
-    render(); return;
+    render(false); return;
   }
-  if ("quizNext" in d){ state.quiz.i++; state.quiz.answered = null; render(); return; }
-  if ("quizRestart" in d){ newQuiz(); render(); return; }
+  if ("quizNext" in d){ state.quiz.i++; state.quiz.answered = null; render(false); return; }
+  if ("quizRestart" in d){ newQuiz(); render(false); return; }
 });
-function refreshDetail(id){
-  const dlg = $("#dlg");
-  if (dlg.open){ const st = dlg.scrollTop; dlg.innerHTML = detailHTML(byId[id], {modal:true}); dlg.scrollTop = st; }
-  render();
-}
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheet(); });
 let jt;
 document.addEventListener("input", e => {
   const id = e.target.dataset && e.target.dataset.journal; if (!id) return;
@@ -1249,13 +1464,19 @@ document.addEventListener("input", e => {
     const text = e.target.value;
     if (text.trim()) state.journal[id] = {text, date: todayKey()}; else delete state.journal[id];
     store.set("journal", state.journal);
-    const st = document.getElementById("js-" + id); if (st) st.textContent = text.trim() ? "Saved ✓" : "";
+    document.querySelectorAll(`[data-jstatus="${id}"]`).forEach(s => s.textContent = text.trim() ? "Saved" : "");
   }, 400);
 });
-$("#dlg").addEventListener("click", e => { if (e.target.id === "dlg") e.target.close(); });
-$("#dlg").addEventListener("close", () => { if ("speechSynthesis" in window) speechSynthesis.cancel(); if (state.tab === "practice" || state.tab === "explore") render(); });
+window.addEventListener("hashchange", () => { const h = location.hash.slice(1); if (TABS.some(t => t[0] === h) && h !== state.tab){ state.tab = h; store.set("tab", h); render(); } });
 
-if (!views[state.tab]) state.tab = "today";
+/* ───────── installable app ───────── */
+let deferredInstall = null;
+window.addEventListener("beforeinstallprompt", e => { e.preventDefault(); deferredInstall = e; render(false); });
+window.addEventListener("appinstalled", () => { deferredInstall = null; toast("Installed"); render(false); });
+if ("serviceWorker" in navigator && location.protocol === "https:" && !/claude\.ai|claudeusercontent/.test(location.hostname)){
+  window.addEventListener("load", () => { navigator.serviceWorker.register("sw.js").catch(() => {}); });
+}
+
 render();
 </script>
 </body>

@@ -1,0 +1,21 @@
+{
+  "name": "Five Wisdom Traditions",
+  "short_name": "Wisdom",
+  "description": "The common principles of the major religions, and the most-quoted passages of the Bible, Tao Te Ching, Quran, Buddhist sutras and Confucius.",
+  "start_url": "./#today",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F4F4EF",
+  "theme_color": "#18202D",
+  "icons": [
+    {"src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png"},
+    {"src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"},
+    {"src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml"}
+  ],
+  "shortcuts": [
+    {"name": "Today's passage", "url": "./#today"},
+    {"name": "Primer", "url": "./#primer"},
+    {"name": "Passages", "url": "./#explore"}
+  ]
+}
