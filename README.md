@@ -2,7 +2,7 @@
 
 A single-page app on the common principles of the major religions, and the most-quoted passages of the Bible, Tao Te Ching, Quran, Buddhist sutras and the Analects of Confucius: what each one means, where it comes from, and how to live it today.
 
-**Live site:** https://deanho1-ui.github.io/wisdom-traditions/
+**Live site:** https://deanho1-ui.github.io/Wisdom-Traditions/
 
 ## What's inside
 
