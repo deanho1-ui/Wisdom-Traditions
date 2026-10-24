@@ -10,8 +10,17 @@ A single-page app on the common principles of the major religions, and the most-
 - **Today:** a passage of the day with one practice to try.
 - **Passages:** 500 passages, 100 from each tradition, searchable and filterable by tradition and theme. Each one has its meaning, context, what it meant then and how it's used today, where it's most often quoted (settings, famous uses, and cross-references within the scriptures), daily practices, a reflection question and a link to the full source text.
 - **Common threads:** passages grouped by shared themes.
-- **Learn:** an introduction to each tradition, a timeline, a glossary, the "same or different?" debate, and how to read hard passages.
-- **Quiz** and **My practice:** reflections, saved passages and an optional practice streak.
+- **Learn:** a quiz, side-by-side answers from all five traditions to 24 life questions, 8 reading plans, a family section with 50 retellings for children, an introduction to each tradition, a timeline, a glossary, and guidance on hard passages.
+- **Practice:** reflections, saved passages and an optional practice streak.
+
+## For discussion groups
+
+- **Guess the sage:** in any Primer chapter, hide who said each quote and reveal them one by one.
+- **Handouts:** "Make a handout" prints a session sheet with the quotes, discussion questions and an answer key (or save it as a PDF).
+
+## Corrections
+
+Every passage has a "Suggest a correction" link that opens a GitHub issue with the passage details filled in.
 
 ## Installing it as an app
 
