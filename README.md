@@ -8,7 +8,7 @@ A single-page app on the common principles of the major religions, and the most-
 
 - **Primer:** 14 short chapters adapted from the discussion series *Common Principles of the Major Religions* (2017–2018): the Five Constant Virtues, cause and effect, the Six Paramitas, the Five Human Relationships and more. You can skip it.
 - **Today:** a passage of the day with one practice to try.
-- **Passages:** 500 passages, 100 from each tradition, searchable and filterable by tradition and theme. Each one has its meaning, context, daily practices, a reflection question and a link to the full source text.
+- **Passages:** 500 passages, 100 from each tradition, searchable and filterable by tradition and theme. Each one has its meaning, context, what it meant then and how it's used today, where it's most often quoted (settings, famous uses, and cross-references within the scriptures), daily practices, a reflection question and a link to the full source text.
 - **Common threads:** passages grouped by shared themes.
 - **Learn:** an introduction to each tradition, a timeline, a glossary, the "same or different?" debate, and how to read hard passages.
 - **Quiz** and **My practice:** reflections, saved passages and an optional practice streak.
