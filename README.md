@@ -8,7 +8,7 @@ A single-page app on the common principles of the major religions, and the most-
 
 - **Primer:** 14 short chapters adapted from the discussion series *Common Principles of the Major Religions* (2017–2018): the Five Constant Virtues, cause and effect, the Six Paramitas, the Five Human Relationships and more. You can skip it.
 - **Today:** a passage of the day with one practice to try.
-- **Explore:** 48 passages, searchable and filterable by tradition and theme. Each one has its meaning, context, daily practices, a reflection question and a link to the full source text.
+- **Passages:** 500 passages, 100 from each tradition, searchable and filterable by tradition and theme. Each one has its meaning, context, daily practices, a reflection question and a link to the full source text.
 - **Common threads:** passages grouped by shared themes.
 - **Learn:** an introduction to each tradition, a timeline, a glossary, the "same or different?" debate, and how to read hard passages.
 - **Quiz** and **My practice:** reflections, saved passages and an optional practice streak.
@@ -25,8 +25,17 @@ The site is an installable web app: it opens full-screen with its own icon and w
 
 - `index.html`: the whole app (no build step). It also works when opened directly from disk.
 - `manifest.webmanifest`, `sw.js`, `icons/`: what makes it installable and available offline.
+- `scripts/check-links.mjs`: checks every source link (runs automatically on GitHub after each change).
 
 Saved passages and reflections are stored only in each visitor's own browser.
+
+## Coverage
+
+- **Bible:** 100 passages across the Old and New Testaments (King James Version)
+- **Taoism:** all 81 chapters of the Tao Te Ching, plus 19 stories from the Zhuangzi
+- **Quran:** 100 of the most recited and taught verses and short surahs
+- **Buddhism:** 48 from the Dhammapada and 52 from the suttas and Mahayana, Chan/Zen and Pure Land texts
+- **Confucianism:** the Four Books: Analects, Mencius, Great Learning and Doctrine of the Mean
 
 ## Translations
 
