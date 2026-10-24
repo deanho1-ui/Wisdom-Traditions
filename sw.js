@@ -1,5 +1,5 @@
 // Offline support: app files are cached on install; pages update in the background (stale-while-revalidate).
-const CACHE = "fwt-v7";
+const CACHE = "fwt-v8";
 const CORE = ["./", "index.html", "manifest.webmanifest", "icons/icon.svg", "icons/icon-192.png", "icons/icon-512.png", "icons/apple-touch-icon.png"];
 
 self.addEventListener("install", e => {

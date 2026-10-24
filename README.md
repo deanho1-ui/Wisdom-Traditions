@@ -13,6 +13,10 @@ A single-page app on the common principles of the major religions, and the most-
 - **Learn:** a quiz, side-by-side answers from all five traditions to 24 life questions, 8 reading plans, a family section with 50 retellings for children, an introduction to each tradition, a timeline, a glossary, and guidance on hard passages.
 - **Practice:** reflections, saved passages and an optional practice streak.
 
+## Podcast
+
+Thirty five-minute episodes (one per Primer chapter, one per tradition, one per theme) as two-host conversations, playable in the app with transcripts. Voices are AI-generated with the open-source [Kokoro](https://github.com/hexgrad/kokoro) text-to-speech model, recorded for free on GitHub Actions (`scripts/render_podcast.py`, `.github/workflows/podcast.yml`). Follow it in a podcast app with the feed: https://deanho1-ui.github.io/Wisdom-Traditions/podcast/feed.xml
+
 ## For discussion groups
 
 - **Guess the sage:** in any Primer chapter, hide who said each quote and reveal them one by one.
