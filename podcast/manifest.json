@@ -1,0 +1,92 @@
+{
+ "primer-0": {
+  "bytes": 2082597,
+  "duration": 297,
+  "hash": "72de06fbe7399f15",
+  "rendered": "2026-10-24"
+ },
+ "primer-1": {
+  "bytes": 1974741,
+  "duration": 282,
+  "hash": "a1bb8f0ed9901843",
+  "rendered": "2026-10-24"
+ },
+ "primer-10": {
+  "bytes": 1858989,
+  "duration": 265,
+  "hash": "fcc4e8fbce07c421",
+  "rendered": "2026-10-24"
+ },
+ "primer-11": {
+  "bytes": 1852437,
+  "duration": 265,
+  "hash": "b8b3d53442f8b7f2",
+  "rendered": "2026-10-24"
+ },
+ "primer-12": {
+  "bytes": 1875621,
+  "duration": 268,
+  "hash": "f3859abd19eb1ba5",
+  "rendered": "2026-10-24"
+ },
+ "primer-13": {
+  "bytes": 1950213,
+  "duration": 279,
+  "hash": "fdce1b1bfa7bc2e9",
+  "rendered": "2026-10-24"
+ },
+ "primer-14": {
+  "bytes": 1855965,
+  "duration": 265,
+  "hash": "79bb7f820eea8246",
+  "rendered": "2026-10-24"
+ },
+ "primer-2": {
+  "bytes": 1885869,
+  "duration": 269,
+  "hash": "10a7052c98af414b",
+  "rendered": "2026-10-24"
+ },
+ "primer-3": {
+  "bytes": 1811445,
+  "duration": 259,
+  "hash": "54b1d5fc09416d5e",
+  "rendered": "2026-10-24"
+ },
+ "primer-4": {
+  "bytes": 1877133,
+  "duration": 268,
+  "hash": "1cb4f87ebd75a027",
+  "rendered": "2026-10-24"
+ },
+ "primer-5": {
+  "bytes": 1931733,
+  "duration": 276,
+  "hash": "7982dbac917d4c41",
+  "rendered": "2026-10-24"
+ },
+ "primer-6": {
+  "bytes": 1896117,
+  "duration": 271,
+  "hash": "b4c74eebc801fe7d",
+  "rendered": "2026-10-24"
+ },
+ "primer-7": {
+  "bytes": 1850589,
+  "duration": 264,
+  "hash": "44ba029b4df2d953",
+  "rendered": "2026-10-24"
+ },
+ "primer-8": {
+  "bytes": 1945845,
+  "duration": 278,
+  "hash": "b207997db75a0af6",
+  "rendered": "2026-10-24"
+ },
+ "primer-9": {
+  "bytes": 1935933,
+  "duration": 276,
+  "hash": "347042a430df7eb9",
+  "rendered": "2026-10-24"
+ }
+}
